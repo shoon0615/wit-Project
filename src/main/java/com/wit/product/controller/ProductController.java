@@ -15,7 +15,7 @@ public class ProductController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main() {		
 		// log.debug("AAA");
-		return "index";
+		return "product/productPage";
 	}
 
 }
