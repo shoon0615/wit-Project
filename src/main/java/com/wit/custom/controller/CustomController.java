@@ -13,7 +13,7 @@ public class CustomController {
 	private Logger log = LoggerFactory.getLogger(CustomController.class);
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main() {		
+	public String main() {	
 		// log.debug("AAA");
 		return "index";
 	}
