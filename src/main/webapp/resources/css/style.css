@@ -1708,25 +1708,23 @@ ol {
 .product__details__text .rating i {
 	font-size: 12px;
 	color: #e3c01c;
-	margin-right: -4px;
 }
 
 .product__details__text .rating span {
 	font-size: 12px;
 	color: #666666;
-	margin-left: 5px;
 }
 
 .product__details__text p {
 	color: #444444;
-	margin-bottom: 28px;
+	margin-bottom: 16px;
 }
 
 .product__details__price {
 	font-size: 30px;
 	font-weight: 600;
 	color: #ca1515;
-	margin-bottom: 30px;
+	margin-bottom: 16px;
 }
 
 .product__details__price span {
@@ -1763,12 +1761,13 @@ ol {
 }
 
 .pro-qty .qtybtn {
-	font-size: 14px;
+	font-size: 16px;
 	color: #666666;
 	cursor: pointer;
 	float: left;
 	width: 12px;
-	line-height: 46px;
+	line-height: 26px;	
+	/* 기존: line-height: 46px; */
 }
 
 .pro-qty input {
@@ -1784,7 +1783,7 @@ ol {
 
 .product__details__button {
 	overflow: hidden;
-	margin-bottom: 25px;
+	margin-top: 25px;
 }
 
 .product__details__button .cart-btn {
@@ -1831,9 +1830,47 @@ ol {
 	color: #666666;
 }
 
-.product__details__widget {
+.product__details__list {
 	border-top: 1px solid #ebebeb;
-	padding-top: 35px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+.product__details__list table {
+	display: block;
+}
+
+.product__details__list table tbody {
+	display: block;
+}
+
+.product__details__list tbody tr {
+	display: block;
+}
+
+.product__details__list tbody tr td {
+	padding: 12px 20px 12px 0;
+}
+
+.product__details__list tbody tr td.prod__sub {
+	width: 200px;
+	word-break: break-all;
+}
+
+.product__details__list tbody tr .prod__close span {
+	height: 20px;
+	width: 20px;
+	background: #EBEBEB;
+	border-radius: 50%;
+	color: #111111;
+	line-height: 18px;
+	text-align: center;
+	display: inline-block;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.product__details__widget {
+	padding-bottom: 16px;
 }
 
 .product__details__widget ul li {
@@ -1927,8 +1964,25 @@ ol {
 	visibility: hidden;
 }
 
+/* 20200822 LSH: checked 속성있을때만 표시나도록 변경
 .product__details__widget ul li .color__checkbox label input:checked~.checkmark:after {
 	border-color: #ffffff;
+	opacity: 1;
+}
+
+.product__details__widget ul li .color__checkbox label input:checked~.checkmark.white-bg:after {
+	border-color: #737373;
+	opacity: 1;
+} 
+*/
+
+.product__details__widget ul li .color__checkbox label input:checked~:after {
+	border-color: #ffffff;
+	opacity: 1;
+}
+
+.product__details__widget ul li .color__checkbox label input[id="white"]:checked~:after {
+	border-color: #737373;
 	opacity: 1;
 }
 
@@ -1947,8 +2001,56 @@ ol {
 	background: #111111;
 }
 
-.product__details__widget ul li .color__checkbox label .checkmark.grey-bg {
-	background: #e4aa8b;
+.product__details__widget ul li .color__checkbox label .checkmark.white-bg {
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	width: 21px;
+	height: 21px;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.red-bg {
+	background: #e31e2f;
+	border-color: #e31e2f;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.orange-bg {
+	background: #FF8224;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.yellow-bg {
+	background: #FFE400;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.green-bg {
+	background: #47C83E;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.blue-bg {
+	background: #2478FF;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.navy-bg {
+	background: #113759;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.purple-bg {
+	background: #8324FF;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.pink-bg {
+	background: #F361A6;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.gray-bg {
+	background: #A6A6A6;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.beige-bg {
+	background: #DFC589;
+}
+
+.product__details__widget ul li .color__checkbox label .checkmark.brown-bg {
+	background: #FF8224;
 }
 
 .product__details__widget ul li .color__checkbox label .checkmark:after {
@@ -1957,7 +2059,7 @@ ol {
 	top: 5px;
 	width: 13px;
 	height: 6px;
-	border: solid #ffffff;
+	border: solid;
 	border-width: 1.5px 1.5px 0px 0px;
 	-webkit-transform: rotate(127deg);
 	-ms-transform: rotate(127deg);

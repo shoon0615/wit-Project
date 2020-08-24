@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%	request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
@@ -25,6 +26,9 @@
     <link rel="stylesheet" href="/wit/resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/style.css" type="text/css">
+    
+    <script src="/wit/resources/js/jquery-3.1.1.js"></script>
+    
 </head>
 
 <body>
@@ -134,57 +138,39 @@
                 <div class="col-lg-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__left product__thumb nice-scroll">
-                            <a class="pt active" href="#product-1">
-                                <img src="/wit/resources/img/product/details/thumb-1.jpg" alt="" style="height: 122px;">
-                            </a>
-                            <a class="pt" href="#product-2">
-                                <img src="/wit/resources/img/product/details/thumb-2.jpg" alt="" style="height: 122px;">
-                            </a>
-                            <a class="pt" href="#product-3">
-                                <img src="/wit/resources/img/product/details/thumb-3.jpg" alt="" style="height: 122px;">
-                            </a>
-                            <a class="pt" href="#product-4">
-                                <img src="/wit/resources/img/product/details/thumb-4.jpg" alt="" style="height: 122px;">
-                            </a>
+                        	<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
+                            	<a class="pt" href="#product-${status.index+1 }">
+                               		<img src="/wit/resources/img/product/details/${img }" alt="" style="height: 122px;">
+                            	</a>
+                            </c:forEach>
                         </div>
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
-                                <img data-hash="product-1" class="product__big__img" src="/wit/resources/img/product/details/product-1.jpg" alt="">
-                                <img data-hash="product-2" class="product__big__img" src="/wit/resources/img/product/details/product-3.jpg" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="/wit/resources/img/product/details/product-2.jpg" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="/wit/resources/img/product/details/product-4.jpg" alt="">
+                            	<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
+                                	<img data-hash="product-${status.index+1 }" class="product__big__img" 
+                                		src="/wit/resources/img/product/details/${img }" alt="" style="height: 549px;">
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <h3>Essential structured blazer <span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
+                        <h3>${dto.PROD_SUBCODE } <span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
                         <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
+                        	<c:if test="${map.CNT > 0 }">
+                        		<c:forEach begin="1" end="${map.AVG }">
+	                            	<i class="fa fa-star"></i>
+	                            </c:forEach>
+	                            <c:forEach begin="0" end="${4 - map.AVG }">
+	                            	<span class="fa fa-star"></span>
+	                            </c:forEach>
+	                            <span>( ${map.CNT } reviews )</span>
+                            </c:if>
                         </div>
                         <!-- <div class="product__details__price">$ 75.0 <span>$ 83.0</span></div> -->
-                        <div class="product__details__price">$ 75.0</div>
-                        <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
-                        magni lores eos qui ratione voluptatem sequi nesciunt.</p>
-                        <div class="quantity" style="float: inherit;">
-                            <span>Quantity:</span>
-                            <div class="pro-qty">
-                                <input type="text" value="1">
-                            </div>
-                        </div>
-                        <div class="product__details__button">  
-                            <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-                            </ul>
-                        </div>
+                        <div class="product__details__price">￦ <fmt:formatNumber value="${dto.PROD_PRICE }" type="number"/></div>
+                        <p>${dto.PROD_CONTENTS }</p>
                         <div class="product__details__widget">
                             <ul>
                                 <!-- 재고 내용 주석(Stock)
@@ -202,45 +188,60 @@
                                 <li>
                                     <span>Available color:</span>
                                     <div class="color__checkbox">
-                                        <label for="red">
-                                            <input type="radio" name="color__radio" id="red" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="black">
-                                            <input type="radio" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
-                                        </label>
+                                    	<c:forEach items="${PROD_COLOR }" var="color">
+	                                        <label for="${color }">
+	                                            <input type="radio" name="color__radio" id="${color }">
+	                                            <span class="checkmark ${color }-bg"></span>
+	                                        </label>
+	                                    </c:forEach>    
                                     </div>
                                 </li>
                                 <li>
                                     <span>Available size:</span>
                                     <div class="size__btn">
-                                        <label for="xs-btn" class="active">
-                                            <input type="radio" id="xs-btn">
-                                            xs
-                                        </label>
-                                        <label for="s-btn">
-                                            <input type="radio" id="s-btn">
-                                            s
-                                        </label>
-                                        <label for="m-btn">
-                                            <input type="radio" id="m-btn">
-                                            m
-                                        </label>
-                                        <label for="l-btn">
-                                            <input type="radio" id="l-btn">
-                                            l
-                                        </label>
+                                    	<c:forEach items="${PROD_SIZE }" var="size">
+	                                        <label for="${size }-btn">
+	                                            <input type="radio" name="size__radio" id="${size }-btn">
+	                                            ${size }
+	                                        </label>
+                                       </c:forEach>
                                     </div>
                                 </li>
                                 <li>
                                     <span>Promotions:</span>
                                     <p>Free shipping</p>
                                 </li>
+                            </ul>
+                        </div>
+                        <div class="product__details__list">
+                        	<table>
+                        		<tr>
+                        			<td class="prod__sub"><span><b>ADIDAS</b><br/>- RED/250</span></td>
+		                        	<td class="prod__qty">
+		                        		<div class="pro-qty" style="height: 28px;width: 74px;padding: 0 9px;vertical-align: middle;">
+		                                	<input type="text" value="1" style="height: 26px;width: 30px;background-color: #fff;" disabled="disabled">
+		                            	</div>
+		                            </td>
+		                            <td class="prod__close"><span class="icon_close"></span></td>
+		                            <td>￦ <fmt:formatNumber type="number">9900</fmt:formatNumber></td>
+		                        </tr>
+		                        <tr>
+                        			<td class="prod__sub"><span><b>ADIDAS</b><br/>- WHITE/260</span></td>
+		                        	<td class="prod__qty">
+		                        		<div class="pro-qty" style="height: 28px;width: 74px;padding: 0 9px;vertical-align: middle;">
+		                                	<input type="text" value="1" style="height: 26px;width: 30px;background-color: #fff;" disabled="disabled">
+		                            	</div>
+		                            </td>
+		                            <td class="prod__close"><span class="icon_close"></span></td>
+		                            <td>￦ 9900</td>
+		                        </tr>
+                            </table>
+                        </div>
+                        <div class="product__details__button">  
+                            <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
+                            <ul>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                     </div>

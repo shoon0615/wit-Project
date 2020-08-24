@@ -11,6 +11,8 @@ Created: Colorib
 
 (function ($) {
 
+	var checked = "";
+
     /*------------------
         Preloader
     --------------------*/
@@ -206,7 +208,7 @@ Created: Colorib
 		Quantity change
 	--------------------- */
     var proQty = $('.pro-qty');
-	proQty.prepend('<span class="dec qtybtn">-</span>');
+	proQty.prepend('<span class="dec qtybtn" style="padding-left: 3px;">-</span>');
 	proQty.append('<span class="inc qtybtn">+</span>');
 	proQty.on('click', '.qtybtn', function () {
 		var $button = $(this);
@@ -216,7 +218,7 @@ Created: Colorib
 			var newVal = parseFloat(oldValue) + 1;
 		} else {
 			// Don't allow decrementing below zero
-			// 20200818 수량 1 미만 안되게 수정(기존 0)
+			// 20200818 LSH: 수량 1 미만 안되게 수정(기존 0)
 			if (parseFloat(oldValue) > 1) {
 				var newVal = parseFloat(oldValue) - 1;
 			} else {
@@ -230,9 +232,63 @@ Created: Colorib
     /*-------------------
 		Radio Btn
 	--------------------- */
-    $(".size__btn label").on('click', function () {
-        $(".size__btn label").removeClass('active');
-        $(this).addClass('active');
+	// 20200822 LSH: 컬러 클릭시 checked 속성 추가되도록 click 함수 추가 및 두가지 옵션 선택시 초기화되도록 수정
+	$(".color__checkbox label input").on('click', function () {
+		if (checked == "" || checked == "color") {
+        	$(".color__checkbox label input").removeAttr('checked');
+        	$(this).attr('checked', true);
+        	$('.color__checkbox label style').remove();
+        	checked = "color";
+        } else {
+			checkedInsert();
+			checked = "";
+        }
+    });
+	
+    $(".size__btn label input").on('click', function () {
+    	if (checked == "" || checked == "size") {
+        	$(".size__btn label").removeClass('active');
+        	$(this).closest("label").addClass('active');
+        	checked = "size";
+        } else {
+			checkedInsert();
+			checked = "";
+        }
+    });
+    
+    var checkedInsert = function() {
+    	$(".color__checkbox label input").after("<style type='text/css'>"
+    		+ ".product__details__widget ul li .color__checkbox label input:checked~:after {opacity: 0;}"
+    		+ ".product__details__widget ul li .color__checkbox label input[id='white']:checked~:after {opacity: 0;}</style>");
+		$(".color__checkbox label input").removeAttr('checked');
+		$(".size__btn label").removeClass('active');
+		
+    	var checkedColor = $(':radio[name=color__radio]:checked').attr('id').toUpperCase();
+		var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim();
+			
+		alert(checkedColor);
+		alert(checkedSize);
+		
+		
+		$.post("choiceProd.action", {PROD_SUBCODE:"ADIDAS", PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
+		    alert(JSON.stringify(data));
+		    alert(JSON.stringify(data.prod_SUBCODE));
+		    alert(JSON.stringify(data.prod_PRICE));
+		    $("#myInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
+		}, "json");
+
+    }
+    
+    $(".product__big__img").on('mouseenter', function () {
+    	$(".owl-nav").css('display', 'block');
+    });
+    
+    $(".product__big__img").on('mouseleave', function () {
+    	$(".owl-nav").css('display', 'none');
+    });
+    
+    $(".owl-nav").on('mouseenter', function () {
+    	$(".owl-nav").css('display', 'block');
     });
 
 })(jQuery);

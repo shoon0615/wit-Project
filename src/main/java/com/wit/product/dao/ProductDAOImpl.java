@@ -16,14 +16,16 @@ public class ProductDAOImpl implements ProductDAO {
 	private SqlSessionTemplate sqlSession;
 
 	// 상품 정보
-	public ProductDTO selectProd() {
+	@Override
+	public ProductDTO selectProd(String PROD_SUBCODE) {
 		
-		ProductDTO dto = sqlSession.selectOne("productMapper.selectProd");
+		ProductDTO dto = sqlSession.selectOne("productMapper.selectProd", PROD_SUBCODE);
 		
 		return dto;
 	}
 	
 	// 상품 이미지 정보
+	@Override
 	public List<String> selectProdImg() {
 		
 		List<String> lists = sqlSession.selectList("productMapper.selectProdImg");
@@ -32,6 +34,7 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	// 상품 별점/리뷰수
+	@Override
 	public HashMap<String, Object> selectProdScore() {
 		
 		HashMap<String, Object> map = sqlSession.selectOne("productMapper.selectProdScore");
@@ -40,6 +43,7 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	// 상품 찜 여부
+	@Override
 	public boolean selectProdHeart() {
 		
 		if(sqlSession.selectOne("productMapper.selectProdHeart") == null) {
@@ -50,6 +54,7 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	// 상품 장바구니 여부
+	@Override
 	public boolean selectProdCart() {
 		
 		if(sqlSession.selectOne("productMapper.selectProdCart") == null) {
@@ -60,10 +65,19 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	// 상품 사이즈/컬러 데이터
-	public List<String> selectProdChoice() {
-		
-		List<String> lists = sqlSession.selectList("productMapper.selectProdChoice");
+	@Override
+	public List<String> selectProdChoice(String PROD_INFO) {
+
+		List<String> lists = sqlSession.selectList("productMapper.selectProdChoice", PROD_INFO);
 		
 		return lists;
+	}
+
+	@Override
+	public ProductDTO choiceProd(ProductDTO dto) {
+		
+		ProductDTO dto_ch = sqlSession.selectOne("productMapper.choiceProd", dto);
+		
+		return dto_ch;
 	}
 }
