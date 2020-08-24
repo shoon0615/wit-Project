@@ -15,7 +15,7 @@ public class CustomController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main() {		
 		// log.debug("AAA");
-		return "index";
+		return "product-details";
 	}
 
 }
