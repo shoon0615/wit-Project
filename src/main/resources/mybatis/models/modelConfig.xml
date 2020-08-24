@@ -5,5 +5,6 @@
 <configuration>
   <typeAliases>
     <typeAlias type="com.wit.custom.dto.CustomDTO" alias="customDTO"/>
+    <typeAlias type="com.wit.category.dto.CategoryDTO" alias="categoryDTO"/>
   </typeAliases>
 </configuration>

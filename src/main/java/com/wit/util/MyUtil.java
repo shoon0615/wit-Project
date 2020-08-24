@@ -24,7 +24,7 @@ public class MyUtil {
 	//currentPage :현재 표시할 페이지
 	//totalPage : 전체 페이지수
 	//listUrl : 링크를 설정할 url
-	public String pageIndexList(int currentPage, int totalPage, String listUrl){
+	public String categoryPageIndexList(int currentPage, int totalPage, String listUrl, String type){
 		
 		int numPerBlock = 5; //1◀이전 6 7 8 9 10 다음▶11(6-10까지 표시되는 페이지 갯수)
 		int currentPageSetup; //표시할 첫 페이지(6)의 – 1 해준 값(5,10,15,20...)
@@ -50,11 +50,9 @@ public class MyUtil {
 		//◀이전
 		if(totalPage > numPerBlock && currentPageSetup > 0){
 						
-			sb.append("<a href=\"" + listUrl + "pageNum=" 
-					+ currentPageSetup + "\">◀이전</a>&nbsp;");
-			
+			sb.append("<a href='javascript:void(0);'"
+					+ "onclick='productList(\""+ type + "\",\"" + currentPageSetup +");'><i class=\"fa fa-angle-left\"></i></a>&nbsp;");
 		}
-		
 		//바로가기 페이지
 		page = currentPageSetup + 1;
 		
@@ -66,7 +64,8 @@ public class MyUtil {
 			
 			}else{
 				
-				sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">"
+				sb.append("<a href='javascript:void(0);'"
+						+ "onclick='productList(\""+ type + "\",\"" + page +"\");'>"
 						+ page + "</a>&nbsp;");
 				
 			}
@@ -78,7 +77,8 @@ public class MyUtil {
 		//다음▶
 		if(totalPage - currentPageSetup > numPerBlock){
 						
-			sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">다음▶</a>&nbsp;");
+			sb.append("<a href='javascript:void(0);'"
+					+ "onclick='productList(\""+ type + "\",\"" + page +");'><i class=\"fa fa-angle-right\"></i></a>&nbsp;");
 			
 		}
 		
