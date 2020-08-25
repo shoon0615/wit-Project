@@ -19,6 +19,8 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<!-- 타일즈가 우선순위1번이기때문에 우선순위2번으로 지정  -->
+		<beans:property name="order" value="2" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.wit" />
