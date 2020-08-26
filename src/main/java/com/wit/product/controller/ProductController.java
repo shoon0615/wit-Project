@@ -40,8 +40,8 @@ public class ProductController {
 		ProductDTO dto = dao.selectProd(PROD_SUBCODE);
 		HashMap<String, Object> map = dao.selectProdScore();
 		List<String> PROD_IMG = dao.selectProdImg();
-		List<String> PROD_COLOR = dao.selectProdChoice("C");
-		List<String> PROD_SIZE = dao.selectProdChoice("S");
+		List<String> PROD_COLOR = dao.selectProdChoice("C", PROD_SUBCODE);
+		List<String> PROD_SIZE = dao.selectProdChoice("S", PROD_SUBCODE);
 
 		mav.addObject("dto", dto);
 		mav.addObject("map", map);
