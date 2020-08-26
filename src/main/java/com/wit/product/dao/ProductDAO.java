@@ -8,7 +8,7 @@ import com.wit.product.dto.ProductDTO;
 public interface ProductDAO {
 	
 	public ProductDTO selectProd(String PROD_SUBCODE);
-	public List<String> selectProdImg();
+	public List<String> selectProdImg(String PROD_SUBCODE);
 	public HashMap<String, Object> selectProdScore();
 	public boolean selectProdHeart();
 	public boolean selectProdCart();
