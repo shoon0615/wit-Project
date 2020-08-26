@@ -180,7 +180,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <h3>${dto.PROD_SUBCODE } <span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
+                        <h3>${dto.PROD_SUBCODE }</h3>
                         <div class="rating">
                         	<c:if test="${map.CNT > 0 }">
                         		<c:forEach begin="1" end="${map.AVG }">

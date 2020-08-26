@@ -290,10 +290,11 @@ Created: Colorib
 		$(".color__checkbox label input").removeAttr('checked');
 		$(".size__btn label").removeClass('active');
 		
+		var checkedSubcode = $('.product__details__text').find('h3').text();
     	var checkedColor = $(':radio[name=color__radio]:checked').attr('id').toUpperCase();
 		var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim();
 		
-		$.post("choiceProd.action", {PROD_SUBCODE:"ADIDAS", PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
+		$.post("choiceProd.action", {PROD_SUBCODE:checkedSubcode, PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
 
 			var proTable = $(".product__details__list table");
 			var prod_COLOR = JSON.stringify(data.prod_COLOR).replace("\"", "").replace("\"", "");

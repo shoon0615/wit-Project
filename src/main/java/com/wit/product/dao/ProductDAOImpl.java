@@ -15,7 +15,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	// �긽�뭹 �젙蹂�
+	// 상품 정보
 	@Override
 	public ProductDTO selectProd(String PROD_SUBCODE) {
 		
@@ -24,7 +24,7 @@ public class ProductDAOImpl implements ProductDAO {
 		return dto;
 	}
 	
-	// �긽�뭹 �씠誘몄� �젙蹂�
+	// 상품 이미지 정보
 	@Override
 	public List<String> selectProdImg() {
 		
@@ -33,7 +33,7 @@ public class ProductDAOImpl implements ProductDAO {
 		return lists;
 	}
 	
-	// �긽�뭹 蹂꾩젏/由щ럭�닔
+	// 상품 별점/리뷰수
 	@Override
 	public HashMap<String, Object> selectProdScore() {
 		
@@ -42,7 +42,7 @@ public class ProductDAOImpl implements ProductDAO {
 		return map;
 	}
 	
-	// �긽�뭹 李� �뿬遺�
+	// 상품 찜 여부
 	@Override
 	public boolean selectProdHeart() {
 		
@@ -53,7 +53,7 @@ public class ProductDAOImpl implements ProductDAO {
 		return true;
 	}
 	
-	// �긽�뭹 �옣諛붽뎄�땲 �뿬遺�
+	// 상품 장바구니 여부
 	@Override
 	public boolean selectProdCart() {
 		
@@ -64,15 +64,15 @@ public class ProductDAOImpl implements ProductDAO {
 		return true;
 	}
 	
-	// �긽�뭹 �궗�씠利�/而щ윭 �뜲�씠�꽣
+	// 상품 사이즈/컬러 데이터
 	@Override
 	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE) {
-		
-		HashMap<String, Object> params = new HashMap<String, Object>();
 
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
 		params.put("PROD_INFO", PROD_INFO);
 		params.put("PROD_SUBCODE", PROD_SUBCODE);
-
+		
 		List<String> lists = sqlSession.selectList("productMapper.selectProdChoice", params);
 		
 		return lists;
