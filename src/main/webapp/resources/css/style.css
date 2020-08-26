@@ -1751,13 +1751,14 @@ ol {
 }
 
 .pro-qty {
-	height: 50px;
-	width: 150px;
+	height: 28px;
+	width: 74px;
 	border: 1px solid #ebebeb;
 	border-radius: 50px;
-	padding: 0 20px;
+	padding: 0 9px;
 	overflow: hidden;
 	display: inline-block;
+	vertical-align: middle;
 }
 
 .pro-qty .qtybtn {
@@ -1776,9 +1777,10 @@ ol {
 	font-weight: 500;
 	border: none;
 	float: left;
-	width: 84px;
+	width: 30px;
 	text-align: center;
-	height: 48px;
+	height: 26px;
+	background-color: #fff;
 }
 
 .product__details__button {
@@ -2094,6 +2096,43 @@ ol {
 .product__details__widget ul li p {
 	margin-bottom: 0;
 	color: #666666;
+}
+
+.product__details__hover li:hover a {
+	background: #ca1515;
+}
+
+.product__details__hover li:hover a span {
+	color: #ffffff;
+	-webkit-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	transform: rotate(360deg);
+}
+
+.product__details__hover li a {
+	font-size: 18px;
+	color: #111111;
+	display: block;
+	height: 45px;
+	width: 45px;
+	background: #ffffff;
+	line-height: 48px;
+	text-align: center;
+	border-radius: 50%;
+	-webkit-transition: all, 0.5s;
+	-o-transition: all, 0.5s;
+	transition: all, 0.5s;
+}
+
+.product__details__hover li a span {
+	position: relative;
+	-webkit-transform: rotate(0);
+	-ms-transform: rotate(0);
+	transform: rotate(0);
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
+	display: inline-block;
 }
 
 .product__details__tab {

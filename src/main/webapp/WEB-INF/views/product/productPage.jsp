@@ -29,6 +29,30 @@
     
     <script src="/wit/resources/js/jquery-3.1.1.js"></script>
     
+    <script type="text/javascript">
+
+	    $(function() {
+	
+	    	$('.prod__qty').on('click', '.qtybtn', function () {
+	    		var $button = $(this);
+	    		var oldValue = $button.parent().find('input').val();
+	    		var oldPrice = $('.product__details__price').text().substring(2);
+	    		if ($button.hasClass('inc')) {
+	    			var newVal = parseFloat(oldValue) + 1;
+	    		} else {
+	    			// Don't allow decrementing below zero
+	    			// 20200818 LSH: 수량 1 미만 안되게 수정(기존 0)
+	    			if (parseFloat(oldValue) > 1) {
+	    				var newVal = parseFloat(oldValue) - 1;
+	    			} else {
+	    				newVal = 1;
+	    			}
+	    		}
+	    	});
+	    });
+
+    </script>
+
 </head>
 
 <body>
@@ -215,31 +239,12 @@
                         </div>
                         <div class="product__details__list">
                         	<table>
-                        		<tr>
-                        			<td class="prod__sub"><span><b>ADIDAS</b><br/>- RED/250</span></td>
-		                        	<td class="prod__qty">
-		                        		<div class="pro-qty" style="height: 28px;width: 74px;padding: 0 9px;vertical-align: middle;">
-		                                	<input type="text" value="1" style="height: 26px;width: 30px;background-color: #fff;" disabled="disabled">
-		                            	</div>
-		                            </td>
-		                            <td class="prod__close"><span class="icon_close"></span></td>
-		                            <td>￦ <fmt:formatNumber type="number">9900</fmt:formatNumber></td>
-		                        </tr>
-		                        <tr>
-                        			<td class="prod__sub"><span><b>ADIDAS</b><br/>- WHITE/260</span></td>
-		                        	<td class="prod__qty">
-		                        		<div class="pro-qty" style="height: 28px;width: 74px;padding: 0 9px;vertical-align: middle;">
-		                                	<input type="text" value="1" style="height: 26px;width: 30px;background-color: #fff;" disabled="disabled">
-		                            	</div>
-		                            </td>
-		                            <td class="prod__close"><span class="icon_close"></span></td>
-		                            <td>￦ 9900</td>
-		                        </tr>
+                        		<tr></tr>
                             </table>
                         </div>
                         <div class="product__details__button">  
                             <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
-                            <ul>
+                            <ul class="product__details__hover">
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                 <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                             </ul>
@@ -554,7 +559,7 @@
     <script src="/wit/resources/js/jquery.slicknav.js"></script>
     <script src="/wit/resources/js/owl.carousel.min.js"></script>
     <script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
-    <script src="/wit/resources/js/main.js"></script>
+    <script src="/wit/resources/js/main.js"></script>	
 </body>
 
 </html>
