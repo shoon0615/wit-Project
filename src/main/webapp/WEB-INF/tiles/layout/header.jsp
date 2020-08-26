@@ -3,37 +3,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 날씨 js  -->
+<script type = "text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type = "text/javascript" src="/wit/resources/js/weather.js"></script>
     <meta charset="UTF-8">
-    <meta name="description" content="Ashion Template">
-    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="description" content="What should I wear Today?">
+    <meta name="keywords" content="WIT, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="/wit/resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/wit/resources/css/style.css" type="text/css">
+    <title>What should I wear Today?</title>
 </head>
-<body>
-header start
+<body onload="weather();">
+
+<!-- 날씨  -->
+<div style="text-align-last: right; padding-right: 34px;">
+<div class="temp">&nbsp;<img class="weatherImg" src=""></div>
+</div>
+<!-- 날씨 끝  -->
+
   <!-- Header Section Begin -->
     <header class="header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="main.action"><img src="/wit/resources/img/logo.png" alt=""></a>
+                        <a href="main.action" style="font: bold; color: black;"><!-- <img src="/wit/resources/img/logo.png" alt=""> -->
+                        What Should wear Today?</a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
@@ -57,6 +52,7 @@ header start
                     </nav>
                 </div>
                 <div class="col-lg-3">
+                
                     <div class="header__right">
                         <div class="header__right__auth">
                             <a href="#">Login</a>
@@ -80,17 +76,7 @@ header start
         </div>
     </header>
     <!-- Header Section End -->
-header finish
-    <!-- Js Plugins -->
-<script src="/wit/resources/js/jquery-3.3.1.min.js"></script>
-<script src="/wit/resources/js/bootstrap.min.js"></script>
-<script src="/wit/resources/js/jquery.magnific-popup.min.js"></script>
-<script src="/wit/resources/js/jquery-ui.min.js"></script>
-<script src="/wit/resources/js/mixitup.min.js"></script>
-<script src="/wit/resources/js/jquery.countdown.min.js"></script>
-<script src="/wit/resources/js/jquery.slicknav.js"></script>
-<script src="/wit/resources/js/owl.carousel.min.js"></script>
-<script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
-<script src="/wit/resources/js/main.js"></script>
+헤더 끝 
+
 </body>
 </html>
