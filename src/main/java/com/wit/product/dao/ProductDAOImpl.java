@@ -26,9 +26,9 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	// 상품 이미지 정보
 	@Override
-	public List<String> selectProdImg() {
+	public List<String> selectProdImg(String PROD_SUBCODE) {
 		
-		List<String> lists = sqlSession.selectList("productMapper.selectProdImg");
+		List<String> lists = sqlSession.selectList("productMapper.selectProdImg", PROD_SUBCODE);
 		
 		return lists;
 	}
