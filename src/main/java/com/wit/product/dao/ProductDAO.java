@@ -12,6 +12,6 @@ public interface ProductDAO {
 	public HashMap<String, Object> selectProdScore();
 	public boolean selectProdHeart();
 	public boolean selectProdCart();
-	public List<String> selectProdChoice(String PROD_INFO);
+	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE);
 	public ProductDTO choiceProd(ProductDTO dto);
 }

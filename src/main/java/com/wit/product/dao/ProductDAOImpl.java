@@ -66,9 +66,14 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	// 상품 사이즈/컬러 데이터
 	@Override
-	public List<String> selectProdChoice(String PROD_INFO) {
+	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE) {
 
-		List<String> lists = sqlSession.selectList("productMapper.selectProdChoice", PROD_INFO);
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("PROD_INFO", PROD_INFO);
+		params.put("PROD_SUBCODE", PROD_SUBCODE);
+		
+		List<String> lists = sqlSession.selectList("productMapper.selectProdChoice", params);
 		
 		return lists;
 	}

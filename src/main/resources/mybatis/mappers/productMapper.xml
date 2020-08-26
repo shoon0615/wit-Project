@@ -38,14 +38,14 @@
 </select>
 
 <!-- 상품 사이즈/컬러 데이터 -->
-<!-- List<String> 으로 처리해보고 이상있을시 Product 데이터 부분이라 필요하면 DTO 에 입력 후 이용 -->
 <!-- Group By Case When 이용시 쿼리박스는 문제없으나 mapper에선 에러발생하여 하위쿼리로 생성 -->
 <!-- 사이즈에 대한 우선순위가 없어 정렬에서 처리 -->
-<select id="selectProdChoice" parameterType="String" resultType="String">
+<select id="selectProdChoice" parameterType="hashMap" resultType="String">
 	SELECT 	A.CHOICE
 	FROM	(
 		SELECT 	LOWER(CASE #{PROD_INFO} WHEN 'C' THEN PROD_COLOR WHEN 'S' THEN PROD_SIZE END) AS CHOICE 
 		FROM 	PRODUCT
+		WHERE	PROD_SUBCODE = #{PROD_SUBCODE}
 	) A
 	GROUP BY A.CHOICE
 	ORDER BY CASE A.CHOICE WHEN 'XS' THEN '1' WHEN 'S' THEN '2' WHEN 'M' THEN '3' 
