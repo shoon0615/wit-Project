@@ -7,5 +7,6 @@
     <typeAlias type="com.wit.custom.dto.CustomDTO" alias="customDTO"/>
     <typeAlias type="com.wit.category.dto.CategoryDTO" alias="categoryDTO"/>
     <typeAlias type="com.wit.main.dto.MainDTO" alias="mainDTO"/>
+    <typeAlias type="com.wit.product.dto.ProductDTO" alias="productDTO"/>
   </typeAliases>
 </configuration>

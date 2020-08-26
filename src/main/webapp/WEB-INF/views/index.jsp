@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="/wit/resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/style.css" type="text/css">
+    
+    <script type="text/javascript" src="/wit/resources/js/main.js"></script>	
 </head>
 
 <body>
@@ -690,7 +692,7 @@
 <script src="/wit/resources/js/jquery.slicknav.js"></script>
 <script src="/wit/resources/js/owl.carousel.min.js"></script>
 <script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
-<script src="/wit/resources/js/main.js"></script>
+
 </body>
 
 </html>
