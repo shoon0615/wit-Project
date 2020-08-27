@@ -1,6 +1,8 @@
 package com.wit.product.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -84,5 +86,68 @@ public class ProductDAOImpl implements ProductDAO {
 		ProductDTO dto_ch = sqlSession.selectOne("productMapper.choiceProd", dto);
 		
 		return dto_ch;
+	}
+	
+	@Override
+	public List<String> selectBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO) {
+
+		List<String> lists = new ArrayList<String>();
+		
+		Iterator<String> it = PROD_INFO.iterator();
+		
+		while(it.hasNext()) {
+			// String selectInfo = it.next();
+			String[] info = it.next().split("-");
+			
+			ProductDTO dto = new ProductDTO();
+			
+			dto.setPROD_SUBCODE(PROD_SUBCODE);
+			dto.setPROD_COLOR(info[0]);
+			dto.setPROD_SIZE(info[1]);	
+			
+			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);
+			
+			HashMap<String, Object> params = new HashMap<String, Object>();
+
+			params.put("USER_ID", USER_ID);
+			params.put("PROD_CODE", PROD_CODE);
+			
+			if(sqlSession.selectOne("productMapper.selectBag", params) != null) {
+				// lists.add(selectInfo.replaceAll("-", ", "));
+				lists.add(PROD_SUBCODE + ", " + info[0] + ", " + info[1]);
+			} 
+		}
+		
+		return lists;
+	}
+
+	@Override
+	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO) {
+		
+		Iterator<String> it = PROD_INFO.iterator();
+		
+		while(it.hasNext()) {
+			String[] info = it.next().split("-");
+			
+			ProductDTO dto = new ProductDTO();
+			
+			dto.setPROD_SUBCODE(PROD_SUBCODE);
+			dto.setPROD_COLOR(info[0]);
+			dto.setPROD_SIZE(info[1]);	
+			
+			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);
+			
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			
+			params.put("USER_ID", USER_ID);
+			params.put("PROD_CODE", PROD_CODE);
+			params.put("CART_QTY", info[2]);
+			
+			if(sqlSession.selectOne("productMapper.selectBag", params) == null) {
+				sqlSession.insert("productMapper.insertBag", params);
+			} else {
+				sqlSession.update("productMapper.updateBag", params);
+			}
+		}
 	}
 }

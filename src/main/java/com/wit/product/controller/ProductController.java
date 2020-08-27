@@ -3,6 +3,9 @@ package com.wit.product.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,7 +58,7 @@ public class ProductController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/choiceProd", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/choiceProd", method = RequestMethod.POST)
 	public @ResponseBody ProductDTO choiceProd(String PROD_SUBCODE, String PROD_COLOR, String PROD_SIZE) {
 
 		ProductDTO dto = new ProductDTO();
@@ -66,6 +70,36 @@ public class ProductController {
 		dto = dao.choiceProd(dto);
 
 		return dto;
+	}
+	
+	@RequestMapping(value = "/selectBag", method = RequestMethod.POST)
+	public @ResponseBody List<String> selectBag(HttpServletRequest req,
+										  String PROD_SUBCODE, 
+										  @RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
+		
+		HttpSession session = req.getSession();
+
+		List<String> lists = dao.selectBag("user", PROD_SUBCODE, PROD_INFO);
+		
+		return lists;
+	}
+	
+	@RequestMapping(value = "/insertBag", method = RequestMethod.POST)
+	public @ResponseBody String insertBag(HttpServletRequest req,
+										  String PROD_SUBCODE, 
+										  @RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
+		
+		HttpSession session = req.getSession();
+
+		dao.insertBag("user", PROD_SUBCODE, PROD_INFO);
+		
+		return "";
+	}
+	
+	@RequestMapping(value = "/shopcart", method = RequestMethod.GET)
+	public String shopcart() {		
+		
+		return "shop-cart";
 	}
 	
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET)

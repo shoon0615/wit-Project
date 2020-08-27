@@ -14,4 +14,6 @@ public interface ProductDAO {
 	public boolean selectProdCart();
 	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE);
 	public ProductDTO choiceProd(ProductDTO dto);
+	public List<String> selectBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
+	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
 }

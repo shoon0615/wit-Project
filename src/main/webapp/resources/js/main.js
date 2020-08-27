@@ -293,7 +293,7 @@ Created: Colorib
 		var checkedSubcode = $('.product__details__text').find('h3').text();
     	var checkedColor = $(':radio[name=color__radio]:checked').attr('id').toUpperCase();
 		var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim().toUpperCase();
-
+		
 		$.post("choiceProd.action", {PROD_SUBCODE:checkedSubcode, PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
 
 			var proTable = $(".product__details__list table");
@@ -305,15 +305,15 @@ Created: Colorib
 		    // $(".product__details__list table").append($('<tr/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
 		    // $(".product__details__list table").find("tr:last").append('<td class="prod__qty"><div class="pro-qty"><input type="text" value="1" disabled="disabled"/></div></td>');
 		    
-		    if($('#' + prod_COLOR + prod_SIZE).length != 0) {
-		    	var $button = $('#' + prod_COLOR + prod_SIZE).closest("tr").find("div.pro-qty");
+		    if($('#' + prod_COLOR + '-' + prod_SIZE).length != 0) {
+		    	var $button = $('#' + prod_COLOR + '-' + prod_SIZE).closest("tr").find("div.pro-qty");
 				var oldValue = $button.parent().find('input').val();
-				var oldPrice = $('#' + prod_COLOR + prod_SIZE).closest("tr").find("td.prod__price").children("span").text();
+				var oldPrice = $('#' + prod_COLOR + '-' + prod_SIZE).closest("tr").find("td.prod__price").children("span").text();
 				oldValue = parseFloat(oldValue) + 1;
-				$('#' + prod_COLOR + prod_SIZE).closest("tr").find("td.prod__price").children("span").text(parseFloat(oldPrice) + parseFloat(prod_PRICE));
+				$('#' + prod_COLOR + '-' + prod_SIZE).closest("tr").find("td.prod__price").children("span").text(parseFloat(oldPrice) + parseFloat(prod_PRICE));
 				$button.parent().find('input').val(oldValue);
 		    } else {
-			    proTable.append('<tr><td class="prod__sub"><span id="' + prod_COLOR + prod_SIZE + '"><b>' 
+			    proTable.append('<tr><td class="prod__sub"><span id="' + prod_COLOR + '-' + prod_SIZE + '"><b>' 
 			    	+ prod_SUBCODE + '</b><br/>- ' 
 			    	+ prod_COLOR + '/' + prod_SIZE + '</span></td>');
 			    proTable.find("tr:last").append('<td class="prod__qty">');	
@@ -329,6 +329,42 @@ Created: Colorib
     
     $('.product__details__list').on('click', '.icon_close', function () {
     	$(this).closest("tr").remove();
+    });
+    
+    $('.bag-btn').on('click', function () {
+    	
+    	var test = [];
+    	
+    	$(".product__details__list table").find("tr").each(function(i){
+    		test.push($(this).find("td.prod__sub").children("span").attr("id") 
+    		+ '-' + $(this).find("div.pro-qty").children("input").val());
+    	});
+    	
+    	test.splice(0, 1);
+    	
+    	if(test.length == 0) {
+    		alert("장바구니에 담을 내역이 없습니다!");
+    	} else {
+    		var checkedSubcode = $('.product__details__text').find('h3').text();
+    		
+    		$.post("selectBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:test}, function(data){
+    			if(data != "") {
+	    			var textim = "이미 장바구니에 존재하는 상품이 있습니다.\r\n";
+					for(var i in data) {
+						textim += "[" + data[i] + "]\r\n";
+					}	
+					textim += "그대로 진행하시겠습니까?"
+					var ok = confirm(textim);
+				}
+				
+				if(data == "" || ok == true) {
+					$.post("insertBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:test}, function(data){
+						alert("장바구니에 담겼습니다!");
+						window.location.href = "shopcart.action";
+					});
+				}
+			});
+    	}
     });
     
     $(".product__big__img").on('mouseenter', function () {
