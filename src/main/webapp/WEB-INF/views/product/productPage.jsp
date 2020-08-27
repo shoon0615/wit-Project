@@ -245,8 +245,8 @@
                         <div class="product__details__button">  
                             <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
                             <ul class="product__details__hover">
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a class="heart-btn" style="cursor: pointer;"><span class="icon_heart_alt"></span></a></li>
+                                <li><a class="bag-btn" style="cursor: pointer;"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                     </div>

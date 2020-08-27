@@ -86,4 +86,23 @@
 	WHERE 	A.PROD_CODE = B.PROD_CODE
 </select>
 
+<select id="selectBag" parameterType="hashMap" resultType="String">
+	SELECT 	PROD_CODE
+	FROM 	CART
+	WHERE 	USER_ID = #{USER_ID}
+	AND 	PROD_CODE = #{PROD_CODE}
+</select>
+
+<update id="updateBag" parameterType="hashMap">
+	UPDATE 	CART
+	SET		CART_QTY = CART_QTY + #{CART_QTY}
+	WHERE 	USER_ID = #{USER_ID}
+	AND 	PROD_CODE = #{PROD_CODE}
+</update>
+
+<insert id="insertBag" parameterType="hashMap">
+	INSERT INTO CART(USER_ID, PROD_CODE, CART_QTY, CART_CREATED)
+	VALUES (#{USER_ID}, #{PROD_CODE}, #{CART_QTY}, SYSDATE)
+</insert>
+
 </mapper>
