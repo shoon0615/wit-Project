@@ -292,8 +292,8 @@ Created: Colorib
 		
 		var checkedSubcode = $('.product__details__text').find('h3').text();
     	var checkedColor = $(':radio[name=color__radio]:checked').attr('id').toUpperCase();
-		var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim();
-		
+		var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim().toUpperCase();
+
 		$.post("choiceProd.action", {PROD_SUBCODE:checkedSubcode, PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
 
 			var proTable = $(".product__details__list table");
