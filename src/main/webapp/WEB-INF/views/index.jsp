@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% request.setCharacterEncoding("UTF-8");
+   String cp = request.getContextPath();  %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -87,7 +91,18 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
+                        
+                        	 <c:if test="${kakao eq null and customInfo eq null}">
+						        <a href="<%=cp %>/custom/login">
+						            Login
+						        </a>
+						    </c:if>
+						    <c:if test="${kakao ne null or customInfo ne null}">
+						        <a href="<%=cp %>/custom/logout">
+						            Logout
+						        </a>
+						    </c:if>
+						                                                       
                             <a href="#">Register</a>
                         </div>
                         <ul class="header__right__widget">
