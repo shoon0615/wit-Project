@@ -231,21 +231,24 @@ Created: Colorib
     });
     */
     
-    // 20200826 LSH: 리스트에 추가된 버튼만 조작할수있도록 수정
+    // 20200826 LSH: 리스트에 추가된 버튼만 조작할수있도록 수정(0829 총금액 추가)
 	$('.product__details__list').on('click', '.qtybtn', function () {
 		var $button = $(this);
 		var oldValue = $button.parent().find('input').val();
 		var oldPrice = $('.product__details__price').text().substring(2).replace(",", "");
+		var totalAmount = $(".product__details__amount").children("span");	
 
 		if ($button.hasClass('inc')) {
 			var newVal = parseFloat(oldValue) + 1;
 			var newPrc = parseFloat($button.closest("tr").find("td.prod__price").children("span").text()) + parseFloat(oldPrice);
+			totalAmount.text(parseFloat(totalAmount.text()) + parseFloat(oldPrice));
 		} else {
 			// Don't allow decrementing below zero
 			// 20200818 LSH: 수량 1 미만 안되게 수정(기존 0)
 			if (parseFloat(oldValue) > 1) {
 				var newVal = parseFloat(oldValue) - 1;
 				var newPrc = parseFloat($button.closest("tr").find("td.prod__price").children("span").text()) - parseFloat(oldPrice);
+				totalAmount.text(parseFloat(totalAmount.text()) - parseFloat(oldPrice));
 			} else {
 				newVal = 1;
 				newPrc = parseFloat(oldPrice);
@@ -324,10 +327,22 @@ Created: Colorib
 				proTable.find("tr:last").append('<td class="prod__close"><span class="icon_close"></span></td>');
 				proTable.find("tr:last").append('<td class="prod__price">￦ <span>' + prod_PRICE + '</span></td></tr>');
 			}
+			
+			// 20200829 LSH: 총금액 추가
+			var totalAmount = $(".product__details__amount").children("span");
+			totalAmount.text(parseFloat(totalAmount.text()) + parseFloat(prod_PRICE));
 		}, "json");
     }
     
+    $(".product__details__amount").on('click', function () {
+ 		totalInsert();
+    });
+    
     $('.product__details__list').on('click', '.icon_close', function () {
+    	var totalAmount = $(".product__details__amount").children("span");
+    	var oldAmount = $(this).closest("tr").find("td.prod__price").children("span").text();
+    	
+    	totalAmount.text(parseFloat(totalAmount.text()) - parseFloat(oldAmount));
     	$(this).closest("tr").remove();
     });
     
