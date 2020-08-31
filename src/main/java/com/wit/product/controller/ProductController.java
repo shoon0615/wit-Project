@@ -33,7 +33,7 @@ public class ProductController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main() {		
 		// log.debug("AAA");
-		return "product-details";
+		return "blog";
 	}
 	
 	@RequestMapping(value = "/productDetail", method = RequestMethod.GET)

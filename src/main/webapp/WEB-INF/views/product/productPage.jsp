@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%	request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
@@ -28,30 +29,6 @@
     <link rel="stylesheet" href="/wit/resources/css/style.css" type="text/css">
     
     <script src="/wit/resources/js/jquery-3.1.1.js"></script>
-    
-    <script type="text/javascript">
-
-	    $(function() {
-	
-	    	$('.prod__qty').on('click', '.qtybtn', function () {
-	    		var $button = $(this);
-	    		var oldValue = $button.parent().find('input').val();
-	    		var oldPrice = $('.product__details__price').text().substring(2);
-	    		if ($button.hasClass('inc')) {
-	    			var newVal = parseFloat(oldValue) + 1;
-	    		} else {
-	    			// Don't allow decrementing below zero
-	    			// 20200818 LSH: 수량 1 미만 안되게 수정(기존 0)
-	    			if (parseFloat(oldValue) > 1) {
-	    				var newVal = parseFloat(oldValue) - 1;
-	    			} else {
-	    				newVal = 1;
-	    			}
-	    		}
-	    	});
-	    });
-
-    </script>
 
 </head>
 
@@ -194,7 +171,7 @@
                         </div>
                         <!-- <div class="product__details__price">$ 75.0 <span>$ 83.0</span></div> -->
                         <div class="product__details__price">￦ <fmt:formatNumber value="${dto.PROD_PRICE }" type="number"/></div>
-                        <p>${dto.PROD_CONTENTS }</p>
+                        
                         <div class="product__details__widget">
                             <ul>
                                 <!-- 재고 내용 주석(Stock)
@@ -242,6 +219,10 @@
                         		<tr></tr>
                             </table>
                         </div>
+                        <div class="product__details__amount">
+                        	<h6><span>Total Amount: </span></h6>
+                        	￦ <span>0</span>
+                        </div>
                         <div class="product__details__button">  
                             <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
                             <ul class="product__details__hover">
@@ -266,17 +247,25 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <h6>Description</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                quis, sem.</p>
+                            	<div class="tab-img" style="text-align: -webkit-center;">
+                            		<c:forEach items="${PROD_IMG }" var="img">
+                            			<img src="/wit/resources/img/product/details/${img }" alt="" 
+                            				style="display: block;width: 580px;height: 549px;margin-bottom: 30px;"/>
+                            				
+                            		</c:forEach>
+                            	</div>
+                            	<div class="tab-cross" style="text-align: -webkit-center;">
+                            		<table>
+                            			<tr>
+		                            		<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
+		                            			<c:if test="${status.index%2 == 0 }"></tr><tr></c:if>
+		                            			<td><img src="/wit/resources/img/product/details/${img }" alt=""
+		                            				style="width: 520px;height: 549px;margin: 10px 15px 30px 15px;"/></td>
+		                            		</c:forEach>
+	                            		</tr>
+                            		</table>
+                            	</div>
+                                <p>${dto.PROD_CONTENTS }</p>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <h6>Specification</h6>

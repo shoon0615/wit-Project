@@ -2098,6 +2098,19 @@ ol {
 	color: #666666;
 }
 
+.product__details__amount {
+	margin-top: 25px;
+}
+
+.product__details__amount h6 {
+	font-weight: 600;
+	display: contents;
+}
+
+.product__details__amount h6 span {
+	padding-right: 90px;
+}
+
 .product__details__hover li:hover a {
 	background: #ca1515;
 }
@@ -2198,7 +2211,10 @@ ol {
 }
 
 .tab-content .tab-pane p:last-child {
+	font-size: 17px;
+	text-align: center;
 	margin-bottom: 0;
+	padding-top: 30px;
 }
 
 .related__title h5 {
