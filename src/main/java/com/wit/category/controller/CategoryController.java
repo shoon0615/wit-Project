@@ -1,6 +1,5 @@
 package com.wit.category.controller;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -35,9 +34,23 @@ public class CategoryController {
 	MyUtil myUtil;
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
-	public String shop(HttpServletRequest request) throws Exception {
+	public String shop(HttpServletRequest request, String category1, String category2) throws Exception {
 
-		return "shop";
+		request.setAttribute("category1_list", dao.getCategory(""));
+		request.setAttribute("category1", category1);
+		request.setAttribute("category2", category2);	
+		
+		return ".tiles/category/shop";
+	}
+	
+	@RequestMapping(value = "/category2", method = RequestMethod.POST)
+	public String category2(HttpServletRequest request) throws Exception {
+
+		String code_form = request.getParameter("code_form");
+	
+		request.setAttribute("category2_list", dao.getCategory(code_form));
+
+		return "category/category2";
 	}
 
 	@RequestMapping(value = "/productList", method = RequestMethod.POST)
@@ -71,7 +84,6 @@ public class CategoryController {
             size += (String)iter.next()+",";
         }
         size = size.replaceAll(",$", "");
-		System.out.print(size);
         
 		// 페이징
 		int currentPage = 1;
@@ -136,7 +148,7 @@ public class CategoryController {
 		// request.setAttribute("imagePath", imagePath);
 		// request.setAttribute("articleUrl", articleUrl);
 
-		return "productList";
+		return "category/productList";
 	}
 
 	@RequestMapping(value = "/categorySize", method = RequestMethod.POST)
@@ -145,8 +157,9 @@ public class CategoryController {
 		String category1 = request.getParameter("category1");
 		
 		request.setAttribute("category1", category1);
+		request.setAttribute("categorySize", dao.getCategorySize(category1));
 
-		return "categorySize";
+		return "category/categorySize";
 	}
 	
 }

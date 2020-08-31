@@ -98,6 +98,28 @@ public class CategoryDAOImpl implements CategoryDAO {
 		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getHighViewOrderProductList",hmap);
 		return list;
 	}
+
+	@Override
+	public List<String> getCategory(String code_form) {
+		List<String> list = sqlSession.selectList("categoryMapper.getCategory",code_form);
+		return list;
+	}
 	
+	@Override
+	public List<String> getCategorySize(String code_form) {
+		
+		if(code_form.equals("1")) {			// TOP
+			code_form = "TOP";
+		} else if(code_form.equals("2")) {	// BOTTOM
+			code_form = "TOP_BOTTOM";
+		} else if(code_form.equals("3")) {	// SHOES
+			code_form = "SHOES";
+		} else {							// OPS, ACC
+			code_form = "SIZE";
+		} 		
+		
+		List<String> list = sqlSession.selectList("categoryMapper.getCategorySize",code_form);
+		return list;
+	}
 	
 }

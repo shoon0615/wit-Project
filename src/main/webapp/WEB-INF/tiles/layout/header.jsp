@@ -34,7 +34,7 @@
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="main.action">Home</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath }/category/shop.action">Home</a></li>
                             <li><a href="#">Women's</a></li>
                             <li><a href="#">Men's</a></li>
                             <li><a href="shop.action">Shop</a></li>

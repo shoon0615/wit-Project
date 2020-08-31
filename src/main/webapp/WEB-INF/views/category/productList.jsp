@@ -4,34 +4,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<!-- Js Plugins -->
-<script src="/wit/resources/js/jquery-3.3.1.min.js"></script>
-<script src="/wit/resources/js/bootstrap.min.js"></script>
-<script src="/wit/resources/js/jquery.magnific-popup.min.js"></script>
-<script src="/wit/resources/js/jquery-ui.min.js"></script>
-<script src="/wit/resources/js/mixitup.min.js"></script>
-<script src="/wit/resources/js/jquery.countdown.min.js"></script>
-<script src="/wit/resources/js/jquery.slicknav.js"></script>
-<script src="/wit/resources/js/owl.carousel.min.js"></script>
-<script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
-<script src="/wit/resources/js/main.js"></script>
-<!-- Css Styles -->
-<link rel="stylesheet" href="/wit/resources/css/bootstrap.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/font-awesome.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/elegant-icons.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/jquery-ui.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/magnific-popup.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/owl.carousel.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/slicknav.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/wit/resources/css/style.css"
-	type="text/css">
+<script type="text/javascript">
+	$('.set-bg').each(function () {
+        var bg = $(this).data('setbg');
+        $(this).css('background-image', 'url(' + bg + ')');
+    });
+</script>
+
 <c:forEach var="dto" items="${list}">
 	<div class="col-lg-4 col-md-6">
 		<div class="product__item">

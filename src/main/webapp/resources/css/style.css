@@ -1599,7 +1599,7 @@ ol {
 	font-weight: 600;
 }
 
-.pagination__option a:hover {
+.pagination__option a.paging__option:hover {
 	background: #0d0d0d;
 	border-color: #0d0d0d;
 	color: #ffffff;

@@ -60,12 +60,13 @@ public class MyUtil {
 			
 			if(page == currentPage){				
 				
-				sb.append("<font color=\"Fuchsia\">" + page + "</font>&nbsp;");				
+				sb.append("<a><font color=\"Fuchsia\">" + page + "</font></a>&nbsp;");			
 			
 			}else{
 				
 				sb.append("<a href='javascript:void(0);'"
-						+ "onclick='productList(\""+ type + "\",\"" + page +"\");'>"
+						+ "onclick='productList(\""+ type + "\",\"" + page +"\");'"
+						+ "class='paging__option'>"
 						+ page + "</a>&nbsp;");
 				
 			}

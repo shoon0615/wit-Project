@@ -33,7 +33,7 @@ public class ProductController {
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main() {		
 		// log.debug("AAA");
-		return "blog";
+		return "product/shop";
 	}
 	
 	@RequestMapping(value = "/productDetail", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class ProductController {
 		mav.addObject("PROD_COLOR", PROD_COLOR);
 		mav.addObject("PROD_SIZE", PROD_SIZE);
 		
-		mav.setViewName("product/productPage");
+		mav.setViewName(".tiles/product/productPage");
 		
 		return mav;
 	}
