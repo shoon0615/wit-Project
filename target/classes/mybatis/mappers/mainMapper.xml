@@ -4,9 +4,12 @@
 
 <mapper namespace="mainMapper">
 
-<!-- 주문표 개수 -->
-<select id="countCart" parameterType="String" resultType="String">
-	select nvl(sum(cqty), 0) from cart where USERID=#{id}
+<!-- 고객 취향 추천 리스트 -->
+<select id="selectUserStyle" parameterType="hashMap" resultType="mainDTO">
+	select c.user_Id,c.user_Style,p.prod_subcode,p.prod_name,p.prod_price,pi.prod_img
+	from custom c,product_info p,product_img pi
+	where c.user_Id=#{user_Id} and c.user_Style=#{user_Style} 
+	and c.user_Style=p.prod_Style and pi.prod_subCode=p.prod_subCode and pi.prod_mainImg='1'
 </select>
 
 </mapper>
