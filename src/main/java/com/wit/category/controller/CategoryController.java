@@ -34,14 +34,7 @@ public class CategoryController {
 	MyUtil myUtil;
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
-<<<<<<< HEAD
-	public String shop(HttpServletRequest request, String category1, String category2) throws Exception {
-=======
 	public String shop(HttpServletRequest request,String category1,String category2) throws Exception {
-		
-		request.setAttribute("category1", category1);
-		request.setAttribute("category2", category2);
->>>>>>> refs/remotes/origin/Hyegyeong
 
 		request.setAttribute("category1_list", dao.getCategory(""));
 		request.setAttribute("category1", category1);
@@ -52,7 +45,6 @@ public class CategoryController {
 	
 	@RequestMapping(value = "/category2", method = RequestMethod.POST)
 	public String category2(HttpServletRequest request) throws Exception {
-
 		String code_form = request.getParameter("code_form");
 	
 		request.setAttribute("category2_list", dao.getCategory(code_form));
@@ -75,22 +67,33 @@ public class CategoryController {
 		String type = request.getParameter("searchType");// 정렬 타입(all/가격↑↓/조회수↑↓/리뷰↑↓/별점↑↓)
 		String category1 = request.getParameter("category1");
 		String category2 = request.getParameter("category2");
+		String sort = request.getParameter("searchSort");
 		
 		String param = "";
 		param = "category1=" + category1;
 		param += "&category2=" + category2;
 		param += "&type=" + type;
+		param += "&sort=" + sort;
 		
 		hMap.put("category1", category1);
 		hMap.put("category2", category2);
 		
+		if(sort == null || sort.equals("0")) {
+			hMap.put("sort", "asc");
+		} else {
+			hMap.put("sort", "desc");
+		}
+		
 		//체크한 사이즈를 예를 들어 220,250 의 모양으로 만들어 SQL 조건문 중 IN 안에 넣음
 		Iterator<String> iter = sizeArray.iterator();
-        String size = null;
-        while(iter.hasNext()==true){
+        String size = "";
+        while(iter.hasNext()){
             size += (String)iter.next()+",";
         }
+        System.out.println("A: " + size);
         size = size.replaceAll(",$", "");
+        System.out.println("B: " + size);
+        hMap.put("size", size);
         
 		// 페이징
 		int currentPage = 1;
@@ -124,23 +127,15 @@ public class CategoryController {
 		 * 
 		 * String imagePath = "/gyp/sfiles/product"; // 이미지 경로
 		 */
-		if (type.equals("가격↑")) {
-			list = dao.getExpensiveProductList(hMap);
-		} else if (type.equals("가격↓")) {
-			list = dao.getCheapProductList(hMap);
-		} else if (type.equals("조회수↑")) {
-			list = dao.getHighViewOrderProductList(hMap);
-		} else if (type.equals("조회수↓")) {
-			list = dao.getLowViewOrderProductList(hMap);
-		} else if (type.equals("리뷰↑")) {
-			list = dao.getManyReviewCountProductList(hMap);
-		} else if (type.equals("리뷰↓")) {
-			list = dao.getLittleReviewCountProductList(hMap);
-		} else if (type.equals("별점↑")) {
-			list = dao.getHighStarRatingProductList(hMap);
-		} else if (type.equals("별점↓")) {
-			list = dao.getLowStarRatingProductList(hMap);
-		} else if (type.equals("all")) {
+		if (type.equals("priceSort")) {
+			list = dao.getPriceProductList(hMap);
+		} else if (type.equals("viewSort")) {
+			list = dao.getViewOrderProductList(hMap);
+		} else if (type.equals("reviewSort")) {
+			list = dao.getReviewCountProductList(hMap);
+		} else if (type.equals("starSort")) {
+			list = dao.getStarRatingProductList(hMap);
+		} else {
 			list = dao.getAllProductList(hMap);
 		}
 

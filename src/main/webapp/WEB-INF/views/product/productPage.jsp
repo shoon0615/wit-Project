@@ -109,7 +109,7 @@
                         		<c:forEach begin="1" end="${map.AVG }">
 	                            	<i class="fa fa-star"></i>
 	                            </c:forEach>
-	                            <c:forEach begin="0" end="${4 - map.AVG }">
+	                            <c:forEach begin="1" end="${5 - map.AVG }">
 	                            	<span class="fa fa-star"></span>
 	                            </c:forEach>
 	                            <span>( ${map.CNT } reviews )</span>

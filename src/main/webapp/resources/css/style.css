@@ -622,9 +622,15 @@ ol {
 }
 
 .trend__item__text .rating span {
+<<<<<<< HEAD
 	font-size: 10px;
 	color: #b1b0b0;
 	margin-right: -4px;
+=======
+   font-size: 10px;
+   color: #b1b0b0;
+   margin-right: -4px;
+>>>>>>> refs/remotes/origin/Sanghoon
 }
 
 .trend__item__text .rating i:last-child {
@@ -1298,9 +1304,15 @@ ol {
 }
 
 .product__item__text .rating span {
+<<<<<<< HEAD
 	font-size: 10px;
 	color: #b1b0b0;
 	margin-right: -4px;
+=======
+   font-size: 10px;
+   color: #b1b0b0;
+   margin-right: -4px;
+>>>>>>> refs/remotes/origin/Sanghoon
 }
 
 .product__item__text .rating i:last-child {

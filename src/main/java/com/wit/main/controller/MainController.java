@@ -62,6 +62,8 @@ public class MainController {
 		hMap.put("start", 1);
 		hMap.put("end", 3);
 		
+		hMap.put("sort", "desc");
+		
 		if(dto.getUser_Id()!=null || !dto.getUser_Id().equals("")) {
 			
 			//취향추천
@@ -79,9 +81,9 @@ public class MainController {
 		req.setAttribute("lists", lists);
 		
 		//조회순,리뷰순,별점순		
-		List<CategoryDTO> hot_lists = categorydao.getHighViewOrderProductList(hMap);
-		List<CategoryDTO> reCount_lists = categorydao.getManyReviewCountProductList(hMap);
-		List<CategoryDTO> reScore_lists = categorydao.getHighStarRatingProductList(hMap);
+		List<CategoryDTO> hot_lists = categorydao.getViewOrderProductList(hMap);
+		List<CategoryDTO> reCount_lists = categorydao.getReviewCountProductList(hMap);
+		List<CategoryDTO> reScore_lists = categorydao.getStarRatingProductList(hMap);
 
 		req.setAttribute("hot_lists", hot_lists);
 		req.setAttribute("reCount_lists", reCount_lists);

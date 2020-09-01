@@ -17,37 +17,38 @@
 	select rownum rnum, data.* from(
 	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
  	FROM PRODUCT_INFO where prod_category1 like '%'||#{category1}||'%' and prod_category2 like '%'||#{category2}||'%') data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end}
-	]]>
+ 	where rnum between #{start} and #{end} 
 </select>
 
-<!-- 가격 높은순 리스트 출력  -->
-<select id="getExpensiveProductList" parameterType="hashMap" resultType="categoryDTO">
+<!-- 가격순 리스트 출력  -->
+<select id="getPriceProductList" parameterType="hashMap" resultType="categoryDTO">
+	select * 
+	from(
+			select rownum rnum, data.* 
+			from(
+					select a.PROD_SUBCODE,a.PROD_CONTENTS,a.PROD_PRICE,a.PROD_CATEGORY1,a.PROD_CATEGORY2,a.PROD_STYLE,a.PROD_COUNT,a.PROD_GENDER
+				 	FROM PRODUCT_INFO a, PRODUCT b 
+				 	where a.prod_subcode = b.prod_subcode
+				 	and a.prod_category1 like '%'|| #{category1} ||'%'
+					and a.prod_category2 like '%'|| #{category2} ||'%' 
+					and b.prod_size in (#{size}) ORDER BY PROD_PRICE ${sort}
+				) data
+		)
+ 	where rnum between #{start} and #{end} 
+</select>
+
+<!-- 조회순 리스트 출력  -->
+<select id="getViewOrderProductList" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
 	select rownum rnum, data.* from(
 	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
  	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_PRICE DESC) data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end}
-	]]>
+	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_COUNT ${sort}) data)
+ 	where rnum between #{start} and #{end} 
 </select>
 
-<!-- 가격 낮은순 리스트 출력  -->
-<select id="getCheapProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
- 	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_PRICE ASC) data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end} 
-	]]>
-</select>
-
-<!-- 많은 조회순 리스트 출력  -->
-<select id="getHighViewOrderProductList" parameterType="hashMap" resultType="categoryDTO">
+<!-- 조회순 리스트 출력  -->
+<select id="getViewOrderProductList2" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
 	select rownum rnum, data.* from(
 	select p.PROD_SUBCODE,p.PROD_PRICE,r.avgscore,p.prod_count
@@ -58,62 +59,11 @@
  	group by p.prod_subcode ) r 
  	where r.prod_subcode=p.prod_subcode and prod_category1 like '%'|| #{category1} ||'%'
 	and prod_category2 like '%'|| #{category2} ||'%' ) data)
-	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end} ORDER BY PROD_COUNT DESC
-	]]>
+	where rnum between #{start} and #{end} ORDER BY PROD_COUNT ${sort}
 </select>
 
-<!-- 적은 조회순 리스트 출력  -->
-<select id="getLowViewOrderProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
- 	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_COUNT ASC) data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end} 
-	]]>
-</select>
-
-<!-- 많은 리뷰순 리스트 출력  -->
-<select id="getManyReviewCountProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-		select rownum rnum, data.* 
-		from
-			(
-				select pi.prod_subcode,pi.prod_price,r.avgscore
-	 			FROM product_info pi,
-	 				(
-	 					select b.prod_subcode,nvl(round(avg(a.review_score),1),0) avgscore,sum(case nvl(a.prod_code, ' ') when ' ' then 0 else 1 end) as recount
-						from review a, product b 
-						where a.prod_code(+)=b.prod_code
-						group by b.prod_subcode
-						order by recount desc
-	 				) r
-	 	 		where r.prod_subcode=pi.prod_subcode 
-	 	 		and prod_category1 like '%'|| #{category1} ||'%'
-				and prod_category2 like '%'|| #{category2} ||'%'
-			) data
-		)
-	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end}
-	]]>
-</select>
-
-<!-- 적은 리뷰순 리스트 출력  -->
-<select id="getLittleReviewCountProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
- 	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%') data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end} ORDER BY PROD_COUNT ASC
-	]]>
-</select>
-
-<!-- 높은 별점순 리스트 출력  -->
-<select id="getHighStarRatingProductList" parameterType="hashMap" resultType="categoryDTO">
+<!-- 별점순 리스트 출력  -->
+<select id="getStarRatingProductList" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
 		select rownum rnum, data.* 
 		from
@@ -125,28 +75,37 @@
 						from review a, product b 
 						where a.prod_code(+)=b.prod_code
 						group by b.prod_subcode
-						order by rescore desc
+						order by rescore ${sort}
 	 				) r
 	 	 		where r.prod_subcode=pi.prod_subcode 
 	 	 		and prod_category1 like '%'|| #{category1} ||'%'
 				and prod_category2 like '%'|| #{category2} ||'%'
 			) data
 		)
-	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end}
-	]]>
+	where rnum between #{start} and #{end} 
 </select>
 
-<!-- 낮은 별점순 리스트 출력  -->
-<select id="getLowStarRatingProductList" parameterType="hashMap" resultType="categoryDTO">
+<!-- 리뷰순 리스트 출력  -->
+<select id="getReviewCountProductList" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
-	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
- 	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%') data)
- 	<![CDATA[
-	where rnum>=#{start} and rnum<=#{end} ORDER BY PROD_COUNT ASC
-	]]>
+		select rownum rnum, data.* 
+		from
+			(
+				select pi.prod_subcode,pi.prod_price,r.avgscore
+	 			FROM product_info pi,
+	 				(
+	 					select b.prod_subcode,nvl(round(avg(a.review_score),1),0) avgscore,sum(case nvl(a.prod_code, ' ') when ' ' then 0 else 1 end) as recount
+						from review a, product b 
+						where a.prod_code(+)=b.prod_code
+						group by b.prod_subcode
+						order by recount ${sort}
+	 				) r
+	 	 		where r.prod_subcode=pi.prod_subcode 
+	 	 		and prod_category1 like '%'|| #{category1} ||'%'
+				and prod_category2 like '%'|| #{category2} ||'%'
+			) data
+		)
+	where rnum between #{start} and #{end} 
 </select>
 
 <!-- 카테고리 리스트 출력  -->
