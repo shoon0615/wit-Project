@@ -53,7 +53,7 @@ public class ProductController {
 		mav.addObject("PROD_COLOR", PROD_COLOR);
 		mav.addObject("PROD_SIZE", PROD_SIZE);
 		
-		mav.setViewName("product/productPage");
+		mav.setViewName(".tiles/product/productPage");
 		
 		return mav;
 	}

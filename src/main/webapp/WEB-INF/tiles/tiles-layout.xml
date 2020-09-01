@@ -18,7 +18,7 @@
 	<!-- 계속 바뀌는 바디부분의 주소값의 {1}번은 상속받은 타일즈(고정) {2}번은 컨트롤러에서 지정해준 리턴값 주소를 타게함  -->
 	<!-- name을 .tiles로 주었기때문에 컨트롤러상에서 리턴값에도 타일즈를 입력해줘야함  -->
 	<definition name=".tiles/*/*" extends="layout-tiles">
-		<put-attribute name="content" value="/WEB-INF/{1}/{2}.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 </tiles-definitions>
 

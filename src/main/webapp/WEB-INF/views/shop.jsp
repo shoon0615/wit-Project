@@ -458,8 +458,10 @@
 
 	//DOM 트리를 생성한 후
 	$(document).ready(function () {
-		productList('all','1','TOP','','');
-		categorySize('TOP');
+		alert("${category1}");
+		alert("${category2}");
+		productList('all','1',"${category1}","${category2}",'');
+		categorySize("${category1}");
 	});
 	
 	//모든 게 로드된 후
@@ -469,6 +471,7 @@
 	
 	//상품 리스트 호출 함수(정렬,페이지번호,대분류,중분류,사이즈)
 	function productList(type,page,cate1,cate2,target) {
+		alert(cate1);
 	var url = "<%=cp%>/category/productList.action";
 	//사이즈 선택이 있으면
 	if(target){

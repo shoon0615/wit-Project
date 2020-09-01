@@ -26,6 +26,7 @@ public class MainDTO {
 	private String prod_Color;
 	private String prod_SubCode;
 	private String prod_Created;
+	private int avgscore;
 	
 	//product_info
 	
@@ -36,6 +37,14 @@ public class MainDTO {
 	private String prod_Gender;
 	private int prod_Count;
 	
+	
+	
+	public int getAvgscore() {
+		return avgscore;
+	}
+	public void setAvgscore(int avgscore) {
+		this.avgscore = avgscore;
+	}
 	//product_img
 	private String prod_Img;
 	

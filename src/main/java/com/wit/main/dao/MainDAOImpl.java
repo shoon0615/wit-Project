@@ -1,11 +1,12 @@
 package com.wit.main.dao;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.wit.main.dto.MainDTO;
 
 @Repository("mainDAO")
@@ -15,16 +16,11 @@ public class MainDAOImpl implements MainDAO {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<MainDTO> selectUserStyle(String user_Id, String user_Style) {
+	//취향추천리스트
+	public List<MainDTO> selectUserStyle(Map<String, Object> hmap) {
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("user_Id", user_Id);
-		map.put("user_Style", user_Style);
-		
-		List<MainDTO> lists = sqlSession.selectList("mainMapper.selectUserStyle",map);
+		List<MainDTO> lists = sqlSession.selectList("mainMapper.selectUserStyle",hmap);
 		return lists;
 	}
-
-	
 	
 }

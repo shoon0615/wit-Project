@@ -35,7 +35,10 @@ public class CategoryController {
 	MyUtil myUtil;
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
-	public String shop(HttpServletRequest request) throws Exception {
+	public String shop(HttpServletRequest request,String category1,String category2) throws Exception {
+		
+		request.setAttribute("category1", category1);
+		request.setAttribute("category2", category2);
 
 		return "shop";
 	}
