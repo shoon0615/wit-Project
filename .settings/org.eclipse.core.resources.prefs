@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/wit/category/controller/CategoryController.java=UTF-8
+encoding//src/main/java/com/wit/category/dao/CategoryDAO.java=UTF-8
+encoding//src/main/java/com/wit/category/dao/CategoryDAOImpl.java=UTF-8
+encoding//src/main/java/com/wit/category/dto/CategoryDTO.java=UTF-8
 encoding//src/main/java/com/wit/product/dao/ProductDAOImpl.java=UTF-8
