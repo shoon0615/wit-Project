@@ -29,82 +29,50 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return list;
 	}
 	
-	//높은 가격
+	//가격순
 	@Override
-	public List<CategoryDTO> getExpensiveProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getExpensiveProductList",hmap);
+	public List<CategoryDTO> getPriceProductList(Map<String, Object> hmap) {
+		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getPriceProductList",hmap);
 		return list;
 	}
 	
-	//낮은 가격
+	//조회순
 	@Override
-	public List<CategoryDTO> getCheapProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getCheapProductList",hmap);
+	public List<CategoryDTO> getViewOrderProductList(Map<String, Object> hmap) {
+		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getViewOrderProductList",hmap);
+		return list;
+	}
+	
+	//별점순
+	@Override
+	public List<CategoryDTO> getStarRatingProductList(Map<String, Object> hmap) {
+		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getStarRatingProductList",hmap);
 		return list;
 	}
 
-	//새로운 상품
+	//리뷰순
+	@Override
+	public List<CategoryDTO> getReviewCountProductList(Map<String, Object> hmap) {
+		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getReviewCountProductList",hmap);
+		return list;
+	}
+	
+	//신상품순
 	@Override
 	public List<CategoryDTO> getNewProductList(Map<String, Object> hmap) {
 		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getNewProductList",hmap);
 		return list;
 	}
-	
-	//오래된 상품
-	@Override
-	public List<CategoryDTO> getOldProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getOldProductList",hmap);
-		return list;
-	}
-	
-	//별점 높은
-	@Override
-	public List<CategoryDTO> getHighStarRatingProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getHighStarRatingProductList",hmap);
-		return list;
-	}
-	
-	//별점 낮은
-	@Override
-	public List<CategoryDTO> getLowStarRatingProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getLowStarRatingProductList",hmap);
-		return list;
-	}
-	
-	//리뷰 적은
-	@Override
-	public List<CategoryDTO> getLittleReviewCountProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getLittleReviewCountProductList",hmap);
-		return list;
-	}
 
-	//리뷰 많은
+	//카테고리 리스트 출력
 	@Override
-	public List<CategoryDTO> getManyReviewCountProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getManyReviewCountProductList",hmap);
+	public List<Map<String, Object>> getCategory(String code_form) {
+		
+		List<Map<String, Object>> list = sqlSession.selectList("categoryMapper.getCategory",code_form);
 		return list;
 	}
 	
-	//조회수 낮은
-	@Override
-	public List<CategoryDTO> getLowViewOrderProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getLowViewOrderProductList",hmap);
-		return list;
-	}
-
-	//조회수 높은
-	@Override
-	public List<CategoryDTO> getHighViewOrderProductList(Map<String, Object> hmap) {
-		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getHighViewOrderProductList",hmap);
-		return list;
-	}
-
-	@Override
-	public List<String> getCategory(String code_form) {
-		List<String> list = sqlSession.selectList("categoryMapper.getCategory",code_form);
-		return list;
-	}
-	
+	//카테고리 사이즈 리스트 출력
 	@Override
 	public List<String> getCategorySize(String code_form) {
 		

@@ -621,6 +621,12 @@ ol {
 	margin-right: -4px;
 }
 
+.trend__item__text .rating span {
+   font-size: 10px;
+   color: #b1b0b0;
+   margin-right: -4px;
+}
+
 .trend__item__text .rating i:last-child {
 	margin-right: 0;
 }
@@ -1289,6 +1295,12 @@ ol {
 	font-size: 10px;
 	color: #e3c01c;
 	margin-right: -4px;
+}
+
+.product__item__text .rating span {
+   font-size: 10px;
+   color: #b1b0b0;
+   margin-right: -4px;
 }
 
 .product__item__text .rating i:last-child {

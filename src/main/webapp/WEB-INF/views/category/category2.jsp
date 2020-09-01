@@ -6,6 +6,6 @@
 %>
 <ul>
 	<c:forEach var="list" items="${category2_list}">
-		<li><a style="cursor:pointer" onclick="productList('all','1','TOP','SLV')">${list }</a></li>
+		<li><a id="${list.CODE }" style="cursor:pointer">${list.CODE_NAME }</a></li>
 	</c:forEach>
 </ul>
