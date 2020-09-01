@@ -238,7 +238,6 @@
 			var url = "<%=cp%>/category/productList.action";
 			//사이즈 선택이 있으면
 			if(target == "sizeArr") {
-				console.log("AA");
 				// 사이즈 선택한 상태로 정렬클릭시 사이즈 그대로 유지한 채로 배열 넘김
 			} else if(target) {
 				if(sizeArr.indexOf("0") != -1) {		// 첫 사이즈 선택시 0 제거
