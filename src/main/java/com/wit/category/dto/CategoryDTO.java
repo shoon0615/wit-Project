@@ -10,6 +10,15 @@ public class CategoryDTO {
 	private String prod_style;   // 상품 설명(내용)
 	private int prod_count;
 	private String prod_gender;
+	private int avgscore; //평균별점
+	
+	
+	public int getAvgscore() {
+		return avgscore;
+	}
+	public void setAvgscore(int avgscore) {
+		this.avgscore = avgscore;
+	}
 	public String getProd_subcode() {
 		return prod_subcode;
 	}
