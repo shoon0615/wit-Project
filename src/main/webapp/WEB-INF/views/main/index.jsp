@@ -229,7 +229,7 @@
                     <c:forEach var="dto" items="${hot_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/${dto.prod_img }" alt="">
+                            <img src="/wit/resources/img/product/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6>${dto.prod_subcode }</h6>

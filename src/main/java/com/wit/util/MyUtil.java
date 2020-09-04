@@ -69,11 +69,9 @@ public class MyUtil {
 				
 				sb.append("<a class='paging__option'"
 						+ "onclick=\"productList('"
-						+ type.get("type") + "','"
 						+ page + "','"
 						+ type.get("category1") + "','"
 						+ type.get("category2") + "','"
-						+ type.get("sort_data") + "','"
 						+ "sizeArr')\""
 						+ "style='cursor:pointer'>"
 						+ page + "</a>&nbsp;");

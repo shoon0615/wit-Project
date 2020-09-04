@@ -226,12 +226,34 @@
     	var sizeArr = new Array();	//선택한 사이즈를 담아줄 배열
     	var priceChk = 0;			//금액스크롤바 마우스 이벤트
 		
-		//정렬 버튼 초기화
-		function searchTypeRest() {
+		//정렬 버튼 초기화 함수
+		function searchTypeReset() {
 			$('.sortNav input').each(function(i){
 	    		$(this).val($(this).val().replace("↓", "").replace("↑", ""));
 	    	});
 			$('.sortNav input').attr("data-sort", "");
+		}
+
+		//금액바 초기화 함수
+		function pagePriceReset(cate1,cate2) {
+			var param = "category1=" + cate1
+					+ "&category2=" + cate2;
+			/*
+			$.post(url,{category1 : cate1, category2 : cate2},function(args){
+				$('#minamount').val('￦ ' + args.MIN);
+				$('#maxamount').val('￦ ' + args.MAX);
+			});
+			*/
+			$.ajax({
+				type: 'POST',
+	        	url: "<%=cp%>/category/categoryPrice.action",
+	       		data: param,
+	        	async: false,
+	        	success: function(args) {
+	            	$('#minamount').val('￦ ' + args.MIN);
+	   				$('#maxamount').val('￦ ' + args.MAX);
+	            }
+			});
 		}
 
 		//상품 리스트 호출 함수(정렬,페이지번호,대분류,중분류,사이즈)
@@ -262,20 +284,27 @@
 				sizeArr.push("0");
 			}
 
+			//정렬한 경우, 정렬 데이터를 받아옴
 			$('.sortNav input').each(function(i){
 	    		if($(this).attr("data-sort") != "") {
 		    		type = $(this).attr("id");
 					sort = $(this).attr("data-sort");
 			    }
 	    	});
-		
+
+			var minA = $('#minamount').val().replace("￦", "").trim();
+			var maxA = $('#maxamount').val().replace("￦", "").trim();
+			console.log(minA);
 			$.post(url,{
-				searchType : type,	//정렬 타입(all/가격↑↓/조회수↑↓/리뷰↑↓/별점↑↓)
+				searchType : type,	//상품 리스트(all/가격/조회수/리뷰/별점)
 				pageNum : page,		//페이지 넘버
 				category1 : cate1,	//카테고리1
 				category2 : cate2,	//카테고리2
-				searchSort : sort,
-				sizeArray : sizeArr},function(args){
+				searchSort : sort,	//정렬 타입(↑↓)
+				sizeArray : sizeArr,//사이즈 배열(선택없으면 0)
+				minAmount : minA,	//금액바 최소 금액
+				maxAmount : maxA,	//금액바 최대 금액
+				},function(args){
 				$('#productDiv').html(args);
 			});
 
@@ -288,17 +317,19 @@
 		//DOM 트리를 생성한 후
 		$(document).ready(function () {
 			productList('1','${category1}','${category2}');
-			//categorySize('${category1}');
 
 			//카테고리 항목 클릭 시 정렬 설정 초기화 및 카테고리 리스트 호출
 			$('.card-heading').click(function(){
-				searchTypeRest();    
+				searchTypeReset();    
 		
 				var url = "<%=cp%>/category/category2.action";
 				var id = $(this).children().attr("id");   
 				var card = $(this).parent();
 				var code_form = card.find('.collapse').attr("data-index");
 
+				// 금액바 초기화
+				pagePriceReset(id, '');
+				
 				// 해당 카테고리 상품 리스트 호출
 				productList('1',id,'');	
 
@@ -313,15 +344,24 @@
 					$('#sizeList').html(args);
 				});
 
+				// 상품별 다른 사이즈 호출
+				url = "<%=cp%>/category/categorySize.action";
+				$.post(url,{category1 : code_form},function(args){
+					$('#sizeList').html(args);
+				});
+
 				$('#sizeList').find('input').prop("checked", false); //체크박스 초기화
 			});
 
 			// 카테고리 중분류 클릭 시 
 			$('.card-body').on('click','a',function(){
-				searchTypeRest();
+				searchTypeReset();
 				
 				var category1 = $(this).closest('.card').children('.card-heading').children().attr("id");
 				var category2 = $(this).attr("id");
+
+				// 금액바 초기화
+				pagePriceReset(category1,category2);
 				
 				// 해당 카테고리 상품 리스트 호출
 				productList('1',category1,category2);
@@ -336,7 +376,7 @@
 				var category2 = $('#sizeList').attr("data-cate2"); 			//카테고리2
 				var sort = $(this).attr("data-sort"); 						//버튼의 정렬값	
 
-				searchTypeRest();											//정렬 버튼 초기화
+				searchTypeReset();											//정렬 버튼 초기화
 				
 				//data-sort에 따라 정렬 방식 전환
 				if (sort != "0") {											//처음 클릭 시 무조건 ↓				
@@ -375,7 +415,9 @@
 			// 금액 스크롤바 마우스 클릭 끝났을 시
 			$('html').mouseup(function(){
 				if(priceChk == 1) {
-					alert("A");
+					var category1 = $('#sizeList').attr("data-cate1"); 			//카테고리1
+					var category2 = $('#sizeList').attr("data-cate2"); 			//카테고리2
+					productList('1',category1,category2,"sizeArr"); 
 					priceChk = 0;
 				}
 			});

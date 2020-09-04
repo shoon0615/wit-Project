@@ -600,8 +600,21 @@ ol {
 	margin-right: 25px;
 }
 
+.trend__item__pic img {
+	/* If there is no img, a blank img is show */
+	width: 90px;
+	height: 90px;
+	
+	/* If there is no img, no img is show */
+	/* 
+	max-width: 90px;
+	max-height: 90px; 
+	*/
+}
+
 .trend__item__text {
 	overflow: hidden;
+	margin-top: 10px;
 }
 
 .trend__item__text h6 {
