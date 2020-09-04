@@ -186,12 +186,13 @@ Created: Colorib
     max: maxPrice,
     values: [minPrice, maxPrice],
     slide: function (event, ui) {
-        minamount.val('$' + ui.values[0]);
-        maxamount.val('$' + ui.values[1]);
+    	// 20200903 LSH: 슬라이드바 100단위로 수정되게 변경
+        minamount.val('￦ ' + (Math.round(ui.values[0]/100)*100));
+        maxamount.val('￦ ' + (Math.round(ui.values[1]/100)*100));
         }
     });
-    minamount.val('$' + rangeSlider.slider("values", 0));
-    maxamount.val('$' + rangeSlider.slider("values", 1));
+    minamount.val('￦ ' + rangeSlider.slider("values", 0));
+    maxamount.val('￦ ' + rangeSlider.slider("values", 1));
 
     /*------------------
 		Single Product

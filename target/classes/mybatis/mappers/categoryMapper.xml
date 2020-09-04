@@ -22,47 +22,37 @@
 
 <!-- 가격순 리스트 출력  -->
 <select id="getPriceProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * 
+	select data.* 
 	from(
-			select rownum rnum, data.* 
-			from(
-					select a.PROD_SUBCODE,a.PROD_CONTENTS,a.PROD_PRICE,a.PROD_CATEGORY1,a.PROD_CATEGORY2,a.PROD_STYLE,a.PROD_COUNT,a.PROD_GENDER
-				 	FROM PRODUCT_INFO a, PRODUCT b 
-				 	where a.prod_subcode = b.prod_subcode
-				 	and a.prod_category1 like '%'|| #{category1} ||'%'
-					and a.prod_category2 like '%'|| #{category2} ||'%' 
-					and b.prod_size in (#{size}) ORDER BY PROD_PRICE ${sort}
-				) data
-		)
- 	where rnum between #{start} and #{end} 
-</select>
-
-<!-- 조회순 리스트 출력  -->
-<select id="getViewOrderProductList" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
- 	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_COUNT ${sort}) data)
- 	where rnum between #{start} and #{end} 
+			select a.PROD_SUBCODE,a.PROD_PRICE
+			FROM PRODUCT_INFO a, PRODUCT b 
+			where a.prod_subcode = b.prod_subcode
+			and a.prod_category1 like '%'|| #{category1} ||'%'
+			and a.prod_category2 like '%'|| #{category2} ||'%' 
+			and b.prod_size ${sizeChk} (${size}) ORDER BY PROD_PRICE ${sort}
+		) data
+	where rownum between #{start} and #{end} 
 </select>
 
 <!-- 조회순 리스트 출력  -->
 <select id="getViewOrderProductList2" parameterType="hashMap" resultType="categoryDTO">
-	select * from(
-	select rownum rnum, data.* from(
-	select p.PROD_SUBCODE,p.PROD_PRICE,i.prod_img,r.avgscore,p.prod_count
- 	FROM PRODUCT_INFO p,
- 	(select p.prod_subcode,sum(nvl(pi.prod_count,0)) prod_count,nvl(round(avg(r.review_score),1),0) avgscore 
- 	from review r,product p,product_info pi
- 	where p.prod_code=r.prod_code(+)
- 	group by p.prod_subcode ) r,
- 	product_img i
- 	where r.prod_subcode=p.prod_subcode 
- 	and	  i.prod_subcode=p.prod_subcode
- 	and prod_category1 like '%'|| #{category1} ||'%'
-	and prod_category2 like '%'|| #{category2} ||'%' ) data)
-	where rnum between #{start} and #{end} ORDER BY PROD_COUNT ${sort}
+	select data.* 
+	from(
+			select p.PROD_SUBCODE,p.PROD_PRICE,i.prod_img,r.avgscore,p.prod_count
+		 	FROM PRODUCT_INFO p,
+			 	(
+				 	select p.prod_subcode,sum(nvl(pi.prod_count,0)) prod_count,nvl(round(avg(r.review_score),1),0) avgscore 
+				 	from review r,product p,product_info pi
+				 	where p.prod_code=r.prod_code(+)
+				 	group by p.prod_subcode 
+				 ) r,
+			 	product_img i
+			 where r.prod_subcode=p.prod_subcode 
+			 and i.prod_subcode=p.prod_subcode
+			 and prod_category1 like '%'|| #{category1} ||'%'
+			 and prod_category2 like '%'|| #{category2} ||'%' 
+		) data
+	where rownum between #{start} and #{end} ORDER BY PROD_COUNT ${sort}
 </select>
 
 <!-- 별점순 리스트 출력  -->
@@ -117,12 +107,20 @@
 
 <!-- 카테고리 리스트 출력  -->
 <select id="getCategory" parameterType="String" resultType="hashMap">
+	select *
+	from (
+			select code, code_name
+			from common_code
+			where code_form like 'CATEGORY' || case nvl(#{code_form}, ' ') when ' ' then '_' else #{code_form} || '_1' end
+			order by code_form
+		 )
+	union all
 	select code, code_name
 	from common_code
-	where code_form like 'CATEGORY' || case nvl(#{code_form}, ' ') when ' ' then '_' else #{code_form} || '_1' end
+	where code = case nvl(#{code_form}, ' ') when '2' then 'TRN' else '' end
 </select>
 
-<!-- 카테고리 리스트 출력  -->
+<!-- 카테고리 사이즈 리스트 출력  -->
 <select id="getCategorySize" parameterType="String" resultType="String">
 	select code 
 	from common_code
@@ -131,23 +129,30 @@
 
 <!-- 판매순 정렬  -->
 <select id="getOrderCount" parameterType="hashMap" resultType="categoryDTO">
-select 	*
-from	(
-			select 	b.prod_subcode,e.prod_img,d.prod_price,
-					nvl(round(avg(a.review_score),1),0) avgscore,
-					count(c.prod_code) as ordercnt
-			from 	review a,product b,order_detail c,product_info d,product_img e
-			where 	c.order_code = a.order_code(+)
-			and 	b.prod_code = c.prod_code(+)
-			and 	b.prod_subcode = d.prod_subcode
-			and 	d.prod_subcode = e.prod_subcode(+)
-			and 	e.prod_mainimg='1'
-			and 	d.prod_category1 like '%'|| #{category1} ||'%'
-			and 	d.prod_category2 like '%'|| #{category2} ||'%'
-			group by b.prod_subcode,e.prod_img,d.prod_price
-			order by ordercnt ${sort}
-		) data
-where rownum between #{start} and #{end}
+	select 	*
+	from	(
+				select 	b.prod_subcode,e.prod_img,d.prod_price,
+						nvl(round(avg(a.review_score),1),0) avgscore,
+						count(c.prod_code) as ordercnt
+				from 	review a,product b,order_detail c,product_info d,product_img e
+				where 	c.order_code = a.order_code(+)
+				and 	b.prod_code = c.prod_code(+)
+				and 	b.prod_subcode = d.prod_subcode
+				and 	d.prod_subcode = e.prod_subcode(+)
+				and 	e.prod_mainimg='1'
+				and 	d.prod_category1 like '%'|| #{category1} ||'%'
+				and 	d.prod_category2 like '%'|| #{category2} ||'%'
+				group by b.prod_subcode,e.prod_img,d.prod_price
+				order by ordercnt ${sort}
+			) data
+	where rownum between #{start} and #{end}
+</select>
+
+<!-- 상품 리스트 금액범위 출력  -->
+<select id="getProductPrice" parameterType="hashMap" resultType="hashMap">
+	select 	min(a.PROD_PRICE) min, max(a.PROD_PRICE) max
+	FROM 	PRODUCT_INFO a, PRODUCT b
+	where 	a.prod_subcode = b.prod_subcode
 </select>
 
 </mapper>

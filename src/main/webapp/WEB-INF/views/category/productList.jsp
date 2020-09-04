@@ -9,6 +9,11 @@
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
+
+	// 페이지 번호 클릭 시
+	$('.pagination__option').on('click',function(){
+      
+	});
 </script>
 
 <c:forEach var="dto" items="${list}">
@@ -29,7 +34,7 @@
 			</div>
 			<div class="product__item__text">
 				<h6>
-					<a href="#">${dto.prod_contents}</a>
+					<a href="#">${dto.prod_subcode}</a>
 				</h6>
 				<div class="rating">
 					<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i

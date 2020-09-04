@@ -1467,7 +1467,7 @@ ol {
 
 .filter-range-wrap .range-slider .price-input:after {
 	position: absolute;
-	left: 81px;
+	left: 135px;
 	top: 12px;
 	height: 1px;
 	width: 5px;
@@ -1478,7 +1478,7 @@ ol {
 .filter-range-wrap .range-slider .price-input input {
 	font-size: 16px;
 	color: #0d0d0d;
-	max-width: 16%;
+	max-width: 35%;
 	border: none;
 }
 
@@ -1609,6 +1609,7 @@ ol {
 
 .pagination__option a i {
 	font-weight: 600;
+	line-height: 38px;
 }
 
 .pagination__option a.paging__option:hover {

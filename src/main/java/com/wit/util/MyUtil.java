@@ -1,5 +1,7 @@
 ﻿package com.wit.util;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 @Repository("myUtil")
@@ -24,7 +26,7 @@ public class MyUtil {
 	//currentPage :현재 표시할 페이지
 	//totalPage : 전체 페이지수
 	//listUrl : 링크를 설정할 url
-	public String categoryPageIndexList(int currentPage, int totalPage, String listUrl, String type){
+	public String categoryPageIndexList(int currentPage, int totalPage, String listUrl, Map<String, Object> type){
 		
 		int numPerBlock = 5; //1◀이전 6 7 8 9 10 다음▶11(6-10까지 표시되는 페이지 갯수)
 		int currentPageSetup; //표시할 첫 페이지(6)의 – 1 해준 값(5,10,15,20...)
@@ -50,8 +52,9 @@ public class MyUtil {
 		//◀이전
 		if(totalPage > numPerBlock && currentPageSetup > 0){
 						
-			sb.append("<a href='javascript:void(0);'"
-					+ "onclick='productList(\""+ type + "\",\"" + currentPageSetup +");'><i class=\"fa fa-angle-left\"></i></a>&nbsp;");
+			sb.append("<a class='paging__option'"
+					+ "style='cursor:pointer'><i class=\"fa fa-angle-left\"></i></a>&nbsp;");
+			
 		}
 		//바로가기 페이지
 		page = currentPageSetup + 1;
@@ -64,10 +67,22 @@ public class MyUtil {
 			
 			}else{
 				
+				sb.append("<a class='paging__option'"
+						+ "onclick=\"productList('"
+						+ type.get("type") + "','"
+						+ page + "','"
+						+ type.get("category1") + "','"
+						+ type.get("category2") + "','"
+						+ type.get("sort_data") + "','"
+						+ "sizeArr')\""
+						+ "style='cursor:pointer'>"
+						+ page + "</a>&nbsp;");
+				/*
 				sb.append("<a href='javascript:void(0);'"
 						+ "onclick='productList(\""+ type + "\",\"" + page +"\");'"
 						+ "class='paging__option'>"
 						+ page + "</a>&nbsp;");
+				*/		
 				
 			}
 			
@@ -78,11 +93,10 @@ public class MyUtil {
 		//다음▶
 		if(totalPage - currentPageSetup > numPerBlock){
 						
-			sb.append("<a href='javascript:void(0);'"
-					+ "onclick='productList(\""+ type + "\",\"" + page +");'><i class=\"fa fa-angle-right\"></i></a>&nbsp;");
+			sb.append("<a class='paging__option'"
+					+ "style='cursor:pointer'><i class=\"fa fa-angle-right\"></i></a>&nbsp;");
 			
 		}
-		
 		
 		return sb.toString();
 		
