@@ -22,16 +22,21 @@
 
 <!-- 가격순 리스트 출력  -->
 <select id="getPriceProductList" parameterType="hashMap" resultType="categoryDTO">
-	select data.* 
+	select * 
 	from (
-			select a.PROD_SUBCODE,a.PROD_PRICE
-			FROM PRODUCT_INFO a, PRODUCT b 
-			where a.prod_subcode = b.prod_subcode
-			and a.prod_category1 like '%'|| #{category1} ||'%'
-			and a.prod_category2 like '%'|| #{category2} ||'%' 
-			and b.prod_size ${sizeChk} (${size}) ORDER BY PROD_PRICE ${sort}
-		) data
-	where rownum between #{start} and #{end} 
+			select rownum rnum, data.* 
+			from (
+					select a.PROD_SUBCODE,a.PROD_PRICE
+					FROM PRODUCT_INFO a, PRODUCT b 
+					where a.prod_subcode = b.prod_subcode
+					and a.prod_category1 like '%'|| #{category1} ||'%'
+					and a.prod_category2 like '%'|| #{category2} ||'%' 
+					and b.prod_size ${sizeChk} (${size})
+					and a.prod_price between #{minAmount} and #{maxAmount} 
+					ORDER BY PROD_PRICE ${sort}
+				 ) data
+		 )
+	where rnum between #{start} and #{end} 
 </select>
 
 <!-- 조회순 리스트 출력  -->
@@ -123,22 +128,25 @@
 <!-- 판매순 정렬  -->
 <select id="getOrderCount" parameterType="hashMap" resultType="categoryDTO">
 	select 	*
-	from	(
-				select 	b.prod_subcode,e.prod_img,d.prod_price,
-						nvl(round(avg(a.review_score),1),0) avgscore,
-						count(c.prod_code) as ordercnt
-				from 	review a,product b,order_detail c,product_info d,product_img e
-				where 	c.order_code = a.order_code(+)
-				and 	b.prod_code = c.prod_code(+)
-				and 	b.prod_subcode = d.prod_subcode
-				and 	d.prod_subcode = e.prod_subcode(+)
-				and 	e.prod_mainimg='1'
-				and 	d.prod_category1 like '%'|| #{category1} ||'%'
-				and 	d.prod_category2 like '%'|| #{category2} ||'%'
-				group by b.prod_subcode,e.prod_img,d.prod_price
-				order by ordercnt ${sort}
-			) data
-	where rownum between #{start} and #{end}
+	from 	(
+				select 	rownum rnum, data.*
+				from	(
+							select 	b.prod_subcode,e.prod_img,d.prod_price,
+									nvl(round(avg(a.review_score),1),0) avgscore,
+									count(c.prod_code) as ordercnt
+							from 	review a,product b,order_detail c,product_info d,product_img e
+							where 	c.order_code = a.order_code(+)
+							and 	b.prod_code = c.prod_code(+)
+							and 	b.prod_subcode = d.prod_subcode
+							and 	d.prod_subcode = e.prod_subcode(+)
+							and 	e.prod_mainimg='1'
+							and 	d.prod_category1 like '%'|| #{category1} ||'%'
+							and 	d.prod_category2 like '%'|| #{category2} ||'%'
+							group by b.prod_subcode,e.prod_img,d.prod_price
+							order by ordercnt ${sort}
+						) data
+			)
+	where rnum between #{start} and #{end}
 </select>
 
 <!-- 상품 리스트 금액범위 출력  -->
@@ -146,6 +154,8 @@
 	select 	min(a.PROD_PRICE) min, max(a.PROD_PRICE) max
 	FROM 	PRODUCT_INFO a, PRODUCT b
 	where 	a.prod_subcode = b.prod_subcode
+	and 	a.prod_category1 like '%'|| #{category1} ||'%'
+	and 	a.prod_category2 like '%'|| #{category2} ||'%'
 </select>
 
 </mapper>

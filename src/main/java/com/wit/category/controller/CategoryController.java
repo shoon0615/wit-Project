@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wit.category.dao.CategoryDAO;
 import com.wit.category.dto.CategoryDTO;
@@ -38,10 +39,20 @@ public class CategoryController {
 		
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
+		// 테스트 에러 방지로 임시 제작, 완성시 삭제
+		if(category1 == null) {
+			category1 = "";
+		}
+		if(category2 == null) {
+			category2 = "";
+		}
+		
+		hMap.put("category1", category1);
+		hMap.put("category2", category2);
+		
 		request.setAttribute("category1_list", dao.getCategory(""));
 		request.setAttribute("category1", category1);
-		request.setAttribute("category2", category2);
-		
+		request.setAttribute("category2", category2);		
 		request.setAttribute("pagePrice", dao.getProductPrice(hMap));
 		
 		return ".tiles/category/shop";
@@ -72,10 +83,14 @@ public class CategoryController {
 		String category1 = request.getParameter("category1");	// 카테고리 대분류
 		String category2 = request.getParameter("category2");	// 카테고리 중분류
 		String sort = request.getParameter("searchSort");		// 정렬 타입(asc/desc)
-		
-		// 카테고리 추가
+		int minAmount = Integer.parseInt(request.getParameter("minAmount"));	// 금액바 최소 금액
+		int maxAmount = Integer.parseInt(request.getParameter("maxAmount"));	// 금액바 최대 금액
+		System.out.println("min: " + minAmount + ", max: " + maxAmount);
+		// 카테고리 및 금액 추가
 		hMap.put("category1", category1);
 		hMap.put("category2", category2);
+		hMap.put("minAmount", minAmount);
+		hMap.put("maxAmount", maxAmount);
 		
 		// 페이지 번호의 onclick 데이터로 인한 추가
 		hMap.put("type", type);
@@ -97,7 +112,7 @@ public class CategoryController {
             size += (String)iter.next()+"',";
         }
         size = size.replaceAll(",$", "");
-        
+
         if(size.equals("'0'")) {
         	hMap.put("size", "'%%'");
         	hMap.put("sizeChk", "like");
@@ -134,6 +149,8 @@ public class CategoryController {
 		 * 
 		 * String imagePath = "/gyp/sfiles/product"; // 이미지 경로
 		 */
+		
+		
 		
 		// 상품 리스트 호출
 		if (type.equals("priceSort")) {
@@ -174,6 +191,19 @@ public class CategoryController {
 		request.setAttribute("categorySize", dao.getCategorySize(category1));
 
 		return "category/categorySize";
+	}
+	
+	@RequestMapping(value = "/categoryPrice", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Integer> categoryPrice(String category1,String category2) {
+		
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		
+		hMap.put("category1", category1);
+		hMap.put("category2", category2);
+		
+		Map<String, Integer> map = dao.getProductPrice(hMap);
+
+		return map;
 	}
 	
 }
