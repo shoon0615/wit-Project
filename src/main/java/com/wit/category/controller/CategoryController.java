@@ -35,10 +35,14 @@ public class CategoryController {
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
 	public String shop(HttpServletRequest request,String category1,String category2) throws Exception {
-
+		
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		
 		request.setAttribute("category1_list", dao.getCategory(""));
 		request.setAttribute("category1", category1);
-		request.setAttribute("category2", category2);	
+		request.setAttribute("category2", category2);
+		
+		request.setAttribute("pagePrice", dao.getProductPrice(hMap));
 		
 		return ".tiles/category/shop";
 	}
@@ -63,39 +67,46 @@ public class CategoryController {
 		// 맵 객체 추가
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		// 넘어오는값
-		String pageNum = request.getParameter("pageNum");
-		String type = request.getParameter("searchType");// 정렬 타입(all/가격↑↓/조회수↑↓/리뷰↑↓/별점↑↓)
-		String category1 = request.getParameter("category1");
-		String category2 = request.getParameter("category2");
-		String sort = request.getParameter("searchSort");
+		String type = request.getParameter("searchType");		// 상품 리스트(all/가격/조회수/리뷰/별점)
+		String pageNum = request.getParameter("pageNum");		// 페이지 넘버
+		String category1 = request.getParameter("category1");	// 카테고리 대분류
+		String category2 = request.getParameter("category2");	// 카테고리 중분류
+		String sort = request.getParameter("searchSort");		// 정렬 타입(asc/desc)
 		
-		String param = "";
-		param = "category1=" + category1;
-		param += "&category2=" + category2;
-		param += "&type=" + type;
-		param += "&sort=" + sort;
-		
+		// 카테고리 추가
 		hMap.put("category1", category1);
 		hMap.put("category2", category2);
 		
+		// 페이지 번호의 onclick 데이터로 인한 추가
+		hMap.put("type", type);
+		hMap.put("sort_data", sort);
+		
+		// 정렬 타입 추가
 		if(sort == null || sort.equals("0")) {
 			hMap.put("sort", "asc");
 		} else {
 			hMap.put("sort", "desc");
 		}
 		
+		// 사이즈 배열 추가
 		//체크한 사이즈를 예를 들어 220,250 의 모양으로 만들어 SQL 조건문 중 IN 안에 넣음
 		Iterator<String> iter = sizeArray.iterator();
         String size = "";
         while(iter.hasNext()){
-            size += (String)iter.next()+",";
+        	size += "'";
+            size += (String)iter.next()+"',";
         }
-        System.out.println("A: " + size);
         size = size.replaceAll(",$", "");
-        System.out.println("B: " + size);
-        hMap.put("size", size);
         
-		// 페이징
+        if(size.equals("'0'")) {
+        	hMap.put("size", "'%%'");
+        	hMap.put("sizeChk", "like");
+        } else {
+        	hMap.put("size", size);
+        	hMap.put("sizeChk", "in");
+        }
+        
+		// 페이지 넘버 추가
 		int currentPage = 1;
 		if (pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
@@ -103,7 +114,7 @@ public class CategoryController {
 			pageNum = "1"; // 처음 페이지값
 		}
 		int dataCount = dao.getProductCount(hMap);
-		int numPerPage = 9;// 페이지에 보여주는 게시물수
+		int numPerPage = 2;// 페이지에 보여주는 게시물수
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 		if (currentPage > totalPage) {
 			currentPage = totalPage;
@@ -113,11 +124,7 @@ public class CategoryController {
 		int end = currentPage * numPerPage;
 		hMap.put("start", start);
 		hMap.put("end", end);
-		
-		String searchUrl = "shop.action?" + param;
-		String pageIndexList = myUtil.categoryPageIndexList(currentPage, totalPage, searchUrl,type);
-
-		/*
+		/*	
 		 * 
 		 * 
 		 * // 전달할 url과 path String 
@@ -127,6 +134,8 @@ public class CategoryController {
 		 * 
 		 * String imagePath = "/gyp/sfiles/product"; // 이미지 경로
 		 */
+		
+		// 상품 리스트 호출
 		if (type.equals("priceSort")) {
 			list = dao.getPriceProductList(hMap);
 		} else if (type.equals("viewSort")) {
@@ -139,6 +148,9 @@ public class CategoryController {
 			list = dao.getAllProductList(hMap);
 		}
 
+		String searchUrl = "shop.action";
+		String pageIndexList = myUtil.categoryPageIndexList(currentPage, totalPage, searchUrl, hMap);
+
 		request.setAttribute("list", list);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("dataCount", dataCount);
@@ -149,7 +161,7 @@ public class CategoryController {
 		request.setAttribute("category2", category2);
 		// request.setAttribute("imagePath", imagePath);
 		// request.setAttribute("articleUrl", articleUrl);
-
+		
 		return "category/productList";
 	}
 

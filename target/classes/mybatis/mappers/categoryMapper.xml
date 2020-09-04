@@ -26,12 +26,12 @@
 	from(
 			select rownum rnum, data.* 
 			from(
-					select a.PROD_SUBCODE,a.PROD_CONTENTS,a.PROD_PRICE,a.PROD_CATEGORY1,a.PROD_CATEGORY2,a.PROD_STYLE,a.PROD_COUNT,a.PROD_GENDER
+					select a.PROD_SUBCODE,a.PROD_PRICE
 				 	FROM PRODUCT_INFO a, PRODUCT b 
 				 	where a.prod_subcode = b.prod_subcode
 				 	and a.prod_category1 like '%'|| #{category1} ||'%'
 					and a.prod_category2 like '%'|| #{category2} ||'%' 
-					and b.prod_size in (#{size}) ORDER BY PROD_PRICE ${sort}
+					and b.prod_size ${sizeChk} (${size}) ORDER BY PROD_PRICE ${sort}
 				) data
 		)
  	where rnum between #{start} and #{end} 
@@ -41,7 +41,7 @@
 <select id="getViewOrderProductList" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
 	select rownum rnum, data.* from(
-	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE,PROD_CATEGORY1,PROD_CATEGORY2,PROD_STYLE,PROD_COUNT,PROD_GENDER
+	select PROD_SUBCODE,PROD_CONTENTS,PROD_PRICE
  	FROM PRODUCT_INFO where prod_category1 like '%'|| #{category1} ||'%'
 	and prod_category2 like '%'|| #{category2} ||'%' ORDER BY PROD_COUNT ${sort}) data)
  	where rnum between #{start} and #{end} 
@@ -110,16 +110,31 @@
 
 <!-- 카테고리 리스트 출력  -->
 <select id="getCategory" parameterType="String" resultType="hashMap">
+	select *
+	from (
+			select code, code_name
+			from common_code
+			where code_form like 'CATEGORY' || case nvl(#{code_form}, ' ') when ' ' then '_' else #{code_form} || '_1' end
+			order by code_form
+		 )
+	union all
 	select code, code_name
 	from common_code
-	where code_form like 'CATEGORY' || case nvl(#{code_form}, ' ') when ' ' then '_' else #{code_form} || '_1' end
+	where code = case nvl(#{code_form}, ' ') when '2' then 'TRN' else '' end
 </select>
 
-<!-- 카테고리 리스트 출력  -->
+<!-- 카테고리 사이즈 리스트 출력  -->
 <select id="getCategorySize" parameterType="String" resultType="String">
 	select code 
 	from common_code
 	where code_form like '%' || #{code_form} || '%'
+</select>
+
+<!-- 상품 리스트 금액범위 출력  -->
+<select id="getProductPrice" parameterType="hashMap" resultType="hashMap">
+	select 	min(a.PROD_PRICE) min, max(a.PROD_PRICE) max
+	FROM 	PRODUCT_INFO a, PRODUCT b
+	where 	a.prod_subcode = b.prod_subcode
 </select>
 
 </mapper>

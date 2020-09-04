@@ -1,5 +1,7 @@
 package com.wit.category.dao;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wit.category.dto.CategoryDTO;
+import com.wit.product.dto.ProductDTO;
 
 @Repository("categoryDAO")
 public class CategoryDAOImpl implements CategoryDAO {
@@ -67,7 +70,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 	//카테고리 리스트 출력
 	@Override
 	public List<Map<String, Object>> getCategory(String code_form) {
-		
 		List<Map<String, Object>> list = sqlSession.selectList("categoryMapper.getCategory",code_form);
 		return list;
 	}
@@ -88,6 +90,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 		
 		List<String> list = sqlSession.selectList("categoryMapper.getCategorySize",code_form);
 		return list;
+	}
+
+	// 상품 리스트 금액범위 출력
+	@Override
+	public Map<String, Integer> getProductPrice(Map<String, Object> hmap) {
+		Map<String, Integer> map = sqlSession.selectOne("categoryMapper.getProductPrice",hmap);
+		return map;
 	}
 	
 }

@@ -16,5 +16,5 @@ public interface CategoryDAO {
 	public List<CategoryDTO> getNewProductList(Map<String,Object> hmap); //신상품순
 	public List<Map<String, Object>> getCategory(String code_form); // 카테고리 리스트
 	public List<String> getCategorySize(String code_form); // 카테고리 사이즈 리스트
-	
+	public Map<String, Integer> getProductPrice(Map<String, Object> hmap); //상품 리스트 금액범위
 }
