@@ -51,13 +51,16 @@
 <select id="getViewOrderProductList2" parameterType="hashMap" resultType="categoryDTO">
 	select * from(
 	select rownum rnum, data.* from(
-	select p.PROD_SUBCODE,p.PROD_PRICE,r.avgscore,p.prod_count
+	select p.PROD_SUBCODE,p.PROD_PRICE,i.prod_img,r.avgscore,p.prod_count
  	FROM PRODUCT_INFO p,
  	(select p.prod_subcode,sum(nvl(pi.prod_count,0)) prod_count,nvl(round(avg(r.review_score),1),0) avgscore 
  	from review r,product p,product_info pi
  	where p.prod_code=r.prod_code(+)
- 	group by p.prod_subcode ) r 
- 	where r.prod_subcode=p.prod_subcode and prod_category1 like '%'|| #{category1} ||'%'
+ 	group by p.prod_subcode ) r,
+ 	product_img i
+ 	where r.prod_subcode=p.prod_subcode 
+ 	and	  i.prod_subcode=p.prod_subcode
+ 	and prod_category1 like '%'|| #{category1} ||'%'
 	and prod_category2 like '%'|| #{category2} ||'%' ) data)
 	where rnum between #{start} and #{end} ORDER BY PROD_COUNT ${sort}
 </select>
@@ -68,7 +71,7 @@
 		select rownum rnum, data.* 
 		from
 			(
-				select pi.prod_subcode,pi.prod_price,r.avgscore
+				select pi.prod_subcode,pi.prod_price,i.prod_img,r.avgscore
 	 			FROM product_info pi,
 	 				(
 	 					select b.prod_subcode,nvl(round(avg(a.review_score),1),0) avgscore,sum(nvl(a.review_score,0)) rescore
@@ -76,8 +79,10 @@
 						where a.prod_code(+)=b.prod_code
 						group by b.prod_subcode
 						order by rescore ${sort}
-	 				) r
+	 				) r,
+	 				product_img i
 	 	 		where r.prod_subcode=pi.prod_subcode 
+	 	 		and	  i.prod_subcode=pi.prod_subcode
 	 	 		and prod_category1 like '%'|| #{category1} ||'%'
 				and prod_category2 like '%'|| #{category2} ||'%'
 			) data
@@ -91,7 +96,7 @@
 		select rownum rnum, data.* 
 		from
 			(
-				select pi.prod_subcode,pi.prod_price,r.avgscore
+				select pi.prod_subcode,pi.prod_price,i.prod_img,r.avgscore
 	 			FROM product_info pi,
 	 				(
 	 					select b.prod_subcode,nvl(round(avg(a.review_score),1),0) avgscore,sum(case nvl(a.prod_code, ' ') when ' ' then 0 else 1 end) as recount
@@ -99,8 +104,10 @@
 						where a.prod_code(+)=b.prod_code
 						group by b.prod_subcode
 						order by recount ${sort}
-	 				) r
+	 				) r,
+	 				product_img i
 	 	 		where r.prod_subcode=pi.prod_subcode 
+	 	 		and	  i.prod_subcode=pi.prod_subcode
 	 	 		and prod_category1 like '%'|| #{category1} ||'%'
 				and prod_category2 like '%'|| #{category2} ||'%'
 			) data
@@ -120,6 +127,27 @@
 	select code 
 	from common_code
 	where code_form like '%' || #{code_form} || '%'
+</select>
+
+<!-- 판매순 정렬  -->
+<select id="getOrderCount" parameterType="hashMap" resultType="categoryDTO">
+select 	*
+from	(
+			select 	b.prod_subcode,e.prod_img,d.prod_price,
+					nvl(round(avg(a.review_score),1),0) avgscore,
+					count(c.prod_code) as ordercnt
+			from 	review a,product b,order_detail c,product_info d,product_img e
+			where 	c.order_code = a.order_code(+)
+			and 	b.prod_code = c.prod_code(+)
+			and 	b.prod_subcode = d.prod_subcode
+			and 	d.prod_subcode = e.prod_subcode(+)
+			and 	e.prod_mainimg='1'
+			and 	d.prod_category1 like '%'|| #{category1} ||'%'
+			and 	d.prod_category2 like '%'|| #{category2} ||'%'
+			group by b.prod_subcode,e.prod_img,d.prod_price
+			order by ordercnt ${sort}
+		) data
+where rownum between #{start} and #{end}
 </select>
 
 </mapper>

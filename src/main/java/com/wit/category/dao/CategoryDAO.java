@@ -14,6 +14,7 @@ public interface CategoryDAO {
 	public List<CategoryDTO> getStarRatingProductList(Map<String,Object> hmap); //별점순 
 	public List<CategoryDTO> getReviewCountProductList(Map<String,Object> hmap); //리뷰순
 	public List<CategoryDTO> getNewProductList(Map<String,Object> hmap); //신상품순
+	public List<CategoryDTO> getOrderCount(Map<String,Object> hmap); //판매순
 	public List<Map<String, Object>> getCategory(String code_form); // 카테고리 리스트
 	public List<String> getCategorySize(String code_form); // 카테고리 사이즈 리스트
 	

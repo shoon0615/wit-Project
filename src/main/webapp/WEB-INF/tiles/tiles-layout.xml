@@ -9,7 +9,7 @@
 
 <tiles-definitions>
 	<!-- main layout -->
-	<definition name="layout-tiles" template="/WEB-INF/tiles/layout/default-layout.jsp">
+	<definition name="layout-tiles" template="/WEB-INF/tiles/layout/default-layout.jsp" preparer="menuPreparer">
 		<put-attribute name="header" value="/WEB-INF/tiles/layout/header.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/layout/footer.jsp" />
 	</definition>

@@ -4,208 +4,260 @@ public class MainDTO {
 	
 	//custom
 	
-	private String user_Id;
-	private String user_Pwd;
-	private String user_Name;
-	private String user_Tel;
-	private String user_Addr1;
-	private String user_Addr2;
-	private int user_Height;
-	private int user_Weight;
-	private String user_Form;
-	private String user_Style;
-	private String user_Gender;
-	private String user_Created;
-	private String user_Email;
+	private String user_id;
+	private String user_pwd;
+	private String user_name;
+	private String user_tel;
+	private String user_addr1;
+	private String user_addr2;
+	private int user_height;
+	private int user_weight;
+	private String user_form;
+	private String user_style;
+	private String user_gender;
+	private String user_created;
+	private String user_email;
 	
 	//product
 	
-	private String prod_Code;
-	private String prod_Name;
-	private String prod_Size;
-	private String prod_Color;
-	private String prod_SubCode;
-	private String prod_Created;
+	private String prod_code;
+	private String prod_name;
+	private String prod_size;
+	private String prod_color;
+	private String prod_subcode;
+	private String prod_created;
 	private int avgscore;
 	
 	//product_info
 	
-	private String prod_Contents;
-	private int prod_Price;
-	private String prod_Category1;
-	private String prod_Category2;
-	private String prod_Gender;
-	private int prod_Count;
+	private String prod_contents;
+	private int prod_price;
+	private String prod_category1;
+	private String prod_category2;
+	private String prod_gender;
+	private int prod_count;
 	
-	
-	
+	//product_img
+	private String prod_img;
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getUser_pwd() {
+		return user_pwd;
+	}
+
+	public void setUser_pwd(String user_pwd) {
+		this.user_pwd = user_pwd;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_tel() {
+		return user_tel;
+	}
+
+	public void setUser_tel(String user_tel) {
+		this.user_tel = user_tel;
+	}
+
+	public String getUser_addr1() {
+		return user_addr1;
+	}
+
+	public void setUser_addr1(String user_addr1) {
+		this.user_addr1 = user_addr1;
+	}
+
+	public String getUser_addr2() {
+		return user_addr2;
+	}
+
+	public void setUser_addr2(String user_addr2) {
+		this.user_addr2 = user_addr2;
+	}
+
+	public int getUser_height() {
+		return user_height;
+	}
+
+	public void setUser_height(int user_height) {
+		this.user_height = user_height;
+	}
+
+	public int getUser_weight() {
+		return user_weight;
+	}
+
+	public void setUser_weight(int user_weight) {
+		this.user_weight = user_weight;
+	}
+
+	public String getUser_form() {
+		return user_form;
+	}
+
+	public void setUser_form(String user_form) {
+		this.user_form = user_form;
+	}
+
+	public String getUser_style() {
+		return user_style;
+	}
+
+	public void setUser_style(String user_style) {
+		this.user_style = user_style;
+	}
+
+	public String getUser_gender() {
+		return user_gender;
+	}
+
+	public void setUser_gender(String user_gender) {
+		this.user_gender = user_gender;
+	}
+
+	public String getUser_created() {
+		return user_created;
+	}
+
+	public void setUser_created(String user_created) {
+		this.user_created = user_created;
+	}
+
+	public String getUser_email() {
+		return user_email;
+	}
+
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
+
+	public String getProd_code() {
+		return prod_code;
+	}
+
+	public void setProd_code(String prod_code) {
+		this.prod_code = prod_code;
+	}
+
+	public String getProd_name() {
+		return prod_name;
+	}
+
+	public void setProd_name(String prod_name) {
+		this.prod_name = prod_name;
+	}
+
+	public String getProd_size() {
+		return prod_size;
+	}
+
+	public void setProd_size(String prod_size) {
+		this.prod_size = prod_size;
+	}
+
+	public String getProd_color() {
+		return prod_color;
+	}
+
+	public void setProd_color(String prod_color) {
+		this.prod_color = prod_color;
+	}
+
+	public String getProd_subcode() {
+		return prod_subcode;
+	}
+
+	public void setProd_subcode(String prod_subcode) {
+		this.prod_subcode = prod_subcode;
+	}
+
+	public String getProd_created() {
+		return prod_created;
+	}
+
+	public void setProd_created(String prod_created) {
+		this.prod_created = prod_created;
+	}
+
 	public int getAvgscore() {
 		return avgscore;
 	}
+
 	public void setAvgscore(int avgscore) {
 		this.avgscore = avgscore;
 	}
-	//product_img
-	private String prod_Img;
-	
-	
-	public String getProd_Img() {
-		return prod_Img;
+
+	public String getProd_contents() {
+		return prod_contents;
 	}
-	public void setProd_Img(String prod_Img) {
-		this.prod_Img = prod_Img;
+
+	public void setProd_contents(String prod_contents) {
+		this.prod_contents = prod_contents;
 	}
-	public String getUser_Id() {
-		return user_Id;
+
+	public int getProd_price() {
+		return prod_price;
 	}
-	public void setUser_Id(String user_Id) {
-		this.user_Id = user_Id;
+
+	public void setProd_price(int prod_price) {
+		this.prod_price = prod_price;
 	}
-	public String getUser_Pwd() {
-		return user_Pwd;
+
+	public String getProd_category1() {
+		return prod_category1;
 	}
-	public void setUser_Pwd(String user_Pwd) {
-		this.user_Pwd = user_Pwd;
+
+	public void setProd_category1(String prod_category1) {
+		this.prod_category1 = prod_category1;
 	}
-	public String getUser_Name() {
-		return user_Name;
+
+	public String getProd_category2() {
+		return prod_category2;
 	}
-	public void setUser_Name(String user_Name) {
-		this.user_Name = user_Name;
+
+	public void setProd_category2(String prod_category2) {
+		this.prod_category2 = prod_category2;
 	}
-	public String getUser_Tel() {
-		return user_Tel;
+
+	public String getProd_gender() {
+		return prod_gender;
 	}
-	public void setUser_Tel(String user_Tel) {
-		this.user_Tel = user_Tel;
+
+	public void setProd_gender(String prod_gender) {
+		this.prod_gender = prod_gender;
 	}
-	public String getUser_Addr1() {
-		return user_Addr1;
+
+	public int getProd_count() {
+		return prod_count;
 	}
-	public void setUser_Addr1(String user_Addr1) {
-		this.user_Addr1 = user_Addr1;
+
+	public void setProd_count(int prod_count) {
+		this.prod_count = prod_count;
 	}
-	public String getUser_Addr2() {
-		return user_Addr2;
+
+	public String getProd_img() {
+		return prod_img;
 	}
-	public void setUser_Addr2(String user_Addr2) {
-		this.user_Addr2 = user_Addr2;
-	}
-	public int getUser_Height() {
-		return user_Height;
-	}
-	public void setUser_Height(int user_Height) {
-		this.user_Height = user_Height;
-	}
-	public int getUser_Weight() {
-		return user_Weight;
-	}
-	public void setUser_Weight(int user_Weight) {
-		this.user_Weight = user_Weight;
-	}
-	public String getUser_Form() {
-		return user_Form;
-	}
-	public void setUser_Form(String user_Form) {
-		this.user_Form = user_Form;
-	}
-	public String getUser_Style() {
-		return user_Style;
-	}
-	public void setUser_Style(String user_Style) {
-		this.user_Style = user_Style;
-	}
-	public String getUser_Gender() {
-		return user_Gender;
-	}
-	public void setUser_Gender(String user_Gender) {
-		this.user_Gender = user_Gender;
-	}
-	public String getUser_Created() {
-		return user_Created;
-	}
-	public void setUser_Created(String user_Created) {
-		this.user_Created = user_Created;
-	}
-	public String getUser_Email() {
-		return user_Email;
-	}
-	public void setUser_Email(String user_Email) {
-		this.user_Email = user_Email;
-	}
-	public String getProd_Code() {
-		return prod_Code;
-	}
-	public void setProd_Code(String prod_Code) {
-		this.prod_Code = prod_Code;
-	}
-	public String getProd_Name() {
-		return prod_Name;
-	}
-	public void setProd_Name(String prod_Name) {
-		this.prod_Name = prod_Name;
-	}
-	public String getProd_Size() {
-		return prod_Size;
-	}
-	public void setProd_Size(String prod_Size) {
-		this.prod_Size = prod_Size;
-	}
-	public String getProd_Color() {
-		return prod_Color;
-	}
-	public void setProd_Color(String prod_Color) {
-		this.prod_Color = prod_Color;
-	}
-	public String getProd_SubCode() {
-		return prod_SubCode;
-	}
-	public void setProd_SubCode(String prod_SubCode) {
-		this.prod_SubCode = prod_SubCode;
-	}
-	public String getProd_Created() {
-		return prod_Created;
-	}
-	public void setProd_Created(String prod_Created) {
-		this.prod_Created = prod_Created;
-	}
-	public String getProd_Contents() {
-		return prod_Contents;
-	}
-	public void setProd_Contents(String prod_Contents) {
-		this.prod_Contents = prod_Contents;
-	}
-	public int getProd_Price() {
-		return prod_Price;
-	}
-	public void setProd_Price(int prod_Price) {
-		this.prod_Price = prod_Price;
-	}
-	public String getProd_Category1() {
-		return prod_Category1;
-	}
-	public void setProd_Category1(String prod_Category1) {
-		this.prod_Category1 = prod_Category1;
-	}
-	public String getProd_Category2() {
-		return prod_Category2;
-	}
-	public void setProd_Category2(String prod_Category2) {
-		this.prod_Category2 = prod_Category2;
-	}
-	public String getProd_Gender() {
-		return prod_Gender;
-	}
-	public void setProd_Gender(String prod_Gender) {
-		this.prod_Gender = prod_Gender;
-	}
-	public int getProd_Count() {
-		return prod_Count;
-	}
-	public void setProd_Count(int prod_Count) {
-		this.prod_Count = prod_Count;
+
+	public void setProd_img(String prod_img) {
+		this.prod_img = prod_img;
 	}
 	
+	
+
 	
 }
 	

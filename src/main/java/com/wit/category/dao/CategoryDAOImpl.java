@@ -63,6 +63,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 		List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getNewProductList",hmap);
 		return list;
 	}
+	
+	//판매순
+		@Override
+		public List<CategoryDTO> getOrderCount(Map<String, Object> hmap) {
+			List<CategoryDTO> list = sqlSession.selectList("categoryMapper.getOrderCount",hmap);
+			return list;
+		}
 
 	//카테고리 리스트 출력
 	@Override

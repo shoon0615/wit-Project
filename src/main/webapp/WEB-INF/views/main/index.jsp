@@ -146,17 +146,17 @@
      	<c:forEach var="dto" items="${lists}">
             <div class="col-lg-3 col-md-4 col-sm-6 mix women">
                 <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/wit/resources/img/product/${dto.prod_Img }">
+                    <div class="product__item__pic set-bg" data-setbg="/wit/resources/img/product/${dto.prod_img }">
                         <div class="label new">New</div>
                         <ul class="product__hover">
-                            <li><a href="/wit/resources/img/product/${dto.prod_Img }" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="/wit/resources/img/product/${dto.prod_img }" class="image-popup"><span class="arrow_expand"></span></a></li>
                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                             <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                         </ul>
                     </div>
                     
                     <div class="product__item__text">
-                        <h6><a href="#">${dto.prod_Name }</a></h6>
+                        <h6><a href="#">${dto.prod_subcode }</a></h6>
                          <div class="rating">
                                   <c:if test="${dto.avgscore  > 0 }">
                            	   <c:forEach begin="1" end="${dto.avgscore  }">
@@ -172,7 +172,7 @@
                                </c:forEach>
                             </c:if>
                             </div>
-                        <div class="product__price">${dto.prod_Price }</div>
+                        <div class="product__price">${dto.prod_price }</div>
                     </div>
                     
                 </div>
@@ -229,7 +229,7 @@
                     <c:forEach var="dto" items="${hot_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/trend/ht-1.jpg" alt="">
+                            <img src="/wit/resources/img/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6>${dto.prod_subcode }</h6>
@@ -263,7 +263,7 @@
                     <c:forEach var="dto" items="${reCount_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/trend/bs-1.jpg" alt="">
+                            <img src="/wit/resources/img/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6>${dto.prod_subcode }</h6>
@@ -296,7 +296,7 @@
                     <c:forEach var="dto" items="${reScore_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/trend/f-1.jpg" alt="">
+                            <img src="/wit/resources/img/trend/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6>${dto.prod_subcode }</h6>

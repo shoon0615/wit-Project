@@ -1,12 +1,12 @@
 package com.wit.main.controller;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,18 +40,21 @@ public class MainController {
 	 * 
 	 * //타일즈/내가 설정하는 jsp경로 return ".tiles/views/index"; }
 	 */
+	
+	@RequestMapping(value = "/test", method = {RequestMethod.GET, RequestMethod.POST})
+	public String test() {
+		return "blog-details";
+	}
 
 	@RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest req,MainDTO dto) {	
 
-		dto.setUser_Id("user");
-		dto.setUser_Style("CAS");
+		dto.setUser_id("user");
+		dto.setUser_style("CAS");
 
 		/*HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");*/
 
-		// 리스트 객체 추가
-		List<MainDTO> lists = new ArrayList<MainDTO>();
 		
 		// 맵 객체 추가
 		Map<String, Object> hMap = new HashMap<String, Object>();
@@ -64,33 +67,36 @@ public class MainController {
 		
 		hMap.put("sort", "desc");
 		
-		if(dto.getUser_Id()!=null || !dto.getUser_Id().equals("")) {
+		hMap.put("user_id", dto.getUser_id());
+		
+		if(dto.getUser_id()==null || dto.getUser_id().equals("")) {
+			
+			List<CategoryDTO> lists = categorydao.getOrderCount(hMap);
+			req.setAttribute("lists", lists);
+			
+		}else if(dto.getUser_id()!=null || !dto.getUser_id().equals("")) {
 			
 			//취향추천
-			hMap.put("user_Id", dto.getUser_Id());
-			hMap.put("user_Style", dto.getUser_Style());
+			hMap.put("user_id", dto.getUser_id());
+			hMap.put("user_Style", dto.getUser_style());
 			
-			lists = maindao.selectUserStyle(hMap);	
+			List<MainDTO> lists = maindao.selectUserStyle(hMap);	
+			req.setAttribute("lists", lists);
 			
-		} else {
-			
-			//비회원
-			//주문순정렬
 		}
-			
-		req.setAttribute("lists", lists);
 		
 		//조회순,리뷰순,별점순		
 		List<CategoryDTO> hot_lists = categorydao.getViewOrderProductList(hMap);
 		List<CategoryDTO> reCount_lists = categorydao.getReviewCountProductList(hMap);
 		List<CategoryDTO> reScore_lists = categorydao.getStarRatingProductList(hMap);
-
+		
+		
 		req.setAttribute("hot_lists", hot_lists);
 		req.setAttribute("reCount_lists", reCount_lists);
 		req.setAttribute("reScore_lists", reScore_lists);
+		//req.setAttribute("getCountHeartCart", maindao.selectUserHeartCart());
 
 		return ".tiles/main/index";
-
 
 
 	}

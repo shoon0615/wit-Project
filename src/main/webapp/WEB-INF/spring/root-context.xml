@@ -43,6 +43,7 @@
                 <value>/WEB-INF/tiles/tiles-layout.xml</value>
             </list>
         </property>
+        <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"></property>
     </bean>
 
 

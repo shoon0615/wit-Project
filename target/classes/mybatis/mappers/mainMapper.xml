@@ -6,7 +6,7 @@
 
 <!-- 고객 취향 추천 리스트 -->
 <select id="selectUserStyle" parameterType="hashMap" resultType="mainDTO">
-	select c.user_Id,c.user_Style,p.prod_subcode,p.prod_name,p.prod_price,pi.prod_img,r.avgscore
+	select c.user_id,c.user_style,p.prod_subcode,p.prod_name,p.prod_price,pi.prod_img,r.avgscore
 	from custom c,product_info p,product_img pi,
 	(
 		select p.prod_subcode,nvl(round(avg(r.review_score),1),0) avgscore 
@@ -14,15 +14,21 @@
 	 	where p.prod_code=r.prod_code(+)
 	 	group by p.prod_subcode
 	 ) r
-	where c.user_Id=#{user_Id} and c.user_Style=#{user_Style}
-	and c.user_Style=p.prod_Style 
+	where c.user_id=#{user_id} and c.user_style=#{user_style}
+	and c.user_style=p.prod_style 
 	and pi.prod_subCode=p.prod_subCode 
 	and r.prod_subcode=p.prod_subcode 
 	and r.prod_subcode=pi.prod_subcode 
-	and pi.prod_mainImg='1'
+	and pi.prod_mainimg='1'
 	<![CDATA[
 	and rownum<5
 	]]>
+</select>
+
+<select id="selectUserHeartCart" parameterType="String" resultType="hashMap">
+	select a.heartcnt,b.cartcnt from 
+		(select nvl(count(*),0) as heartcnt from heart where user_id=#{user_id})  a,
+		(select nvl(count(*),0) as cartcnt from cart where user_id=#{user_id}) b
 </select>
 
 </mapper>

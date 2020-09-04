@@ -11,8 +11,15 @@ public class CategoryDTO {
 	private int prod_count;
 	private String prod_gender;
 	private int avgscore; //평균별점
+	private String prod_img; //상품이미지
 	
 	
+	public String getProd_img() {
+		return prod_img;
+	}
+	public void setProd_img(String prod_img) {
+		this.prod_img = prod_img;
+	}
 	public int getAvgscore() {
 		return avgscore;
 	}

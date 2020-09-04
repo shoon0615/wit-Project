@@ -1,11 +1,14 @@
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <!-- 날씨 js  -->
 <script type = "text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type = "text/javascript" src="/wit/resources/js/weather.js"></script>
+
     <meta charset="UTF-8">
     <meta name="description" content="What should I wear Today?">
     <meta name="keywords" content="WIT, unica, creative, html">
@@ -14,6 +17,8 @@
     <title>What should I wear Today?</title>
 </head>
 <body onload="weather();">
+
+<tiles:importAttribute name="hmap"/>
 
 <!-- 날씨  -->
 <div style="text-align-last: right; padding-right: 34px;">
@@ -121,10 +126,10 @@
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
                             <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
+                                <div class="tip">${hmap.HEARTCNT }</div>
                             </a></li>
                             <li><a href="#"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
+                                <div class="tip">${hmap.CARTCNT }</div>
                             </a></li>
                         </ul>
                     </div>
