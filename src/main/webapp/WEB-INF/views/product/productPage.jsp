@@ -226,19 +226,23 @@
                                     nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
                                 quis, sem.</p>
                             </div>
+                            <!-- 리뷰  -->
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>Reviews ( 2 )</h6>
-                                <p>Remo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                quis, sem.</p>
+                                <div class="blog__comment__item__pic">
+                                    <img src="/wit/resources/img/blog/details/comment-1.jpg" alt="">
+                                </div>
+                                <div class="blog__comment__item__text">
+                                    <h6>Brandon Kelley</h6>
+                                    <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
+                                    mei et. Simul viderer facilisis egimus tractatos splendi.</p>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
+                                        <li><i class="fa fa-heart-o"></i> 12</li>
+                                        <li><i class="fa fa-share"></i> 1</li>
+                                    </ul>
+                                </div>    
                             </div>
+                            <!-- 리뷰 끝  -->
                         </div>
                     </div>
                 </div>
