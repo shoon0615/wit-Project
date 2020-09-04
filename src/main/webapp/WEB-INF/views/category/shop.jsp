@@ -375,7 +375,6 @@
 			// 금액 스크롤바 마우스 클릭 끝났을 시
 			$('html').mouseup(function(){
 				if(priceChk == 1) {
-					alert("A");
 					priceChk = 0;
 				}
 			});

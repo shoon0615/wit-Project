@@ -78,7 +78,7 @@ public class MainController {
 			
 			//취향추천
 			hMap.put("user_id", dto.getUser_id());
-			hMap.put("user_Style", dto.getUser_style());
+			hMap.put("user_style", dto.getUser_style());
 			
 			List<MainDTO> lists = maindao.selectUserStyle(hMap);	
 			req.setAttribute("lists", lists);
