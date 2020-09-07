@@ -2,17 +2,16 @@ package com.wit.category.dto;
 
 public class CategoryDTO {
 
-	private String prod_subcode;   		// 상품 ID
-	private String prod_contents;   	// 상품 이름
-	private int prod_price;  		// 상품 이미지
-	private String prod_category1;  		// 상품 가격
-	private String prod_category2;  		// 상품 조회수
-	private String prod_style;   // 상품 설명(내용)
-	private int prod_count;
-	private String prod_gender;
-	private int avgscore; //평균별점
-	private String prod_img; //상품이미지
-	
+	private String prod_subcode;   	// 상품 ID
+	private String prod_contents;   // 상품 설명(내용)
+	private int prod_price;  		// 상품 가격
+	private String prod_category1;  // 상품 대분류			
+	private String prod_category2;  // 상품 중분류	
+	private String prod_style;   	// 상품 취향
+	private int prod_count;			// 상품 조회수
+	private String prod_gender;		// 상품 성별
+	private int avgscore; 			// 평균 별점
+	private String prod_img; 		// 상품 이미지
 	
 	public String getProd_img() {
 		return prod_img;

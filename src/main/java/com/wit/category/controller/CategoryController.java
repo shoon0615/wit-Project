@@ -35,8 +35,8 @@ public class CategoryController {
 	MyUtil myUtil;
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
-	public String shop(HttpServletRequest request,String category1,String category2) throws Exception {
-		
+	public String shop(HttpServletRequest request, CategoryDTO dto) throws Exception {
+		/*
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
 		// 테스트 에러 방지로 임시 제작, 완성시 삭제
@@ -49,11 +49,18 @@ public class CategoryController {
 		
 		hMap.put("category1", category1);
 		hMap.put("category2", category2);
+		*/
+		
+		// 테스트 에러 방지로 임시 제작, 완성시 삭제
+		if(dto.getProd_category1() == null) {
+			dto.setProd_category1("");
+			dto.setProd_category2("");
+		}
 		
 		request.setAttribute("category1_list", dao.getCategory(""));
-		request.setAttribute("category1", category1);
-		request.setAttribute("category2", category2);		
-		request.setAttribute("pagePrice", dao.getProductPrice(hMap));
+		request.setAttribute("category1", dto.getProd_category1());
+		request.setAttribute("category2", dto.getProd_category2());		
+		request.setAttribute("pagePrice", dao.getProductPrice(dto));
 		
 		return ".tiles/category/shop";
 	}
@@ -85,13 +92,13 @@ public class CategoryController {
 		String sort = request.getParameter("searchSort");		// 정렬 타입(asc/desc)
 		int minAmount = Integer.parseInt(request.getParameter("minAmount"));	// 금액바 최소 금액
 		int maxAmount = Integer.parseInt(request.getParameter("maxAmount"));	// 금액바 최대 금액
-		System.out.println("min: " + minAmount + ", max: " + maxAmount);
+
 		// 카테고리 및 금액 추가
 		hMap.put("category1", category1);
 		hMap.put("category2", category2);
 		hMap.put("minAmount", minAmount);
 		hMap.put("maxAmount", maxAmount);
-		
+
 		// 페이지 번호의 onclick 데이터로 인한 추가
 		hMap.put("type", type);
 		hMap.put("sort_data", sort);
@@ -102,7 +109,7 @@ public class CategoryController {
 		} else {
 			hMap.put("sort", "desc");
 		}
-		
+
 		// 사이즈 배열 추가
 		//체크한 사이즈를 예를 들어 220,250 의 모양으로 만들어 SQL 조건문 중 IN 안에 넣음
 		Iterator<String> iter = sizeArray.iterator();
@@ -149,9 +156,7 @@ public class CategoryController {
 		 * 
 		 * String imagePath = "/gyp/sfiles/product"; // 이미지 경로
 		 */
-		
-		
-		
+	
 		// 상품 리스트 호출
 		if (type.equals("priceSort")) {
 			list = dao.getPriceProductList(hMap);
@@ -194,14 +199,8 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(value = "/categoryPrice", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Integer> categoryPrice(String category1,String category2) {
-		
-		Map<String, Object> hMap = new HashMap<String, Object>();
-		
-		hMap.put("category1", category1);
-		hMap.put("category2", category2);
-		
-		Map<String, Integer> map = dao.getProductPrice(hMap);
+	public @ResponseBody Map<String, Integer> categoryPrice(CategoryDTO dto) {
+		Map<String, Integer> map = dao.getProductPrice(dto);
 
 		return map;
 	}

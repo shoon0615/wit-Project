@@ -101,8 +101,15 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	// 상품 리스트 금액범위 출력
 	@Override
-	public Map<String, Integer> getProductPrice(Map<String, Object> hmap) {
-		Map<String, Integer> map = sqlSession.selectOne("categoryMapper.getProductPrice",hmap);
+	public Map<String, Integer> getProductPrice(CategoryDTO dto) {
+		Map<String, Integer> map = sqlSession.selectOne("categoryMapper.getProductPrice",dto);
+		
+		if(map == null) {
+			map = new HashMap<String, Integer>();
+			map.put("MIN", 0);
+			map.put("MAX", 0);
+		}
+		
 		return map;
 	}
 	

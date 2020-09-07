@@ -236,8 +236,9 @@
 
 		//금액바 초기화 함수
 		function pagePriceReset(cate1,cate2) {
-			var param = "category1=" + cate1
-					+ "&category2=" + cate2;
+			var param = "prod_category1=" + cate1;
+			param += "&prod_category2=" + cate2;
+
 			/*
 			$.post(url,{category1 : cate1, category2 : cate2},function(args){
 				$('#minamount').val('￦ ' + args.MIN);
@@ -250,8 +251,20 @@
 	       		data: param,
 	        	async: false,
 	        	success: function(args) {
+		        	var rangeSlider = $(".price-range");
+		        	// 슬라이더 하단 금액 재설정
 	            	$('#minamount').val('￦ ' + args.MIN);
 	   				$('#maxamount').val('￦ ' + args.MAX);
+
+	   				// 슬라이더 옵션 금액 재설정
+	   				rangeSlider.slider("option", "min", args.MIN);
+	   				rangeSlider.slider("option", "max", args.MAX);
+	   				rangeSlider.slider("option", "values", [args.MIN, args.MAX]);
+
+					// 슬라이더 금액바 무조건 full로 출력
+					rangeSlider.children("div").attr("style", "left: 0%; width: 100%;");
+					rangeSlider.children("span").first().attr("style", "left: 0%;");
+					rangeSlider.children("span").last().attr("style", "left: 100%;");
 	            }
 			});
 		}
@@ -294,7 +307,7 @@
 
 			var minA = $('#minamount').val().replace("￦", "").trim();
 			var maxA = $('#maxamount').val().replace("￦", "").trim();
-			console.log(minA);
+
 			$.post(url,{
 				searchType : type,	//상품 리스트(all/가격/조회수/리뷰/별점)
 				pageNum : page,		//페이지 넘버
@@ -362,7 +375,7 @@
 
 				// 금액바 초기화
 				pagePriceReset(category1,category2);
-				
+
 				// 해당 카테고리 상품 리스트 호출
 				productList('1',category1,category2);
 				

@@ -54,8 +54,7 @@ public class MainController {
 
 		/*HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");*/
-
-		
+	
 		// ¸Ê °´Ã¼ Ãß°¡
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
