@@ -11,6 +11,7 @@
 			select pi.prod_subcode
 			from product p,product_info pi, product_img i
 			where p.prod_subcode = pi.prod_subcode
+			and p.prod_subcode = i.prod_subcode(+)
 			and pi.prod_category1 like '%'|| #{category1} ||'%'
 			and pi.prod_category2 like '%'|| #{category2} ||'%' 
 			and p.prod_size ${sizeChk} (${size})

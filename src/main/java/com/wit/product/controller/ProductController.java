@@ -56,8 +56,6 @@ public class ProductController {
 		List<String> PROD_COLOR = dao.selectProdChoice("C", PROD_SUBCODE);
 		List<String> PROD_SIZE = dao.selectProdChoice("S", PROD_SUBCODE);
 
-
-
 		mav.addObject("dto", dto);
 		mav.addObject("map", map);
 		mav.addObject("PROD_IMG", PROD_IMG);
