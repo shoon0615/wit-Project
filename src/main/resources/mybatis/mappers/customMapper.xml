@@ -4,9 +4,42 @@
 
 <mapper namespace="customMapper">
 
-<!-- 주문표 개수 -->
-<select id="countCart" parameterType="String" resultType="String">
-	select nvl(sum(cqty), 0) from cart where USERID=#{id}
+<!-- 중복 아이디 체크 -->
+<select id="idCheck" parameterType="String" resultType="String">
+	select decode(count(*),1,'true','false') from custom where user_id = #{id}
 </select>
+
+<!-- 회원가입 -->
+<insert id="addCustom" parameterType="customDTO">
+	insert into custom values 
+	(#{user_id},#{user_pwd},#{user_name},#{user_tel},null,#{user_addr1},#{user_addr2},#{user_height},#{user_weight},#{user_form},#{user_style},#{user_gender},SYSDATE,#{user_email})
+</insert>
+
+<!-- 로그인 처리 (존재하는 계정인지 확인) -->
+<select id="loginCheck" parameterType="customDTO" resultType="customDTO">
+	select * from custom where user_id = #{user_id} and user_pwd = #{user_pwd}
+</select>
+
+<!-- 아이디 찾기 처리 (해당 name,email로 계정이 존재하는지 확인) -->
+<select id="findID" parameterType="hashMap" resultType="String">
+	select user_id from custom where user_name = #{user_name} and user_email = #{user_email}
+</select>
+
+<!-- 비밀번호 찾기 처리 (해당 id,email로 계정이 존재하는지 확인) -->
+<select id="findPWD" parameterType="hashMap" resultType="String">
+	select decode(count(*),1,'true','false') from custom where user_id = #{user_id} and user_email = #{user_email}
+</select>
+
+<!-- 임시 비밀번호로 회원 DB update 처리 -->
+<update id="newPWD" parameterType="hashMap">
+	update custom set user_pwd = #{key} where user_id = #{user_id}
+</update>
+
+<!-- 회원 정보 수정 처리 -->
+<update id="modifyCustom" parameterType="customDTO">
+	update custom set 
+	user_pwd=#{user_pwd},user_name=#{user_name},user_tel=#{user_tel},user_addr1=#{user_addr1},user_addr2=#{user_addr2},user_height=#{user_height},user_weight=#{user_weight},user_form=#{user_form},user_style=#{user_style},user_gender=#{user_gender},user_email=#{user_email}
+	where user_id = #{user_id}
+</update>
 
 </mapper>

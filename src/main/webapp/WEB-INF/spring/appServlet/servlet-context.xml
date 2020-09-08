@@ -23,32 +23,8 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 	
+	<!-- 어떤 패키지를 사용할 지 선언 -->
 	<context:component-scan base-package="com.wit" />
 	
-	<!-- root-context.xml로 내용 이동 -->
-	<!-- 
-	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg ref="sessionFactory"/>
-	</beans:bean>
-
-	<beans:bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource"/>
-		<beans:property name="configLocation" value="classpath:mybatis-config.xml"/>
-		<beans:property name="mapperLocations" value="classpath:mybatis/mappers/*.xml"/>
-	</beans:bean>
-
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<beans:property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<beans:property name="url" value="${jdbc.url}"/>
-		<beans:property name="username" value="${jdbc.username}"/>
-		<beans:property name="password" value="${jdbc.password}"/>
-	</beans:bean>
-	
-	<beans:bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<beans:property name="locations" value="/WEB-INF/config/jdbc/jdbc.properties"/>
-	</beans:bean> 
-	-->
-
-	<!-- <beans:bean id="myUtil" class="com.wit.util.MyUtil"/> -->
 		
 </beans:beans>
