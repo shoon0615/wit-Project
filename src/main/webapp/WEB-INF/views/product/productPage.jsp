@@ -34,6 +34,34 @@
     
     <script src="/wit/resources/js/jquery-3.1.1.js"></script>
 
+	<script type="text/javascript">
+	
+		$(function() {
+			var checkedSubcode = '${dto.PROD_SUBCODE }';
+			var f = document.prodForm;
+			
+			$('.cart-btn').click(function(){
+				var prodStr = "";																//선택한 상품 리스트를 담아줄 문자열
+				$('.product__details__list tr').each(function(index){
+					if(index != 0) {															// 첫 tr은 디자인용이므로 제외		
+						prodStr += "-" + $(this).find('.prod__sub span').attr("id");			// 문자열에 상품 id(코드) 삽입
+						prodStr += "-" + $(this).find('.prod__qty input').val();				// 문자열에 수량 삽입
+					} 
+				});
+
+				if(prodStr == "") {
+					alert("구매할 상품이 없습니다!");
+					return;
+				} else {
+					prodStr = checkedSubcode + prodStr;												// 문자열(0)에 subcode 삽입												// 문자열(0)에 subcode 삽입	
+					$(f).append($('<input/>', {type: 'hidden', name: 'prodStr', value: prodStr}));	// form에 매개변수 저장 후 이동
+					f.submit();
+				}
+			});
+			
+		});	
+			
+	</script>
 </head>
 
 <body>
@@ -174,7 +202,9 @@
                         	￦ <span>0</span>
                         </div>
                         <div class="product__details__button">  
-                            <a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
+                            <form method="POST" action="${pageContext.request.contextPath}/payment/checkout.action" name="prodForm">
+                            	<a href="#" class="cart-btn"><span class="icon_wallet"></span>&nbsp;&nbsp;&nbsp;Buy it now</a>
+                            </form>
                             <ul class="product__details__hover">
                                 <li><a class="heart-btn" style="cursor: pointer;"><span class="icon_heart_alt"></span></a></li>
                                 <li><a class="bag-btn" style="cursor: pointer;"><span class="icon_bag_alt"></span></a></li>

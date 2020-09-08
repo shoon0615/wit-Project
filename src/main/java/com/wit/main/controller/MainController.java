@@ -54,8 +54,7 @@ public class MainController {
 
 		/*HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");*/
-
-		
+	
 		// ¸Ê °´Ã¼ Ãß°¡
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
@@ -64,6 +63,12 @@ public class MainController {
 		
 		hMap.put("start", 1);
 		hMap.put("end", 3);
+		
+		hMap.put("size", "'%%'");
+    	hMap.put("sizeChk", "like");
+		
+		hMap.put("minAmount", 0);
+		hMap.put("maxAmount", 9999999);
 		
 		hMap.put("sort", "desc");
 		

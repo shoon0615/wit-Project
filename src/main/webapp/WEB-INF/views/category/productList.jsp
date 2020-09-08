@@ -37,9 +37,12 @@
 					<a href="#">${dto.prod_subcode}</a>
 				</h6>
 				<div class="rating">
-					<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-						class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-						class="fa fa-star"></i>
+					<c:forEach begin="1" end="${dto.avgscore }">
+                    	<i class="fa fa-star"></i>
+                    </c:forEach>
+                    <c:forEach begin="1" end="${5 - dto.avgscore }">
+                    	<span class="fa fa-star"></span>
+                    </c:forEach>
 				</div>
 				<div class="product__price">${dto.prod_price}원</div>
 			</div>
