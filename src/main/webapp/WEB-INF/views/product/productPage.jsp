@@ -3,6 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%	request.setCharacterEncoding("UTF-8"); %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -188,7 +192,7 @@
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" onclick="sendReview('review_created');" role="tab">Reviews ( 2 )</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -226,22 +230,23 @@
                                     nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
                                 quis, sem.</p>
                             </div>
-                            <!-- 리뷰  -->
+                            <!-- 리뷰  -->                    
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <div class="blog__comment__item__pic">
-                                    <img src="/wit/resources/img/blog/details/comment-1.jpg" alt="">
-                                </div>
-                                <div class="blog__comment__item__text">
-                                    <h6>Brandon Kelley</h6>
-                                    <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
-                                    mei et. Simul viderer facilisis egimus tractatos splendi.</p>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
-                                        <li><i class="fa fa-heart-o"></i> 12</li>
-                                        <li><i class="fa fa-share"></i> 1</li>
-                                    </ul>
-                                </div>    
+                              	<div class="reviewSortNav" align="right">
+                              		포토리뷰
+                              		<input type="checkbox" id="photoReview" onclick="sendReview('');" style="border: 0; background: white;"><br/>
+                              		체형별
+					 				<input type="checkbox" id="myFormReview" onclick="sendReview('');" style="border: 0; background: white;"><br/>
+                              		<input type="button" id="review_created" onclick="sendReview('review_created');" value="최신순" style="border: 0; background: white;">|
+					 				<input type="button" id="review_score" onclick="sendReview('review_score');"  value="별점순"   style="border: 0; background: white;">|	 				
+			            		</div>
+			            		<!-- 리뷰 리스트  -->
+			            		<span id="reviewSort"></span>
+			            		<div class="viewMore" style="text-align: center;">
+			            			<input type="button" id="reviewMore" value="view more" style="border: 0; background: white;">
+			            		</div>
                             </div>
+                            
                             <!-- 리뷰 끝  -->
                         </div>
                     </div>
@@ -426,7 +431,107 @@
     <script src="/wit/resources/js/jquery.slicknav.js"></script>
     <script src="/wit/resources/js/owl.carousel.min.js"></script>
     <script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
-    <script src="/wit/resources/js/main.js"></script>	
+    <script src="/wit/resources/js/main.js"></script>
+    
+    
+<script type="text/javascript">
+
+var PROD_SUBCODE = "${dto.PROD_SUBCODE }";
+var sortChk = null;
+var mode = null;
+var url = "<%=cp%>/product/review.action";
+
+function sendReview(sort){
+
+	if(sort == "") {
+		sort = sortChk;
+	}
+
+	var pageNum = $('#reviewPageNum').val();
+
+	if(pageNum == null || pageNum == "") { 
+		pageNum = 1;
+	}
+
+	$(".reviewSortNav input").each(function(){
+		
+		var cnt = $("input:checkbox:checked").length; 	//체크박스 개수 카운트
+
+		if(cnt == 0) {
+			mode = null;
+		} 
+		
+		if($(this).prop("checked") == true) { 
+			if(cnt == 1) {					
+				mode = $(this).attr("id"); 				//포토리뷰 || 체형별리뷰
+			} else {
+				mode = "all"; 							//내 체형 && 포토리뷰 둘다 선택
+			}
+		}
+
+		$('.reviewSortNav input').css("font-weight", "");
+		$('#' + sort).css("font-weight", "bold"); 		//선택한 정렬 볼드체	
+
+	});
+
+	$.ajax({
+		type:"POST",
+		url:url,
+		data:{sort : sort, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},
+		async: false,	//동기식으로 변환
+		success:function(args){
+
+			$('#reviewSort').html(args);
+			
+		},
+		error:function(e){
+			alert(e.responseText);
+		}
+		
+	});
+
+	var	totalPage = $('#totalPage').val(); //토탈페이지
+
+	//더보기 show/hide
+	if(pageNum == totalPage){	
+		$("#reviewMore").hide();
+		$('#reviewPageNum').attr("value",1); //초기화
+	}else{
+		$("#reviewMore").show();
+	}
+
+	sortChk = sort;
+
+}
+
+$('.viewMore').on('click','input',function(){
+
+	addPageReview(); //페이징 
+	
+	var totalPage = $('#totalPage').attr("value");
+	var pageNum = $('#reviewPageNum').attr("value");
+	
+	$.post(url,{sort : sortChk, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},function(args){
+
+		 $('#reviewSort').append(args);
+
+	});
+	
+	if(pageNum == totalPage){
+
+		$("#reviewMore").hide();
+		$('#reviewPageNum').attr("value",1); //초기화
+	}
+	
+});	
+
+function addPageReview() {
+
+	var pageNum = Number($('#reviewPageNum').attr("value"))+1; //더보기를 누르면 페이지넘 +1
+	$('#reviewPageNum').attr("value",pageNum);
+}
+
+</script>	
 </body>
 
 </html>

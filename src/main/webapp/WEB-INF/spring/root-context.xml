@@ -46,14 +46,12 @@
         <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"></property>
     </bean>
 
-
-   
    <!-- 메일 보내기 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	   	<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="hyeona73@gmail.com" />
-		<property name="password" value="qorhvk777" />
+		<property name="username" value="shoon0615@gmail.com" />
+		<property name="password" value="s1632000" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>

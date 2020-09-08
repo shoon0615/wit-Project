@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wit.product.dto.ProductDTO;
+import com.wit.product.dto.reviewDTO;
 
 @Repository("productDAO")
 public class ProductDAOImpl implements ProductDAO {
@@ -150,4 +152,60 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 		}
 	}
+
+	@Override
+	public List<reviewDTO> selectProductReview(Map<String, Object> hmap) {
+		List<reviewDTO> list = sqlSession.selectList("productMapper.selectProductReview",hmap);
+		return list;
+	}
+
+	@Override
+	public List<String> selectReviewImg(String review_num) {
+		List<String> list = sqlSession.selectList("productMapper.selectReviewImg",review_num);
+		return list;
+	}
+
+	@Override
+	public List<reviewDTO> selectPhotoReview(Map<String, Object> hmap) {
+		List<reviewDTO> list = sqlSession.selectList("productMapper.selectPhotoReview",hmap);
+		return list;
+	}
+
+	@Override
+	public List<reviewDTO> selectUserFormReview(Map<String, Object> hmap) {
+		List<reviewDTO> list = sqlSession.selectList("productMapper.selectUserFormReview",hmap);
+		return list;
+	}
+
+	@Override
+	public List<reviewDTO> selectAllChkReview(Map<String, Object> hmap) {
+		List<reviewDTO> list = sqlSession.selectList("productMapper.selectAllChkReview",hmap);
+		return list;
+	}
+
+	@Override
+	public int selectCountReview(String PROD_SUBCODE) {
+		int reviewCnt =  sqlSession.selectOne("productMapper.selectCountReview",PROD_SUBCODE);
+		return reviewCnt;
+	}
+
+	@Override
+	public int selectCountPhotoReview(String PROD_SUBCODE) {
+		int photoCnt =  sqlSession.selectOne("productMapper.selectCountPhotoReview",PROD_SUBCODE);
+		return photoCnt;
+	}
+
+	@Override
+	public int selectCountFormReview(Map<String,Object> hmap) {
+		int formCnt =  sqlSession.selectOne("productMapper.selectCountFormReview", hmap);
+		return formCnt;
+	}
+
+	@Override
+	public int selectCountAllChkReview(Map<String,Object> hmap) {
+		int allChkCnt =  sqlSession.selectOne("productMapper.selectCountAllChkReview",hmap);
+		return allChkCnt;
+	}
+
+
 }

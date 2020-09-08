@@ -7,7 +7,7 @@
 <!-- 상품 정보 -->
 <select id="selectProd" parameterType="String" resultType="productDTO">
 	SELECT 	PROD_SUBCODE, PROD_PRICE, PROD_CONTENTS, PROD_STYLE, PROD_GENDER 
-	FROM 	PRODUCT_INFO
+	FROM 	PRODUCT_INFO 
 	WHERE 	PROD_SUBCODE = #{PROD_SUBCODE}
 </select>
 
@@ -104,5 +104,128 @@
 	INSERT INTO CART(USER_ID, PROD_CODE, CART_QTY, CART_CREATED)
 	VALUES (#{USER_ID}, #{PROD_CODE}, #{CART_QTY}, SYSDATE)
 </insert>
+
+<!-- prod_subcode에대한 전체 리뷰출력  -->
+<select id="selectProductReview" parameterType="hashMap" resultType="reviewDTO">
+	select * from (
+	select rownum rnum, data.* from (
+			select a.prod_code,a.user_id,a.review_num,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode
+			from review a,product p
+			where a.prod_code=p.prod_code
+			and p.prod_subcode=#{prod_subcode}
+			order by ${sort} desc
+	 ) data) 
+	<![CDATA[ 
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+	
+</select>
+
+<!-- 고객이 쓴 리뷰의 이미지들 출력  -->
+<select id="selectReviewImg" parameterType="String" resultType="String">
+	select review_img from review_img
+	where review_num = #{review_num}
+</select>
+
+<!-- 포토리뷰 출력  -->
+<select id="selectPhotoReview" parameterType="hashMap" resultType="reviewDTO">
+	select * from (
+	select rownum rnum, data.* from (
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num
+			from review a,review_img ri,product p
+			where  a.review_num=ri.review_num
+			and p.prod_code=a.prod_code
+			and p.prod_subcode=#{prod_subcode}
+			and ri.review_img is not null
+			group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM
+			order by ${sort} desc
+	 ) data) 
+<![CDATA[ 
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 내 체형별 리뷰 출력  -->
+<select id="selectUserFormReview" parameterType="hashMap" resultType="reviewDTO">
+	select * from (
+	select rownum rnum, data.* from (
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num,c.user_form
+			from review a,product p,custom c
+			where p.prod_code=a.prod_code
+			and a.user_id=c.user_id
+			and p.prod_subcode=#{prod_subcode}
+			and c.user_form=#{user_form}
+			group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form
+			order by ${sort} desc
+	 ) data) 
+	<![CDATA[ 
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 내 체형별 + 포토 리뷰 출력  -->
+<select id="selectAllChkReview" parameterType="hashMap" resultType="reviewDTO">
+	select * from (
+	select rownum rnum, data.* from (
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode,a.review_num,c.user_form
+			from review a,review_img ri,product p,custom c
+			where  a.review_num=ri.review_num
+			and a.user_id=c.user_id
+			and p.prod_code=a.prod_code
+			and p.prod_subcode=#{prod_subcode}
+			and c.user_form=#{user_form}
+			and ri.review_img is not null
+			group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form
+			order by ${sort} desc
+	 ) data) 
+	<![CDATA[ 
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+<select id="selectCountReview" parameterType="String" resultType="int">
+	select count(*) as reviewCnt 
+	from review r,product p
+	where r.prod_code = p.prod_code
+	and p.prod_subcode=#{prod_subcode}
+</select>
+
+<select id="selectCountPhotoReview" parameterType="String" resultType="int">
+	select count(*) as photoCnt 
+	from 
+	(select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num
+	from review a,review_img ri,product p
+	where  a.review_num=ri.review_num
+	and p.prod_code=a.prod_code
+	and p.prod_subcode=#{prod_subcode}
+	and ri.review_img is not null
+	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM)
+</select>
+
+<select id="selectCountFormReview" parameterType="hashMap" resultType="int">
+	select count(*) as formCnt 
+	from 
+	(select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num,c.user_form
+	from review a,product p,custom c
+	where p.prod_code=a.prod_code
+	and a.user_id=c.user_id
+	and p.prod_subcode=#{prod_subcode}
+	and c.user_form=#{user_form}
+	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form)
+</select>
+
+<select id="selectCountAllChkReview" parameterType="hashMap" resultType="int">
+	select count(*) as allChkCnt
+	from 
+	(select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode,a.review_num,c.user_form
+	from review a,review_img ri,product p,custom c
+	where  a.review_num=ri.review_num
+	and a.user_id=c.user_id
+	and p.prod_code=a.prod_code
+	and p.prod_subcode=#{prod_subcode}
+	and c.user_form=#{user_form}
+	and ri.review_img is not null
+	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form)
+</select>
 
 </mapper>

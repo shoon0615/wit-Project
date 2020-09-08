@@ -9,7 +9,11 @@ encoding//src/main/java/com/wit/main/controller/MainController.java=EUC-KR
 encoding//src/main/java/com/wit/main/dao/MainDAO.java=EUC-KR
 encoding//src/main/java/com/wit/main/dao/MainDAOImpl.java=EUC-KR
 encoding//src/main/java/com/wit/product/dao/ProductDAOImpl.java=UTF-8
+<<<<<<< HEAD
 encoding//src/main/java/com/wit/util/MenuPreparer.java=EUC-KR
 =======
 encoding//src/main/webapp/WEB-INF/views/custom/join.jsp=UTF-8
 >>>>>>> refs/remotes/origin/Hyeona
+=======
+encoding//src/main/java/com/wit/product/dto/ProductDTO.java=UTF-8
+>>>>>>> refs/remotes/origin/Hyegyeong
