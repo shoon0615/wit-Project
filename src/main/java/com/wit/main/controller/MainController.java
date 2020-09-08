@@ -64,6 +64,12 @@ public class MainController {
 		hMap.put("start", 1);
 		hMap.put("end", 3);
 		
+		hMap.put("size", "'%%'");
+    	hMap.put("sizeChk", "like");
+		
+		hMap.put("minAmount", 0);
+		hMap.put("maxAmount", 9999999);
+		
 		hMap.put("sort", "desc");
 		
 		hMap.put("user_id", dto.getUser_id());

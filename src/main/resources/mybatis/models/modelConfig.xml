@@ -8,5 +8,6 @@
     <typeAlias type="com.wit.category.dto.CategoryDTO" alias="categoryDTO"/>
     <typeAlias type="com.wit.main.dto.MainDTO" alias="mainDTO"/>
     <typeAlias type="com.wit.product.dto.ProductDTO" alias="productDTO"/>
+    <typeAlias type="com.wit.payment.dto.PaymentDTO" alias="paymentDTO"/>
   </typeAliases>
 </configuration>

@@ -2653,6 +2653,7 @@ ol {
 	color: #111111;
 	font-weight: 600;
 	float: right;
+	padding-top: 12px;
 }
 
 .checkout__order__product ul li .top__text {
