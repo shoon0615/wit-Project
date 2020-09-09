@@ -471,6 +471,7 @@ var sortChk = null;
 var mode = null;
 var url = "<%=cp%>/product/review.action";
 
+//처음 리뷰를 클릭했을때 || 정렬 or 체크박스 선택시 타는 함수
 function sendReview(sort){
 
 	if(sort == "") {
@@ -479,7 +480,7 @@ function sendReview(sort){
 
 	var pageNum = $('#reviewPageNum').val();
 
-	if(pageNum == null || pageNum == "") { 
+	if(pageNum == null || pageNum == "") { //처음 리뷰를 클릭했을시 페이지넘이 넘어오는 값이 없기때문에 1 로 만들어줌
 		pageNum = 1;
 	}
 
@@ -488,7 +489,7 @@ function sendReview(sort){
 		var cnt = $("input:checkbox:checked").length; 	//체크박스 개수 카운트
 
 		if(cnt == 0) {
-			mode = null;
+			mode = null; //정렬 || 체크박스 아무것도 선택하지 않았을시
 		} 
 		
 		if($(this).prop("checked") == true) { 
@@ -508,7 +509,7 @@ function sendReview(sort){
 		type:"POST",
 		url:url,
 		data:{sort : sort, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},
-		async: false,	//동기식으로 변환
+		async: false,									//동기식으로 변환
 		success:function(args){
 
 			$('#reviewSort').html(args);
@@ -523,17 +524,18 @@ function sendReview(sort){
 	var	totalPage = $('#totalPage').val(); //토탈페이지
 
 	//더보기 show/hide
-	if(pageNum == totalPage){	
+	if(pageNum == totalPage || totalPage == 0){	//마지막 페이지일떄 || 데이터가 없을때
 		$("#reviewMore").hide();
 		$('#reviewPageNum').attr("value",1); //초기화
 	}else{
 		$("#reviewMore").show();
 	}
 
-	sortChk = sort;
+	sortChk = sort; //sort는 매개변수로 넘어왔기때문에 sortChk에 sort를 담아서 저장해놈
 
 }
 
+//더보기를 클릭했을때 타는 함수
 $('.viewMore').on('click','input',function(){
 
 	addPageReview(); //페이징 
@@ -555,10 +557,11 @@ $('.viewMore').on('click','input',function(){
 	
 });	
 
+//페이징 함수
 function addPageReview() {
 
 	var pageNum = Number($('#reviewPageNum').attr("value"))+1; //더보기를 누르면 페이지넘 +1
-	$('#reviewPageNum').attr("value",pageNum);
+	$('#reviewPageNum').attr("value",pageNum); // review.jsp에 reviewPageNum이라는 아이디의 value값을 변경
 }
 
 </script>	
