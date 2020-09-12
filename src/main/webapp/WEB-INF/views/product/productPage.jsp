@@ -479,7 +479,7 @@ function sendReview(sort){
 	}
 
 	var pageNum = $('#reviewPageNum').val();
-
+	
 	if(pageNum == null || pageNum == "") { //처음 리뷰를 클릭했을시 페이지넘이 넘어오는 값이 없기때문에 1 로 만들어줌
 		pageNum = 1;
 	}
@@ -494,9 +494,11 @@ function sendReview(sort){
 		
 		if($(this).prop("checked") == true) { 
 			if(cnt == 1) {					
-				mode = $(this).attr("id"); 				//포토리뷰 || 체형별리뷰
+				mode = $(this).attr("id"); //포토리뷰 || 체형별리뷰
+				$('#reviewPageNum').attr("value",1); //페이지넘 초기화 				
 			} else {
-				mode = "all"; 							//내 체형 && 포토리뷰 둘다 선택
+				mode = "all"; //내 체형 && 포토리뷰 둘다 선택
+				$('#reviewPageNum').attr("value",1); //페이지넘 초기화 							
 			}
 		}
 
@@ -511,9 +513,7 @@ function sendReview(sort){
 		data:{sort : sort, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},
 		async: false,									//동기식으로 변환
 		success:function(args){
-
-			$('#reviewSort').html(args);
-			
+			$('#reviewSort').html(args);			
 		},
 		error:function(e){
 			alert(e.responseText);
@@ -536,25 +536,31 @@ function sendReview(sort){
 }
 
 //더보기를 클릭했을때 타는 함수
+
 $('.viewMore').on('click','input',function(){
 
 	addPageReview(); //페이징 
 	
 	var totalPage = $('#totalPage').attr("value");
 	var pageNum = $('#reviewPageNum').attr("value");
-	
-	$.post(url,{sort : sortChk, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},function(args){
 
-		 $('#reviewSort').append(args);
-
+	$.ajax({
+		type:"POST",
+		url:url,
+		data:{sort : sortChk, PROD_SUBCODE : PROD_SUBCODE, mode : mode, pageNum : pageNum},
+		async: false,									//동기식으로 변환
+		success:function(args){
+			$('#reviewSort').html(args);	
+		},
+		error:function(e){
+			alert(e.responseText);
+		}	
 	});
 	
 	if(pageNum == totalPage){
-
 		$("#reviewMore").hide();
 		$('#reviewPageNum').attr("value",1); //초기화
-	}
-	
+	}	
 });	
 
 //페이징 함수
@@ -564,7 +570,8 @@ function addPageReview() {
 	$('#reviewPageNum').attr("value",pageNum); // review.jsp에 reviewPageNum이라는 아이디의 value값을 변경
 }
 
-</script>	
+</script>
+
 </body>
 
 </html>

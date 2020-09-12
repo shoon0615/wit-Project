@@ -207,5 +207,10 @@ public class ProductDAOImpl implements ProductDAO {
 		return allChkCnt;
 	}
 
+	@Override
+	public void insertReport(Map<String, Object> hmap) {	
+		sqlSession.insert("productMapper.insertReport",hmap);
+	}
+
 
 }

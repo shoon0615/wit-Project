@@ -228,4 +228,10 @@
 	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form)
 </select>
 
+<insert id="insertReport" parameterType="hashMap">
+	insert into report values (#{user_id},#{review_num},sysdate)
+</insert>
+
+
+
 </mapper>

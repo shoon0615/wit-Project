@@ -27,5 +27,6 @@ public interface ProductDAO {
 	public int selectCountPhotoReview(String PROD_SUBCODE);
 	public int selectCountFormReview(Map<String,Object> hmap);
 	public int selectCountAllChkReview(Map<String,Object> hmap);
+	public void insertReport(Map<String,Object> hmap);
 	
 }

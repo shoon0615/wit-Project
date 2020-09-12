@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wit.product.dao.ProductDAO;
 import com.wit.product.dto.ProductDTO;
@@ -131,16 +132,16 @@ public class ProductController {
 		}
 		int numPerPage = 2; 
 		int reviewCnt = dao.selectCountReview(PROD_SUBCODE); //전체리뷰 카운트
-		int start = (currentPage - 1) * numPerPage + 1; //3
-		int end = currentPage * numPerPage; //4
-
+		int start = 1;
+		int end = numPerPage * Integer.parseInt(pageNum);
+	
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap.put("prod_subcode", PROD_SUBCODE);
 		hMap.put("start", start);
 		hMap.put("end", end);
 		hMap.put("sort", sort);
 		hMap.put("user_form", user_form);
-
+	
 		if(mode == null || mode.equals("")){ //초기리뷰 (정렬: 최신순/ 체크박스 체크x)
 
 			review_lists =  dao.selectProductReview(hMap);	
@@ -165,7 +166,6 @@ public class ProductController {
 		}
 
 		int totalPage = myUtil.getPageCount(numPerPage, reviewCnt); //토탈페이지카운트
-
 		if(currentPage > totalPage) currentPage = totalPage;
 
 		System.out.println("totalPage: " + totalPage);
@@ -177,7 +177,6 @@ public class ProductController {
 		for(int i=0; i<review_lists.size(); i++) { //리뷰이미지
 			review_lists.get(i).setReview_img(dao.selectReviewImg(review_lists.get(i).getReview_num()));
 		}
-
 		req.setAttribute("review_lists", review_lists);
 		req.setAttribute("reviewCnt", reviewCnt);
 		req.setAttribute("pageNum", pageNum);
@@ -185,5 +184,20 @@ public class ProductController {
 
 		return "product/review";
 	}
-
+	
+	//신고
+	@RequestMapping(value = "/report", method = RequestMethod.POST)
+	public String report(HttpServletRequest req) {
+		
+		String user_id = "user";
+		int review_num = Integer.parseInt(req.getParameter("review_num"));
+		Map<String, Object> hMap = new HashMap<String, Object>();		
+		//신고
+		if(review_num != 0) {	
+			hMap.put("review_num", review_num);
+			hMap.put("user_id", user_id);
+			dao.insertReport(hMap);
+		}		
+		return "product/review";
+	}
 }
