@@ -3160,6 +3160,16 @@ ol {
 	line-height: 26px;
 }
 
+.blog__comment__item__text .rating i {
+	font-size: 16px;
+	color: #e3c01c;
+}
+
+.blog__comment__item__text .rating span {
+	font-size: 16px;
+	color: #666666;
+}
+
 .blog__comment__item__text ul li {
 	list-style: none;
 	font-size: 12px;
