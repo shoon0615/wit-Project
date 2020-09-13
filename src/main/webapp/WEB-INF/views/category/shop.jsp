@@ -425,6 +425,17 @@
 				priceChk = 1;
 			});
 
+			/*
+			$('.price-range span').mousedown(function(args){
+				priceChk = 1;
+
+				// 마우스를 뗐을 때 범위를 벗어나면
+				if($('.price-range span').has(args.target).length == 0) {
+					priceChk = 0;
+				}
+			});
+			*/
+
 			// 금액 스크롤바 마우스 클릭 끝났을 시
 			$('html').mouseup(function(){
 				if(priceChk == 1) {
