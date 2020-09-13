@@ -27,36 +27,26 @@ $('.blog__comment__item__text').on('click','input',function(){
 });
 
 //신고버튼을 눌렀을때
-$('.blog__comment__item__text').on('click','i','.fa fa-heart-o',function(){
+$('.blog__comment__item__text').on('click','.fa-remove',function(){
 	
 	var parent = $(this).parents("div");
 	var review_num = parent.children(".reviewNum").val();
 	var url = "<%=cp%>/product/report.action";
-	var idx = $(this).attr('data-idx'); //신고한 버튼에 인덱스
-
-	if($('#reportCnt' + idx).attr("value") != null) { //신고 카운트가 0 이 아닐때
-		Number($('#reportCnt' + idx).attr("value"))+1; //원래 카운트 +1
-	}else{
-		$('#reportCnt' + idx).attr("value",1); //신고 카운트가 0일시 value값에 1 부여
-	}
-
-	var reportCnt = $('#reportCnt' + idx).attr("value"); //신고 카운트 저장	
-
+	//var reportCnt = $(this).parent().children("span");	//신고한 리뷰의 카운트
+	var pageNum = $('#reviewPageNum').val(); 
+	
 	$.ajax({
 		type:"POST",
 		url:url,
-		data:{review_num : review_num},					
+		data:{review_num : review_num},	
+		success:function(args){
+			sendReview(sortChk, pageNum); //성공했을시 정렬과 체크박스 페이지넘 유지를 위해 sendReview 함수를 탐	
+		},		
 		error:function(e){
 			alert("이미 신고하셨습니다!");
 		}	
 	});
 	
-});
-
-$(document).ready(function(){
-
-	$('.reviewOption').hide();
-	$('.reviewDetailImg').hide();
 });
 
 </script>	
@@ -72,9 +62,9 @@ $(document).ready(function(){
               <div class="blog__comment__item__text">
               	  <input type="hidden" class="reviewNum" value="${dto1.review_num }">
                   <h6>${dto1.user_id} ${dto1.review_score  }</h6>
-                  	<p class="reviewOption"  style="font: -webkit-small-control;">option : <br/></p>
+                  	<p class="reviewOption" style="font: -webkit-small-control;display: none;">option : ${dto1.prod_code }<br/></p>
                   <div class="rating">
-                                  <c:if test="${dto1.review_score  > 0 }">
+                            <c:if test="${dto1.review_score  > 0 }">
                            	   <c:forEach begin="1" end="${dto1.review_score  }">
                                   <i class="fa fa-star"></i>
                                </c:forEach>
@@ -91,14 +81,14 @@ $(document).ready(function(){
                   <p>${dto1.review_contents } <br/>
                   	<input type="button" class="reviewDetail" data-chk="show" value="..more" style="border: 0; background: white; font-size: smaller; color: #cccccc;">
                   </p>
-                  <p class="reviewDetailImg">
+                  <p class="reviewDetailImg" style="display: none;">
                   	<c:forEach var="dto2" items="${dto1.review_img }">
            				<img src="/wit/resources/img/blog/details/${dto2 }" alt="">
            			</c:forEach>
                   </p>
                   <ul>
                       <li><i class="fa fa-clock-o"></i>${dto1.review_created }</li>
-                      <li><i class="fa fa-heart-o" data-idx="${status.index }"></i>&nbsp;<input id="reportCnt${status.index }" data-save="${reportCnt }" type="text" style="border: 0;"></li>
+                      <li><i class="fa fa-remove"></i><span>${dto1.reportCnt }</span></li>
                       <li><i class="fa fa-share"></i> 1</li>
                   </ul>
               </div>
@@ -114,9 +104,9 @@ $(document).ready(function(){
               <div class="blog__comment__item__text">
               	  <input type="hidden" class="reviewNum" value="${dto1.review_num }">
                   <h6>${dto1.user_id} ${dto1.review_score  }</h6>
-                  <p class="reviewOption" style="font: -webkit-small-control;">option : <br/></p>
+                  <p class="reviewOption" style="font: -webkit-small-control;display: none;">option : ${dto1.prod_code }<br/></p>
                   <div class="rating">
-                                  <c:if test="${dto1.review_score  > 0 }">
+                            <c:if test="${dto1.review_score  > 0 }">
                            	   <c:forEach begin="1" end="${dto1.review_score  }">
                                   <i class="fa fa-star"></i>
                                </c:forEach>
@@ -133,16 +123,17 @@ $(document).ready(function(){
                   <p>${dto1.review_contents }<br/>
                   	<input type="button" class="reviewDetail" value="..more" data-chk="show" style="border: 0; background: white; font-size: smaller; color: #cccccc;">
                   </p>
-                  <p class="reviewDetailImg">
+                  <p class="reviewDetailImg" style="display: none;"> 
                   	<c:forEach var="dto2" items="${dto1.review_img }">
            				<img src="/wit/resources/img/blog/details/${dto2 }" alt="">
            			</c:forEach>
                   </p>
                   <ul>
                       <li><i class="fa fa-clock-o"></i>${dto1.review_created }</li>
-                      <li><i class="fa fa-heart-o" data-idx="${status.index }">&nbsp;<input id="reportCnt${status.index }" data-save="${reportCnt }" type="text" style="border: 0;"></i></li>
+                      <li><i class="fa fa-remove"></i><span>${dto1.reportCnt }</span></li>
                       <li><i class="fa fa-share"></i> 1</li>
                   </ul>
+                 
               </div>
       	</div>
       </c:if>   
@@ -150,3 +141,4 @@ $(document).ready(function(){
     
 <input type="hidden" id="reviewPageNum" value="${pageNum}"/>
 <input type="hidden" id="totalPage" value="${totalPage}"/>
+

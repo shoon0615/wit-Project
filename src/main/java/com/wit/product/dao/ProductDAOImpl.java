@@ -212,5 +212,16 @@ public class ProductDAOImpl implements ProductDAO {
 		sqlSession.insert("productMapper.insertReport",hmap);
 	}
 
+	@Override
+	public void deleteReview() {	
+		sqlSession.delete("productMapper.deleteReview");
+	}
+
+	@Override
+	public void deleteReport() {
+		sqlSession.delete("productMapper.deleteReport");
+		
+	}
+
 
 }

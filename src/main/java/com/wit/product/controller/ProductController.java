@@ -123,9 +123,9 @@ public class ProductController {
 	public String review(HttpServletRequest req,String PROD_SUBCODE,String sort,String mode,String pageNum) {
 
 		String user_form = "NORMAL";
-		
+
 		List<reviewDTO> review_lists = new ArrayList<reviewDTO>();
-		
+
 		int currentPage = 1; 
 		if(pageNum != null) {
 			currentPage = Integer.parseInt(pageNum);
@@ -134,14 +134,15 @@ public class ProductController {
 		int reviewCnt = dao.selectCountReview(PROD_SUBCODE); //전체리뷰 카운트
 		int start = 1;
 		int end = numPerPage * Integer.parseInt(pageNum);
-	
+
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		hMap.put("prod_subcode", PROD_SUBCODE);
 		hMap.put("start", start);
 		hMap.put("end", end);
 		hMap.put("sort", sort);
 		hMap.put("user_form", user_form);
-	
+
+
 		if(mode == null || mode.equals("")){ //초기리뷰 (정렬: 최신순/ 체크박스 체크x)
 
 			review_lists =  dao.selectProductReview(hMap);	
@@ -166,38 +167,43 @@ public class ProductController {
 		}
 
 		int totalPage = myUtil.getPageCount(numPerPage, reviewCnt); //토탈페이지카운트
-		if(currentPage > totalPage) currentPage = totalPage;
+		if(currentPage > totalPage) currentPage = totalPage;	
+
 
 		System.out.println("totalPage: " + totalPage);
 		System.out.println("currentPage: " + currentPage);
-		log.debug(pageNum);
-		log.debug(mode);
+		log.debug("pageNum: " + pageNum);
+		log.debug("mode: " + mode);
 		log.debug("PROD_SUBCODE: " + PROD_SUBCODE + "user_form: " + user_form);
 
-		for(int i=0; i<review_lists.size(); i++) { //리뷰이미지
+		//리뷰이미지
+		for(int i=0; i<review_lists.size(); i++) { 
 			review_lists.get(i).setReview_img(dao.selectReviewImg(review_lists.get(i).getReview_num()));
 		}
 		req.setAttribute("review_lists", review_lists);
 		req.setAttribute("reviewCnt", reviewCnt);
-		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("pageNum", currentPage);
 		req.setAttribute("totalPage", totalPage);
 
 		return "product/review";
 	}
-	
+
 	//신고
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public String report(HttpServletRequest req) {
-		
+
 		String user_id = "user";
 		int review_num = Integer.parseInt(req.getParameter("review_num"));
-		Map<String, Object> hMap = new HashMap<String, Object>();		
-		//신고
-		if(review_num != 0) {	
-			hMap.put("review_num", review_num);
-			hMap.put("user_id", user_id);
-			dao.insertReport(hMap);
-		}		
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		
+		//신고 insert
+		hMap.put("review_num", review_num);
+		hMap.put("user_id", user_id);
+		dao.insertReport(hMap);
+
+		dao.deleteReview(); //신고가 3번됐을시 리뷰삭제
+		dao.deleteReport(); //신고 테이블에서도 삭제
+
 		return "product/review";
 	}
 }

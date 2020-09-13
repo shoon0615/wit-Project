@@ -472,15 +472,13 @@ var mode = null;
 var url = "<%=cp%>/product/review.action";
 
 //처음 리뷰를 클릭했을때 || 정렬 or 체크박스 선택시 타는 함수
-function sendReview(sort){
+function sendReview(sort, pageNum){
 
-	if(sort == "") {
+	if(!sort) {
 		sort = sortChk;
 	}
 
-	var pageNum = $('#reviewPageNum').val();
-	
-	if(pageNum == null || pageNum == "") { //처음 리뷰를 클릭했을시 페이지넘이 넘어오는 값이 없기때문에 1 로 만들어줌
+	if(!pageNum) {
 		pageNum = 1;
 	}
 
@@ -494,16 +492,14 @@ function sendReview(sort){
 		
 		if($(this).prop("checked") == true) { 
 			if(cnt == 1) {					
-				mode = $(this).attr("id"); //포토리뷰 || 체형별리뷰
-				$('#reviewPageNum').attr("value",1); //페이지넘 초기화 				
+				mode = $(this).attr("id"); //포토리뷰 || 체형별리뷰		
 			} else {
-				mode = "all"; //내 체형 && 포토리뷰 둘다 선택
-				$('#reviewPageNum').attr("value",1); //페이지넘 초기화 							
+				mode = "all"; //내 체형 && 포토리뷰 둘다 선택						
 			}
 		}
 
 		$('.reviewSortNav input').css("font-weight", "");
-		$('#' + sort).css("font-weight", "bold"); 		//선택한 정렬 볼드체	
+		$('#' + sort).css("font-weight", "bold"); //선택한 정렬 볼드체	
 
 	});
 
@@ -518,15 +514,13 @@ function sendReview(sort){
 		error:function(e){
 			alert(e.responseText);
 		}
-		
 	});
 
 	var	totalPage = $('#totalPage').val(); //토탈페이지
 
 	//더보기 show/hide
-	if(pageNum == totalPage || totalPage == 0){	//마지막 페이지일떄 || 데이터가 없을때
+	if(totalPage<=pageNum || totalPage == 0){	//마지막 페이지일떄 || 데이터가 없을때
 		$("#reviewMore").hide();
-		$('#reviewPageNum').attr("value",1); //초기화
 	}else{
 		$("#reviewMore").show();
 	}
@@ -557,9 +551,8 @@ $('.viewMore').on('click','input',function(){
 		}	
 	});
 	
-	if(pageNum == totalPage){
+	if(totalPage<=pageNum || totalPage == 0 ) {
 		$("#reviewMore").hide();
-		$('#reviewPageNum').attr("value",1); //초기화
 	}	
 });	
 

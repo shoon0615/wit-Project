@@ -109,7 +109,8 @@
 <select id="selectProductReview" parameterType="hashMap" resultType="reviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-			select a.prod_code,a.user_id,a.review_num,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode
+			select a.prod_code,a.user_id,a.review_num,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode,
+			(select count(*) from report re where re.review_num=a.review_num) reportCnt
 			from review a,product p
 			where a.prod_code=p.prod_code
 			and p.prod_subcode=#{prod_subcode}
@@ -131,7 +132,8 @@
 <select id="selectPhotoReview" parameterType="hashMap" resultType="reviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num,
+			(select count(*) from report re where re.review_num=a.review_num) reportCnt
 			from review a,review_img ri,product p
 			where  a.review_num=ri.review_num
 			and p.prod_code=a.prod_code
@@ -149,7 +151,8 @@
 <select id="selectUserFormReview" parameterType="hashMap" resultType="reviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num,c.user_form
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode, a.review_num,c.user_form,
+			(select count(*) from report re where re.review_num=a.review_num) reportCnt
 			from review a,product p,custom c
 			where p.prod_code=a.prod_code
 			and a.user_id=c.user_id
@@ -167,7 +170,8 @@
 <select id="selectAllChkReview" parameterType="hashMap" resultType="reviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode,a.review_num,c.user_form
+			select a.prod_code,a.user_id,a.review_contents,a.ceo_contents,a.review_score,a.review_created,p.prod_subcode,a.review_num,c.user_form,
+			(select count(*) from report re where re.review_num=a.review_num) reportCnt
 			from review a,review_img ri,product p,custom c
 			where  a.review_num=ri.review_num
 			and a.user_id=c.user_id
@@ -182,14 +186,14 @@
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
 </select>
-
+<!-- 전체 리뷰 카운트  -->
 <select id="selectCountReview" parameterType="String" resultType="int">
 	select count(*) as reviewCnt 
 	from review r,product p
 	where r.prod_code = p.prod_code
 	and p.prod_subcode=#{prod_subcode}
 </select>
-
+<!-- 포토리뷰 카운트  -->
 <select id="selectCountPhotoReview" parameterType="String" resultType="int">
 	select count(*) as photoCnt 
 	from 
@@ -201,7 +205,7 @@
 	and ri.review_img is not null
 	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM)
 </select>
-
+<!-- 체형별 리뷰 카운트  -->
 <select id="selectCountFormReview" parameterType="hashMap" resultType="int">
 	select count(*) as formCnt 
 	from 
@@ -213,7 +217,7 @@
 	and c.user_form=#{user_form}
 	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form)
 </select>
-
+<!-- 포토 + 체형별 리뷰 카운트  -->
 <select id="selectCountAllChkReview" parameterType="hashMap" resultType="int">
 	select count(*) as allChkCnt
 	from 
@@ -227,11 +231,17 @@
 	and ri.review_img is not null
 	group by a.PROD_CODE,a.USER_ID,a.REVIEW_CONTENTS,a.CEO_CONTENTS,a.REVIEW_SCORE,a.REVIEW_CREATED,p.PROD_SUBCODE,a.REVIEW_NUM,c.user_form)
 </select>
-
+<!-- 신고 인서트  -->
 <insert id="insertReport" parameterType="hashMap">
 	insert into report values (#{user_id},#{review_num},sysdate)
 </insert>
 
-
+<!-- 신고,리뷰 테이블 딜리트(신고 3번이상이면 게시물 자동삭제)  -->
+<delete id="deleteReview">
+	delete review where review_num = (select review_num from report group by review_num having count(*)>=2)
+</delete>
+<delete id="deleteReport">
+	delete report where review_num = (select review_num from report group by review_num having count(*)>=2)
+</delete>
 
 </mapper>

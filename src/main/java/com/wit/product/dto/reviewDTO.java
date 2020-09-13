@@ -20,6 +20,8 @@ public class reviewDTO {
 	private String user_gender;
 	private String order_code;
 	private int prod_qty;
+	private int reportCnt;
+	
 	
 	private List<String> review_img;
 	
@@ -125,6 +127,13 @@ public class reviewDTO {
 	public void setReview_img(List<String> list) {
 		this.review_img = list;
 	}
+	public int getReportCnt() {
+		return reportCnt;
+	}
+	public void setReportCnt(int reportCnt) {
+		this.reportCnt = reportCnt;
+	}
+	
 
 
 }

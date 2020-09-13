@@ -23,10 +23,12 @@ public interface ProductDAO {
 	public List<reviewDTO> selectPhotoReview(Map<String,Object> hmap); //포토리뷰 출력
 	public List<reviewDTO> selectUserFormReview(Map<String,Object> hmap); //내 체형별 리뷰 출력
 	public List<reviewDTO> selectAllChkReview(Map<String,Object> hmap); //내 체형별+포토별 리뷰 출력
-	public int selectCountReview(String PROD_SUBCODE);
-	public int selectCountPhotoReview(String PROD_SUBCODE);
-	public int selectCountFormReview(Map<String,Object> hmap);
-	public int selectCountAllChkReview(Map<String,Object> hmap);
-	public void insertReport(Map<String,Object> hmap);
+	public int selectCountReview(String PROD_SUBCODE); //전체 리뷰 카운트
+	public int selectCountPhotoReview(String PROD_SUBCODE); //포토리뷰 카운트
+	public int selectCountFormReview(Map<String,Object> hmap); //체형별 리뷰 카운트
+	public int selectCountAllChkReview(Map<String,Object> hmap); //포토 + 체형별 리뷰 카운트
+	public void insertReport(Map<String,Object> hmap); //신고테이블 인서트
+	public void deleteReview(); //신고 3번됐을시 리뷰테이블에서 리뷰 삭제
+	public void deleteReport(); //신고 3번됐을시 신고테이블에서 신고내역 삭제
 	
 }
