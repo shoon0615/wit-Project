@@ -1,6 +1,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8");
+   String cp = request.getContextPath();  %>
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +35,7 @@
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
                         <a href="main.action" style="font: bold; color: black;"><!-- <img src="/wit/resources/img/logo.png" alt=""> -->
-                        What Should wear Today?</a>
+                        What Should I wear Today?</a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
@@ -120,7 +122,7 @@
                 
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
+                            <a href="<%=cp%>/custom/login">Login</a>
                             <a href="#">Register</a>
                         </div>
                         <ul class="header__right__widget">

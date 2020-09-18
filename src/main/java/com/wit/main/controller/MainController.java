@@ -4,17 +4,13 @@ package com.wit.main.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.wit.category.dao.CategoryDAO;
 import com.wit.category.dto.CategoryDTO;
 
@@ -49,7 +45,7 @@ public class MainController {
 	@RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest req,MainDTO dto) {	
 
-		dto.setUser_id("user");
+		dto.setUser_id("users");
 		dto.setUser_style("CAS");
 
 		/*HttpSession session = req.getSession();
@@ -88,6 +84,7 @@ public class MainController {
 			List<MainDTO> lists = maindao.selectUserStyle(hMap);	
 			req.setAttribute("lists", lists);
 			
+			
 		}
 		
 		//조회순,리뷰순,별점순		
@@ -99,8 +96,7 @@ public class MainController {
 		req.setAttribute("hot_lists", hot_lists);
 		req.setAttribute("reCount_lists", reCount_lists);
 		req.setAttribute("reScore_lists", reScore_lists);
-		//req.setAttribute("getCountHeartCart", maindao.selectUserHeartCart());
-
+		
 		return ".tiles/main/index";
 
 

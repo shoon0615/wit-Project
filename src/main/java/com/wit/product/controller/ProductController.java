@@ -11,16 +11,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.
+Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.wit.product.dao.ProductDAO;
+import com.wit.product.dto.CartDTO;
 import com.wit.product.dto.ProductDTO;
 import com.wit.product.dto.reviewDTO;
 import com.wit.util.MyUtil;
@@ -47,8 +46,6 @@ public class ProductController {
 	@RequestMapping(value = "/productDetail", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView productDetail(String PROD_SUBCODE,String sort) {		
 
-		String user_form = "NORMAL";
-
 		ModelAndView mav = new ModelAndView();
 
 		ProductDTO dto = dao.selectProd(PROD_SUBCODE);
@@ -59,7 +56,7 @@ public class ProductController {
 
 		mav.addObject("dto", dto);
 		mav.addObject("map", map);
-		mav.addObject("PROD_IMG", PROD_IMG);
+		mav.addObject("PROD_IMG", PROD_IMG);		
 		mav.addObject("PROD_COLOR", PROD_COLOR);
 		mav.addObject("PROD_SIZE", PROD_SIZE);
 
@@ -89,7 +86,7 @@ public class ProductController {
 
 		HttpSession session = req.getSession();
 
-		List<String> lists = dao.selectBag("user", PROD_SUBCODE, PROD_INFO);
+		List<String> lists = dao.selectBag("users", PROD_SUBCODE, PROD_INFO);
 
 		return lists;
 	}
@@ -101,15 +98,70 @@ public class ProductController {
 
 		HttpSession session = req.getSession();
 
-		dao.insertBag("user", PROD_SUBCODE, PROD_INFO);
+		dao.insertBag("users", PROD_SUBCODE, PROD_INFO);
 
 		return "";
 	}
+	
+	@RequestMapping(value = "/shopcart", method = {RequestMethod.GET})
+	public String shopcart(HttpServletRequest req) {
+	
+		return ".tiles/product/shop-cart";
+	}
 
-	@RequestMapping(value = "/shopcart", method = RequestMethod.GET)
-	public String shopcart() {		
-
-		return "shop-cart";
+	@RequestMapping(value = "/shopcart_ok", method = {RequestMethod.POST})
+	public String shopcart_ok(HttpServletRequest req) {
+		
+		String user_id = "users";
+		List<CartDTO> lists = dao.selectCart(user_id);
+		int total_amount = dao.selectTotalAmount(user_id);
+		req.setAttribute("lists", lists);
+		req.setAttribute("total_amount", total_amount);
+		
+		return "/product/cartDetail";
+	}
+	
+	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
+	public @ResponseBody int updateCart(HttpServletRequest req,String prod_code) {
+		
+		String user_id = "users";
+		int cart_qty = Integer.parseInt(req.getParameter("cart_qty"));
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("cart_qty", cart_qty);
+		hMap.put("prod_code", prod_code);
+		dao.updateCart(hMap);
+		
+		int total_amount = dao.selectTotalAmount(user_id);
+		
+		return total_amount;
+	}
+	
+	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+	public String deleteCart(HttpServletRequest req,String prod_code) {
+		
+		System.out.println(prod_code);
+		
+		String[] prod_code_arr = null;
+		String user_id = "users";
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		
+		prod_code = prod_code.substring(0, prod_code.length()-1);
+		prod_code_arr = prod_code.split(",");
+		
+		for(int i=0; i<prod_code_arr.length; i++) {
+			
+			hMap.put("user_id", user_id);
+			hMap.put("prod_code", prod_code_arr[i]);
+			
+			System.out.println(prod_code_arr[i]);
+			dao.deleteCart(hMap);
+		}
+		
+		List<CartDTO> lists = dao.selectCart(user_id);
+		
+		req.setAttribute("lists", lists);
+		
+		return "product/cartDetail";
 	}
 
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET)
@@ -206,4 +258,12 @@ public class ProductController {
 
 		return "product/review";
 	}
+	
+	//½Å°í
+		@RequestMapping(value = "cartOptionChange", method = RequestMethod.GET)
+		public String cartOptionChange(HttpServletRequest req) {
+
+			return "product/cartOptionModal";
+		}
+
 }

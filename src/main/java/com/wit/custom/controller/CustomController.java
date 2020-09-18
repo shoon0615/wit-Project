@@ -40,31 +40,31 @@ public class CustomController {
 	//	회원가입 페이지
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() throws Exception {
-		return "custom/join";
+		return ".tiles/custom/join";
 	}
 
 	//	로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() throws Exception {
-		return "custom/login";
+		return ".tiles/custom/login";
 	}
 	
 	//	아이디, 비밀번호 찾기 페이지
 	@RequestMapping(value = "/find_account", method = RequestMethod.GET)
 	public String fine_account() throws Exception {
-		return "custom/findAccount";
+		return ".tiles/custom/findAccount";
 	}
 	
 	//	회원 정보 수정 시도 페이지
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String try_modify() throws Exception {
-		return "custom/tryModify";
+		return ".tiles/custom/tryModify";
 	}
 	
 	//	회원 정보 수정  페이지
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modify() throws Exception {
-		return "custom/modify";
+		return ".tiles/custom/modify";
 	}
 	
 	//******************************************************************************
@@ -100,7 +100,7 @@ public class CustomController {
 		//DB에 INSERT
 		customDAO.addCustom(dto);
 		
-		return "redirect:/custom/main";
+		return "redirect:/main/main";
 		
 	}
 	
@@ -156,7 +156,7 @@ public class CustomController {
 	        session.setAttribute("kakao", "ok");
 	    }
 	    
-		return "redirect:/custom/main";		
+		return "redirect:/main/main";		
 		
 	}
 	
@@ -176,7 +176,7 @@ public class CustomController {
 		    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=46a7983f1090447e062943a08473a49f&logout_redirect_uri=http://localhost:8081/wit/custom/main";
 		}
 
-		return "redirect:/custom/main";
+		return "redirect:/main/main";
 		
 	}
 	
@@ -281,7 +281,7 @@ public class CustomController {
 		//DB에 UPDATE
 		customDAO.modifyCustom(dto);
 		
-		return "redirect:/custom/main";
+		return "redirect:/main/main";
 		
 	}
 	
@@ -291,7 +291,7 @@ public class CustomController {
 	@RequestMapping(value = "/main", method = {RequestMethod.GET,RequestMethod.POST})
 	public String main() {		
 		// log.debug("AAA");
-		return "index";
+		return ".tiles/main/index";
 	}
 
 	@RequestMapping(value = "/contact", method = RequestMethod.GET)

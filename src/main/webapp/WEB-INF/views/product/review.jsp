@@ -32,7 +32,6 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
 	var parent = $(this).parents("div");
 	var review_num = parent.children(".reviewNum").val();
 	var url = "<%=cp%>/product/report.action";
-	//var reportCnt = $(this).parent().children("span");	//신고한 리뷰의 카운트
 	var pageNum = $('#reviewPageNum').val(); 
 	
 	$.ajax({
@@ -88,7 +87,7 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
                   </p>
                   <ul>
                       <li><i class="fa fa-clock-o"></i>${dto1.review_created }</li>
-                      <li><i class="fa fa-remove"></i><span>${dto1.reportCnt }</span></li>
+                      <li><i class="fa fa-remove"></i>${dto1.reportCnt }</li>
                       <li><i class="fa fa-share"></i> 1</li>
                   </ul>
               </div>
@@ -130,7 +129,7 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
                   </p>
                   <ul>
                       <li><i class="fa fa-clock-o"></i>${dto1.review_created }</li>
-                      <li><i class="fa fa-remove"></i><span>${dto1.reportCnt }</span></li>
+                      <li><i class="fa fa-remove"></i>${dto1.reportCnt }</li>
                       <li><i class="fa fa-share"></i> 1</li>
                   </ul>
                  

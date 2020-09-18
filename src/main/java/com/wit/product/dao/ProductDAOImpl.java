@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.wit.product.dto.CartDTO;
 import com.wit.product.dto.ProductDTO;
 import com.wit.product.dto.reviewDTO;
 
@@ -220,6 +221,30 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public void deleteReport() {
 		sqlSession.delete("productMapper.deleteReport");
+		
+	}
+
+	@Override
+	public List<CartDTO> selectCart(String user_id) {
+		List<CartDTO> list = sqlSession.selectList("productMapper.selectCart",user_id);
+		return list;
+	}
+
+	@Override
+	public void updateCart(Map<String, Object> hmap) {
+		sqlSession.update("productMapper.updateCart",hmap);
+		
+	}
+
+	@Override
+	public int selectTotalAmount(String user_id) {
+		int total_amount =  sqlSession.selectOne("productMapper.selectTotalAmount", user_id);
+		return total_amount;
+	}
+
+	@Override
+	public void deleteCart(Map<String, Object> hmap) {
+		sqlSession.delete("productMapper.deleteCart",hmap);
 		
 	}
 

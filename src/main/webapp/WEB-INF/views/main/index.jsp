@@ -3,6 +3,8 @@
 <%	request.setCharacterEncoding("UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<% request.setCharacterEncoding("UTF-8");
+   String cp = request.getContextPath();  %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -31,37 +33,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <ul class="offcanvas__widget">
-            <li><span class="icon_search search-switch"></span></li>
-            <li><a href="#"><span class="icon_heart_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-            <li><a href="#"><span class="icon_bag_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-        </ul>
-        <div class="offcanvas__logo">
-            <a href="main.action"><img src="/wit/resources/img/logo.png" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
-
-  
-
     <!-- Categories Section Begin -->
     <section class="categories">
         <div class="container-fluid">
@@ -232,7 +203,7 @@
                             <img src="/wit/resources/img/product/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
-                            <h6>${dto.prod_subcode }</h6>
+                            <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
                             <div class="rating">
                                   <c:if test="${dto.avgscore  > 0 }">
                            	   <c:forEach begin="1" end="${dto.avgscore  }">
@@ -266,7 +237,7 @@
                             <img src="/wit/resources/img/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
-                            <h6>${dto.prod_subcode }</h6>
+                            <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
                            <div class="rating">
                            <c:if test="${dto.avgscore  > 0 }">
                            	   <c:forEach begin="1" end="${dto.avgscore  }">
@@ -299,7 +270,7 @@
                             <img src="/wit/resources/img/trend/${dto.prod_img }" alt="">
                         </div>
                         <div class="trend__item__text">
-                            <h6>${dto.prod_subcode }</h6>
+                            <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
                              <div class="rating">
                            <c:if test="${dto.avgscore  > 0 }">
                               <c:forEach begin="1" end="${dto.avgscore  }">
