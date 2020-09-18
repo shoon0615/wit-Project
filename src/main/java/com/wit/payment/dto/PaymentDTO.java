@@ -2,8 +2,16 @@ package com.wit.payment.dto;
 
 public class PaymentDTO {
 	
-	// Order_Main
+	// Payment
 	private String order_code;	
+	private String payment_type;	
+	private String payment_account;	
+	private String payment_bank;	
+	private int payment_point;	
+	private int payment_amount;	
+	private String payment_created;
+	
+	// Order_Main
 	private String user_id;
 	private String user_tel;	
 	private String order_contents;	
@@ -20,6 +28,43 @@ public class PaymentDTO {
 	public void setOrder_code(String order_code) {
 		this.order_code = order_code;
 	}
+	public String getPayment_type() {
+		return payment_type;
+	}
+	public void setPayment_type(String payment_type) {
+		this.payment_type = payment_type;
+	}
+	public String getPayment_account() {
+		return payment_account;
+	}
+	public void setPayment_account(String payment_account) {
+		this.payment_account = payment_account;
+	}
+	public String getPayment_bank() {
+		return payment_bank;
+	}
+	public void setPayment_bank(String payment_bank) {
+		this.payment_bank = payment_bank;
+	}
+	public int getPayment_point() {
+		return payment_point;
+	}
+	public void setPayment_point(int payment_point) {
+		this.payment_point = payment_point;
+	}
+	public int getPayment_amount() {
+		return payment_amount;
+	}
+	public void setPayment_amount(int payment_amount) {
+		this.payment_amount = payment_amount;
+	}
+	public String getPayment_created() {
+		return payment_created;
+	}
+	public void setPayment_created(String payment_created) {
+		this.payment_created = payment_created;
+	}
+	
 	public String getUser_id() {
 		return user_id;
 	}

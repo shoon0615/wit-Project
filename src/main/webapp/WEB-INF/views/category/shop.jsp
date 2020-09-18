@@ -373,6 +373,10 @@
 				var category1 = $(this).closest('.card').children('.card-heading').children().attr("id");
 				var category2 = $(this).attr("id");
 
+				// 선택한 중분류에만 색 구분 추가
+				$(this).closest("ul").find("a").css({"color":"", "font-weight":""});
+				$(this).css({"color":"black", "font-weight":"500"});
+
 				// 금액바 초기화
 				pagePriceReset(category1,category2);
 

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/wit/resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/wit/resources/css/style.css" type="text/css">
+    
 </head>
 
 <body>

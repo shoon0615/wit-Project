@@ -90,32 +90,30 @@ public class ProductDAOImpl implements ProductDAO {
 		return dto_ch;
 	}
 	
+	// 상품 리스트가 cart에 존재하는지 비교
 	@Override
 	public List<String> selectBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO) {
-
-		List<String> lists = new ArrayList<String>();
 		
+		ProductDTO dto = new ProductDTO();
+		dto.setPROD_SUBCODE(PROD_SUBCODE);			// SUBCODE는 고정으로 받아둠
+
+		List<String> lists = new ArrayList<String>();	
 		Iterator<String> it = PROD_INFO.iterator();
 		
 		while(it.hasNext()) {
-			// String selectInfo = it.next();
-			String[] info = it.next().split("-");
+			String[] info = it.next().split("-");	// [색상-사이즈] 배열로 들어옴 (예시: {RED,250}, {RED,260})
+				
+			dto.setPROD_COLOR(info[0]);				// info[0] : 색상
+			dto.setPROD_SIZE(info[1]);				// info[1] : 사이즈
 			
-			ProductDTO dto = new ProductDTO();
-			
-			dto.setPROD_SUBCODE(PROD_SUBCODE);
-			dto.setPROD_COLOR(info[0]);
-			dto.setPROD_SIZE(info[1]);	
-			
-			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);
+			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);	// 매번 DTO의 값을 덮어써서 보냄
 			
 			HashMap<String, Object> params = new HashMap<String, Object>();
 
 			params.put("USER_ID", USER_ID);
-			params.put("PROD_CODE", PROD_CODE);
+			params.put("PROD_CODE", PROD_CODE);		// 조회한 상품코드를 map에 넣고 보냄
 			
 			if(sqlSession.selectOne("productMapper.selectBag", params) != null) {
-				// lists.add(selectInfo.replaceAll("-", ", "));
 				lists.add(PROD_SUBCODE + ", " + info[0] + ", " + info[1]);
 			} 
 		}
@@ -126,24 +124,24 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO) {
 		
+		ProductDTO dto = new ProductDTO();
+		dto.setPROD_SUBCODE(PROD_SUBCODE);			// SUBCODE는 고정으로 받아둠
+		
 		Iterator<String> it = PROD_INFO.iterator();
 		
 		while(it.hasNext()) {
-			String[] info = it.next().split("-");
+			String[] info = it.next().split("-");	// [색상-사이즈-수량] 배열로 들어옴 (예시: {RED,250,1}, {RED,260,1})
 			
-			ProductDTO dto = new ProductDTO();
+			dto.setPROD_COLOR(info[0]);				// info[0] : 색상
+			dto.setPROD_SIZE(info[1]);				// info[1] : 사이즈
 			
-			dto.setPROD_SUBCODE(PROD_SUBCODE);
-			dto.setPROD_COLOR(info[0]);
-			dto.setPROD_SIZE(info[1]);	
-			
-			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);
+			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);	// 매번 DTO의 값을 덮어써서 보냄
 			
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			
 			params.put("USER_ID", USER_ID);
-			params.put("PROD_CODE", PROD_CODE);
-			params.put("CART_QTY", info[2]);
+			params.put("PROD_CODE", PROD_CODE);		// 조회한 상품코드를 map에 넣고 보냄
+			params.put("CART_QTY", info[2]);		// info[2] : 수량
 			
 			if(sqlSession.selectOne("productMapper.selectBag", params) == null) {
 				sqlSession.insert("productMapper.insertBag", params);
