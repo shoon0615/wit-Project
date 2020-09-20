@@ -170,7 +170,7 @@ public class ProductController {
 		return "product/kakao";
 	}
 
-	//¸®ºä
+	//ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/review", method = RequestMethod.POST)
 	public String review(HttpServletRequest req,String PROD_SUBCODE,String sort,String mode,String pageNum) {
 
@@ -183,7 +183,7 @@ public class ProductController {
 			currentPage = Integer.parseInt(pageNum);
 		}
 		int numPerPage = 2; 
-		int reviewCnt = dao.selectCountReview(PROD_SUBCODE); //ÀüÃ¼¸®ºä Ä«¿îÆ®
+		int reviewCnt = dao.selectCountReview(PROD_SUBCODE); //ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
 		int start = 1;
 		int end = numPerPage * Integer.parseInt(pageNum);
 
@@ -195,30 +195,30 @@ public class ProductController {
 		hMap.put("user_form", user_form);
 
 
-		if(mode == null || mode.equals("")){ //ÃÊ±â¸®ºä (Á¤·Ä: ÃÖ½Å¼ø/ Ã¼Å©¹Ú½º Ã¼Å©x)
+		if(mode == null || mode.equals("")){ //ï¿½Ê±â¸®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½: ï¿½Ö½Å¼ï¿½/ Ã¼Å©ï¿½Ú½ï¿½ Ã¼Å©x)
 
 			review_lists =  dao.selectProductReview(hMap);	
 
-		}else if(mode.equals("photoReview")) { //Æ÷Åä¸®ºä¸¸
+		}else if(mode.equals("photoReview")) { //ï¿½ï¿½ï¿½ä¸®ï¿½ä¸¸
 
 			review_lists =  dao.selectPhotoReview(hMap);
-			reviewCnt = dao.selectCountPhotoReview(PROD_SUBCODE); //Æ÷Åä¸®ºä Ä«¿îÆ®
+			reviewCnt = dao.selectCountPhotoReview(PROD_SUBCODE); //ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
 
-		}else if(mode.equals("myFormReview")) { //³» Ã¼Çüº° ¸®ºä¸¸
+		}else if(mode.equals("myFormReview")) { //ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ä¸¸
 
 			hMap.put("user_form", user_form);
 			review_lists =  dao.selectUserFormReview(hMap);	
-			reviewCnt = dao.selectCountFormReview(hMap); //Ã¼Çüº° Ä«¿îÆ®
+			reviewCnt = dao.selectCountFormReview(hMap); //Ã¼ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
 
-		}else if(mode.equals("all")){ //Æ÷Åä + Ã¼Çüº° ¸®ºä
+		}else if(mode.equals("all")){ //ï¿½ï¿½ï¿½ï¿½ + Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 			hMap.put("user_form", user_form);
 			review_lists =  dao.selectAllChkReview(hMap);
-			reviewCnt = dao.selectCountAllChkReview(hMap); // Ã¼Çü + Æ÷Åä¸®ºä Ä«¿îÆ®
+			reviewCnt = dao.selectCountAllChkReview(hMap); // Ã¼ï¿½ï¿½ + ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
 
 		}
 
-		int totalPage = myUtil.getPageCount(numPerPage, reviewCnt); //ÅäÅ»ÆäÀÌÁöÄ«¿îÆ®
+		int totalPage = myUtil.getPageCount(numPerPage, reviewCnt); //ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½Æ®
 		if(currentPage > totalPage) currentPage = totalPage;	
 
 
@@ -228,7 +228,7 @@ public class ProductController {
 		log.debug("mode: " + mode);
 		log.debug("PROD_SUBCODE: " + PROD_SUBCODE + "user_form: " + user_form);
 
-		//¸®ºäÀÌ¹ÌÁö
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
 		for(int i=0; i<review_lists.size(); i++) { 
 			review_lists.get(i).setReview_img(dao.selectReviewImg(review_lists.get(i).getReview_num()));
 		}
@@ -240,21 +240,21 @@ public class ProductController {
 		return "product/review";
 	}
 
-	//½Å°í
+	//ï¿½Å°ï¿½
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public String report(HttpServletRequest req) {
 
-		String user_id = "user";
+		String user_id = "users";
 		int review_num = Integer.parseInt(req.getParameter("review_num"));
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
-		//½Å°í insert
+		//ï¿½Å°ï¿½ insert
 		hMap.put("review_num", review_num);
 		hMap.put("user_id", user_id);
 		dao.insertReport(hMap);
 
-		dao.deleteReview(); //½Å°í°¡ 3¹øµÆÀ»½Ã ¸®ºä»èÁ¦
-		dao.deleteReport(); //½Å°í Å×ÀÌºí¿¡¼­µµ »èÁ¦
+		dao.deleteReview(); //ï¿½Å°ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		dao.deleteReport(); //ï¿½Å°ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		return "product/review";
 	}

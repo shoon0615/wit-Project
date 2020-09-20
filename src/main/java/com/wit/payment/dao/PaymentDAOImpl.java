@@ -1,6 +1,7 @@
 package com.wit.payment.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,12 @@ public class PaymentDAOImpl implements PaymentDAO {
 	@Override
 	public List<Map<String, Object>> getProdCode(String prodStr) {
 
-		List<Map<String, Object>> map = new ArrayList<Map<String, Object>>();	// return용 저장 변수 선언(PROD_CODE, PROD_PRICE, PROD_QTY)
+		List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();	// return용 저장 변수 선언(PROD_CODE, PROD_PRICE, PROD_QTY)
 		
 		// 카트 페이지에서 결제한 경우
 		if(prodStr == null) {
 			
-			map = sqlSession.selectList("paymentMapper.getCartProdInfo");		// 카트의 상품정보 받아옴	
+			lists = sqlSession.selectList("paymentMapper.getCartProdInfo");		// 카트의 상품정보 받아옴	
 			
 		// 상품 페이지에서 바로 결제한 경우
 		} else {
@@ -41,15 +42,43 @@ public class PaymentDAOImpl implements PaymentDAO {
 				
 				Map<String, Object> hMap = sqlSession.selectOne("paymentMapper.getProdInfo", dto);
 				hMap.put("CART_QTY", prodStrArr[i+2]);							// prodStrArr[3] : 수량
-				map.add(hMap);
+				lists.add(hMap);
 			}	
 		}
 		
-		return map;
+		return lists;
 	}
+	
+	// 은행사 code 출력
+	@Override
+	public String getPaymentBank(String paymentBank) {
+		String paymentBankCode = sqlSession.selectOne("paymentMapper.getPaymentBank", paymentBank);
+		return paymentBankCode;
+	}
+	
+	// Payment 테이블 삽입
+	@Override
+	public void insertPayment(PaymentDTO dto) {
+		sqlSession.insert("paymentMapper.insertPayment", dto);
+	}	
 
+	// Order_Main 테이블 삽입
 	@Override
 	public void insertOrderMain(PaymentDTO dto) {
 		sqlSession.insert("paymentMapper.insertOrderMain", dto);
 	}
+	
+	// Order_Detail 테이블 삽입
+	@Override
+	public void insertOrderDetail(List<Map<String, Object>> list, String order_code) {
+		Map<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("order_code", order_code);
+		
+		for(int i=0;i<list.size();i++) {
+			hMap.put("prod_code", list.get(i).get("PROD_CODE"));
+			hMap.put("prod_qty", list.get(i).get("CART_QTY"));
+			sqlSession.insert("paymentMapper.insertOrderDetail", hMap);
+		}	
+	}
+	
 }

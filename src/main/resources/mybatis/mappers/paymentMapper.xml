@@ -6,7 +6,7 @@
 
 <!-- 상품 코드 정보 -->
 <select id="getProdInfo" parameterType="productDTO" resultType="hashMap">
-	SELECT 	A.PROD_SUBCODE, A.PROD_COLOR||'/'||A.PROD_SIZE AS PROD_OPTION, B.PROD_PRICE	
+	SELECT 	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR||'/'||A.PROD_SIZE AS PROD_OPTION, B.PROD_PRICE	
 	FROM 	PRODUCT A 
 	INNER JOIN PRODUCT_INFO B 
 	ON 		(A.PROD_SUBCODE = B.PROD_SUBCODE)
@@ -17,7 +17,7 @@
 
 <!-- 카트 상품 코드 정보 -->
 <select id="getCartProdInfo" resultType="hashMap">
-	SELECT 	B.PROD_SUBCODE, B.PROD_COLOR||'/'||B.PROD_SIZE AS PROD_OPTION, C.PROD_PRICE, A.CART_QTY
+	SELECT 	B.PROD_CODE, B.PROD_SUBCODE, B.PROD_COLOR||'/'||B.PROD_SIZE AS PROD_OPTION, C.PROD_PRICE, A.CART_QTY
 	FROM 	CART A 
 	INNER JOIN PRODUCT B 
 	ON 		(A.PROD_CODE = B.PROD_CODE)
@@ -25,15 +25,35 @@
 	ON 		(B.PROD_SUBCODE = C.PROD_SUBCODE)
 </select>
 
-<!-- 오더 인서트  -->
+<!-- 은행사 확인  -->
+<select id="getPaymentBank" parameterType="String" resultType="String">
+	SELECT CODE FROM COMMON_CODE WHERE CODE_NAME LIKE '%' || NVL(#{payment_bank}, '기타') || '%'
+</select>
+
+<!-- 결제테이블 인서트  -->
+<insert id="insertPayment" parameterType="paymentDTO">
+	INSERT INTO payment 
+	(order_code, payment_type, payment_account, payment_bank, payment_point, payment_amount, payment_created)
+	values 
+	(#{order_code}, #{payment_type}, #{payment_account}, #{payment_bank}, #{payment_point}, #{payment_amount}, sysdate)
+</insert>
+
+<!-- 주문테이블 인서트  -->
 <insert id="insertOrderMain" parameterType="paymentDTO">
 	INSERT INTO order_main 
 	(order_code, user_id, user_tel, order_contents, order_status, 
 	order_qty, order_amount, delivery_addr1, delivery_addr2, order_created) 
 	values 
-	(to_char(sysdate,'YYYYMMDDHHMISS'), #{user_id}, #{user_tel}, #{order_contents}, '100', 
-	0, 0, #{delivery_addr1}, #{delivery_addr2}, sysdate)
+	(#{order_code}, #{user_id}, #{user_tel}, #{order_contents}, '100', 
+	#{order_qty}, #{order_amount}, #{delivery_addr1}, #{delivery_addr2}, sysdate)
 </insert>
 
+<!-- 주문상세테이블 인서트  -->
+<insert id="insertOrderDetail" parameterType="hashMap">
+	INSERT INTO order_detail
+	(order_code, prod_code, prod_qty) 
+	values 
+	(#{order_code}, #{prod_code}, #{prod_qty})
+</insert>
 
 </mapper>

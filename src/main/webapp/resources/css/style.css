@@ -2519,6 +2519,10 @@ ol {
 	margin-bottom: 25px;
 }
 
+.checkout__form .checkout__form__input {
+	margin-bottom: 10px;
+}
+
 .checkout__form .checkout__form__input p {
 	color: #444444;
 	font-weight: 500;
@@ -2534,10 +2538,16 @@ ol {
 	width: 100%;
 	border: 1px solid #e1e1e1;
 	border-radius: 2px;
-	margin-bottom: 25px;
 	font-size: 14px;
 	padding-left: 20px;
 	color: #666666;
+	margin-bottom: 3px;
+}
+
+.checkout__form .checkout__form__input span {
+	color: red;
+	font-size: 14px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .checkout__form .checkout__form__input input::-webkit-input-placeholder {
@@ -2561,7 +2571,7 @@ ol {
 }
 
 .checkout__form .checkout__form__checkbox {
-	margin-bottom: 20px;
+	display: contents;
 }
 
 .checkout__form .checkout__form__checkbox label {
