@@ -43,7 +43,7 @@ public class PaymentController {
 		List<Map<String, Object>> list = dao.getProdCode(prodStr);
 		
 		try {
-			// list에 qty를 가져올수없어 map에 추가했기 때문에 이대로 json 형태로 보냄
+			// json 방식으로 가능한지 테스트를 위해 시험해봄
 			String list_json = mapper.writeValueAsString(list);
 			
 			request.setAttribute("prod_list", list);
@@ -67,10 +67,9 @@ public class PaymentController {
 		String order_code = dto.getOrder_code();
 
 		ObjectMapper mapper = new ObjectMapper();
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		
 		try {
-			list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});
+			List<Map<String, Object>> list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});
 			
 			dao.insertOrderMain(dto);
 			dao.insertOrderDetail(list, order_code);

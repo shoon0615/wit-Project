@@ -1,7 +1,8 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=refs/remotes/origin/Hyegyeong
+>>>>>>>=refs/remotes/origin/Sanghoon
 eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
 encoding//src/main/java/com/wit/category/controller/CategoryController.java=UTF-8
 encoding//src/main/java/com/wit/category/dao/CategoryDAO.java=UTF-8
 encoding//src/main/java/com/wit/category/dao/CategoryDAOImpl.java=UTF-8
@@ -10,12 +11,10 @@ encoding//src/main/java/com/wit/main=EUC-KR
 encoding//src/main/java/com/wit/main/controller/MainController.java=EUC-KR
 encoding//src/main/java/com/wit/main/dao/MainDAO.java=EUC-KR
 encoding//src/main/java/com/wit/main/dao/MainDAOImpl.java=EUC-KR
+encoding//src/main/java/com/wit/payment/controller/PaymentController.java=UTF-8
 encoding//src/main/java/com/wit/payment/dao/PaymentDAOImpl.java=UTF-8
 encoding//src/main/java/com/wit/product/dao/ProductDAOImpl.java=UTF-8
 encoding//src/main/java/com/wit/product/dto/ProductDTO.java=UTF-8
 encoding//src/main/java/com/wit/util/MenuPreparer.java=EUC-KR
 encoding//src/main/webapp/WEB-INF/views/custom/join.jsp=UTF-8
-<<<<<<< HEAD
 encoding//src/main/webapp/WEB-INF/views/product/cartOptionModal.jsp=UTF-8
-=======
->>>>>>> refs/remotes/origin/Sanghoon

@@ -92,7 +92,6 @@ public class MainController {
 		List<CategoryDTO> reCount_lists = categorydao.getReviewCountProductList(hMap);
 		List<CategoryDTO> reScore_lists = categorydao.getStarRatingProductList(hMap);
 		
-		
 		req.setAttribute("hot_lists", hot_lists);
 		req.setAttribute("reCount_lists", reCount_lists);
 		req.setAttribute("reScore_lists", reScore_lists);

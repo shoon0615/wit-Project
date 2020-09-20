@@ -163,7 +163,7 @@
 				// 동의 칸에 동의하지 않았다면
 				if(!$('#o-acc').prop("checked")) {
 					alert("Please agree to the checkbox");
-					return;
+					result = false;
 				}
 
 				if(result) {
