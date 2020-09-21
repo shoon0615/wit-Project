@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cartMapper">
+<select id="selectCart" parameterType="String" resultType="cartDTO">
+	select c.prod_code,p.prod_subcode,p.prod_color,p.prod_size,c.cart_qty,pi.prod_price,c.cart_qty*pi.prod_price as cart_amount,img.prod_img
+	from cart c,product_info pi,product p,product_img img
+	where c.prod_code=p.prod_code
+	and p.prod_subcode=pi.prod_subcode
+	and pi.prod_subcode=img.prod_subcode(+)
+	and nvl(img.prod_mainimg,'1')='1'
+	and c.user_id = #{user_id}
+</select>
+
+<update id="updateCart" parameterType="hashMap">
+	update cart set cart_qty=#{cart_qty} where prod_code=#{prod_code} and user_id = #{user_id}
+</update>
+
+<select id="selectTotalAmount" parameterType="String" resultType="int">
+	select nvl(sum(c.cart_qty*pi.prod_price),0) as total_amount
+	from cart c, product p, product_info pi
+	where c.prod_code=p.prod_code
+	and p.prod_subcode=pi.prod_subcode
+	and c.user_id = #{user_id}
+</select>
+
+<delete id="deleteCart" parameterType="hashMap">
+	delete from cart 
+	where user_id = #{user_id} 
+	and prod_code = #{prod_code}
+</delete>
+
+<select id="selectColor" parameterType="String" resultType="cartDTO">
+	select DISTINCT prod_color
+	from product
+	where prod_subcode=#{prod_subcode}
+</select>
+
+<select id="selectSize" parameterType="String" resultType="cartDTO">
+	select DISTINCT prod_size
+	from product
+	where prod_subcode=#{prod_subcode}
+</select>
+
+<update id="updateCartOption" parameterType="hashMap">
+	update cart set prod_code=
+	(select prod_code from product where prod_size=#{prod_size} and prod_color=#{prod_color} and prod_subcode=#{prod_subcode})
+	where user_id = #{user_id}
+	and prod_code = #{prod_code}
+</update>
+
+<insert id="insertCartOption" parameterType="hashMap">
+	insert into cart values 
+	(#{user_id},(select prod_code from product where prod_size=#{prod_size} and prod_color=#{prod_color} and prod_subcode=#{prod_subcode}),1,sysdate)
+</insert>
+</mapper>

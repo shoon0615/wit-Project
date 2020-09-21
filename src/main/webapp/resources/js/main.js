@@ -376,7 +376,7 @@ Created: Colorib
 				if(data == "" || ok == true) {
 					$.post("insertBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:test}, function(data){
 						alert("장바구니에 담겼습니다!");
-						window.location.href = "shopcart.action";
+						window.location.href = "/wit/cart/shopcart.action";
 					});
 				}
 			});

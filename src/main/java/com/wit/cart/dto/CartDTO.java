@@ -1,4 +1,4 @@
-package com.wit.product.dto;
+package com.wit.cart.dto;
 
 public class CartDTO {
 	
@@ -12,10 +12,7 @@ public class CartDTO {
 	private int prod_price;
 	private String prod_code;
 	private int total_amount;
-	
-	
-	
-	
+
 	public String getProd_subcode() {
 		return prod_subcode;
 	}

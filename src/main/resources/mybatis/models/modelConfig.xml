@@ -10,6 +10,6 @@
     <typeAlias type="com.wit.product.dto.ProductDTO" alias="productDTO"/>
     <typeAlias type="com.wit.product.dto.reviewDTO" alias="reviewDTO"/>
     <typeAlias type="com.wit.payment.dto.PaymentDTO" alias="paymentDTO"/>
-     <typeAlias type="com.wit.product.dto.CartDTO" alias="cartDTO"/>
+     <typeAlias type="com.wit.cart.dto.CartDTO" alias="cartDTO"/>
   </typeAliases>
 </configuration>

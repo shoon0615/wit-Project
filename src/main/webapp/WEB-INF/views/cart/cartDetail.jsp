@@ -6,13 +6,19 @@
 <script src="/wit/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+//옵션변경을 클릭했을때
 $('.optionChange').on('click',function(){
-
+	hide(); //옵션창 하나만 선택되게 하기위해 우선 하이드해줌
 	var next = $(this).next();
-	next.find('#someID').html();
-	next.attr("style","display: block;");
-	
+	next.find('#cartOptionModal').html(); //div id cartOptionModal이 있는 html(cartOptionModal.jsp)을 찾아서 불러옴
+	next.attr("style","display: block;"); //show
+
 });
+
+//아이프레임(옵션창) 숨기기
+function hide() {
+	$('.my_iframe').hide();
+}
 
 </script>
 
@@ -51,7 +57,9 @@ $('.optionChange').on('click',function(){
                                                 <i class="fa fa-star"></i>
                                             </div>
                                             <input type="button" class="optionChange" value="option 변경">
-                                            <iframe id="my_iframe" SRC='<%=cp%>/product/cartOptionChange.action' style="display: none;"></iframe>
+                                            <iframe class="my_iframe" 
+                                            SRC='<%=cp%>/cart/cartOptionChange.action?prod_code=${dto.prod_code}&prod_subcode=${dto.prod_subcode}' 
+                                            style="display: none;"></iframe>
                                         </div>
                                     </td>
                                     <td class="cart__price">${dto.prod_price}</td>

@@ -132,30 +132,36 @@
     <script src="/wit/resources/js/main.js"></script>
     <script type="text/javascript">
 
+	//shopcart.action 들어오면 리스트 띄우기
+	function startCart(){
+
+		var url = "<%=cp%>/cart/shopcart_ok.action";
+		 
+		$.ajax({
+			type:"POST",
+			url:url,
+			async: false,
+			success:function(args){
+				$(".cartDetail").html(args);
+			},error:function(e){
+		
+			}	
+		});
+	}
+
     $(window).on('load',function(){
 
-    	var url = "<%=cp%>/product/shopcart_ok.action";
- 
-    	$.ajax({
-    		type:"POST",
-    		url:url,
-    		async: false,
-    		success:function(args){
-    			$(".cartDetail").html(args);
-    		},error:function(e){
-    	
-    		}	
-    	});
+    	startCart();
 
     	//수량변화 (+,-) 눌렀을때
         $('.cartDetail').on('click','.qtybtn','.pro-qty',function(){
 
+        	var url = "<%=cp%>/cart/updateCart.action";
         	var parent = $(this).closest("tr");
             var cartQtyValue = parent.find('.cartQtyValue').val(); //선택한 상품의 수량
             var cartAmountValue = parent.find('.cart__total').text(); //선택한 상품의 총액 
-            var cartPriceValue = parent.find('.cart__price').text(); //선택한 상품의 한개의 가격
-            var url = "<%=cp%>/product/updateCart.action";
-            var prod_code = parent.find('.cart_prod_code').val();
+            var cartPriceValue = parent.find('.cart__price').text(); //선택한 상품의 한개의 가격    
+            var prod_code = parent.find('.cart_prod_code').val(); //선택한 상품의 prod_code
 
          	//+ 눌렀을때
     		if($(this).hasClass('inc')){
@@ -186,7 +192,7 @@
         $('.cartDetail').on('click','.deleteCart',function(){
 
             var prod_code = "";
-        	var url = "<%=cp%>/product/deleteCart.action";
+        	var url = "<%=cp%>/cart/deleteCart.action";
 
             $(".cart__product__item input:checkbox").each(function(){
             	var parent = $(this).closest("tr");
@@ -204,7 +210,7 @@
     	//한개씩 삭제
         $('.cartDetail').on('click','.icon_close',function(){
     		
-        	var url = "<%=cp%>/product/deleteCart.action";
+        	var url = "<%=cp%>/cart/deleteCart.action";
     		var parent = $(this).closest("tr");   
     		var prod_code = parent.find('.cart_prod_code').val() + ","; //체크박스랑 같은 메소드를 사용해서 뒤에 ,넣어줌
             
@@ -227,16 +233,16 @@
         });
 
     	//전체체크한 후 한개라도 체크를 해제하면 전체체크박스 체크 해제
-        $('.cart_check').on('click',function(){
+        $('.cartDetail').on('click','.cart_check',function(){
 
         	var allCnt = $("input:checkbox").length; //전체 체크박스 개수
         	var chkCnt = $("input:checkbox:checked").length; //체크된 체크박스 개수
-        	  
+
         	 if(chkCnt != allCnt) {
       	     	$("input[class=chkAll]").prop("checked",false);
       	     }   
             
-        });
+        });             
     		
 	});
 
