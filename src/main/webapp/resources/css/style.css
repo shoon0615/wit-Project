@@ -2340,6 +2340,15 @@ ol {
 	color: #444444;
 }
 
+.shop__cart__table tbody tr .cart__buydate {
+	width: 190px;
+	padding-left: 5px;
+}
+
+.shop__cart__table tbody tr .cart__ordercode {
+	width: 210px;
+}
+
 .shop__cart__table tbody tr .cart__total {
 	font-size: 16px;
 	color: #ca1515;
@@ -3348,6 +3357,156 @@ ol {
 
 .contact__map iframe {
 	width: 100%;
+}
+
+/*--------------------------------- MyPage -----------------------------*/
+
+.shop__cart__table tbody tr .myPage__order__insert a {
+	display: inline-block;
+    font-size: 13px;
+    color: #666666;
+    border: 1px solid #f2f2f2;
+    padding: 8px 14px 7px;
+    -webkit-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+    width: 116px;
+}
+
+.myPage__review__text {
+	margin-bottom: 22px;
+	border-bottom: 1px solid #f2f2f2;
+}
+
+.myPage__review__text h3 {
+	color: #111111;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 16px;
+}
+
+.myPage__review__text h3 span {
+	display: block;
+	font-size: 14px;
+	color: #444444;
+	text-transform: none;
+	font-weight: 400;
+	margin-top: 5px;
+}
+
+.myPage__review__text img {
+	margin: 7px 16px -52px 0;
+	width: 90px;
+	height: 90px;
+}
+
+.myPage__review__text .rating {
+	margin-bottom: 16px;
+}
+
+.myPage__review__text .rating i {
+	font-size: 12px;
+	color: #e3c01c;
+}
+
+.myPage__review__text .rating span {
+	font-size: 12px;
+	color: #b1b0b0;
+}
+
+.myPage__review__item {
+	display: inline-table;
+}
+
+.myPage__review__item span {
+	font-size: 15px;
+}
+
+.myPage__review__tags {
+    float: right;
+    display: grid;
+    margin-top: 30px;
+}
+
+.myPage__review__tags a {
+    display: inline-block;
+    font-size: 13px;
+    color: #666666;
+    border: 1px solid #f2f2f2;
+    padding: 8px 14px 7px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    -webkit-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+}
+
+.tab-content .tab-pane .myPage__review__text p:last-child {
+    font-size: 17px;
+    text-align: left;
+    margin-bottom: 22px;
+    padding-top: 0;
+    max-width: 85%; 
+}
+
+.myPage__heart__text {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.myPage__heart__item {
+	width: 20%;
+	padding-bottom: 20px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #f2f2f2;
+	text-align: -webkit-center;
+}
+
+.myPage__heart__item input {
+    visibility: hidden;
+    margin-right: -5px;
+}
+
+.myPage__heart__item label { 
+	width: 14px;
+    height: 14px;
+    border: 1px solid #bcbcbc;
+    border-radius: 3px 3px 3px 3px;
+    vertical-align: top;
+}
+
+.myPage__heart__item label.active:after { 
+	content: '\2713'; 
+	position: relative;
+    bottom: 9px;
+}
+
+.myPage__heart__item img {
+    margin-right: 32px;
+}
+
+.myPage__heart__item h6 {
+    max-width: 75%;
+    padding-top: 9px;
+    overflow-wrap: break-word;
+    color: #111111 !important;
+}
+
+.myPage__heart__item .rating i {
+	font-size: 12px;
+	color: #e3c01c;
+	margin-right: -4px;
+}
+
+.myPage__heart__item .rating span {
+	font-size: 12px;
+	color: #b1b0b0;
+	margin-right: -4px;
+}
+
+.myPage__heart__item .myPage__heart__item__price {
+	font-weight: 600;
+	color: #ca1515;
 }
 
 /*--------------------------------- Responsive Media Quaries -----------------------------*/

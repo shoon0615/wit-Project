@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myPageMapper">
+
+<!-- 내가 주문한 내역 -->
+<select id="getOrder" parameterType="String" resultType="myPageDTO">
+	select 	om.order_code, i.prod_img, p.prod_subcode, od.prod_qty, p.prod_color, p.prod_size, 
+			to_char(om.order_created,'yyyy.mm.dd') review_created, (od.prod_qty*pi.prod_price) prod_price
+	from	order_main om, order_detail od, product p, product_info pi, product_img i
+	where	om.order_code = od.order_code
+	and 	od.prod_code = p.prod_code
+	and 	p.prod_subcode = pi.prod_subcode
+	and 	pi.prod_subcode = i.prod_subcode(+)
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	om.user_id = 'users'
+	order by om.order_created desc
+</select>
+
+<!-- 내가 리뷰 작성한 내역 -->
+<select id="getReview" parameterType="String" resultType="myPageDTO">
+	select	i.prod_img, to_char(r.review_created,'YYYY.MM.DD') review_created, 
+			p.prod_subcode, p.prod_color, p.prod_size, r.review_score, r.review_contents
+	from 	review r, product p, product_img i
+	where	r.prod_code = p.prod_code
+	and		p.prod_subcode = i.prod_subcode(+)
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	r.user_id = #{user_id}
+	order by r.review_created desc
+</select>
+
+<!-- 내가 찜한 상품 목록 -->
+<select id="getHeart" parameterType="String" resultType="myPageDTO">
+	select 	i.prod_img, pi.prod_subcode, pi.prod_price, nvl(round(avg(r.review_score),1),0) review_score
+	from 	review r,product p,product_info pi,product_img i, heart h
+	where 	p.prod_code = r.prod_code(+)
+	and 	p.prod_subcode = pi.prod_subcode
+	and 	pi.prod_subcode = i.prod_subcode(+)
+	and		pi.prod_subcode = h.prod_subcode
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	h.user_id = #{user_id}
+	group by i.prod_img, pi.prod_subcode, pi.prod_price
+	order by pi.prod_subcode
+</select>
+
+</mapper>

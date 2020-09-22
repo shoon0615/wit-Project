@@ -105,6 +105,12 @@ public class ProductController {
 
 		return "";
 	}
+	
+	@RequestMapping(value = "/shop", method = RequestMethod.GET)
+	public String shop() {		
+
+		return "product/shop";
+	}
 
 	@RequestMapping(value = "/shopcart", method = RequestMethod.GET)
 	public String shopcart() {		
