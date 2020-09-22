@@ -36,11 +36,11 @@ function hide() {
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
-                                    <th></th>
-                                    
+                                    <th></th> 
                                 </tr>
                             </thead>
                             <tbody>
+                            
                             <c:forEach var="dto" items="${lists }">
                                 <tr>
                                     <td class="cart__product__item">
@@ -58,7 +58,7 @@ function hide() {
                                             </div>
                                             <input type="button" class="optionChange" value="option 변경">
                                             <iframe class="my_iframe" 
-                                            SRC='<%=cp%>/cart/cartOptionChange.action?prod_code=${dto.prod_code}&prod_subcode=${dto.prod_subcode}' 
+                                            SRC='<%=cp%>/cart/cartOptionChange.action?prod_code=${dto.prod_code}&prod_subcode=${dto.prod_subcode}&cart_qty=${dto.cart_qty}' 
                                             style="display: none;"></iframe>
                                         </div>
                                     </td>

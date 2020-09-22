@@ -11,10 +11,10 @@ import com.wit.cart.dto.CartDTO;
 
 @Repository("cartDAO")
 public class CartDAOImpl implements CartDAO{
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	@Override
 	public List<CartDTO> selectCart(String user_id) {
 		List<CartDTO> list = sqlSession.selectList("cartMapper.selectCart",user_id);
@@ -24,7 +24,7 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public void updateCart(Map<String, Object> hmap) {
 		sqlSession.update("cartMapper.updateCart",hmap);
-		
+
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public void deleteCart(Map<String, Object> hmap) {
 		sqlSession.delete("cartMapper.deleteCart",hmap);
-		
+
 	}
 
 	@Override
@@ -54,12 +54,38 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public void updateCartOption(Map<String, Object> hmap) {
 		sqlSession.update("cartMapper.updateCartOption",hmap);
-		
+
 	}
 
 	@Override
 	public void insertCartOption(Map<String, Object> hmap) {
 		sqlSession.insert("cartMapper.insertCartOption",hmap);
+
+	}
+
+	@Override
+	public int selectChk(Map<String, Object> hmap) {
+
+		if(sqlSession.selectOne("cartMapper.selectChk",hmap) == null) {
+			return -1;
+		}else {
+
+			int cart_qty = sqlSession.selectOne("cartMapper.selectChk",hmap);
+			return cart_qty;
+		}
+
+	}
+
+	@Override
+	public void deleteCartOption(Map<String, Object> hmap) {
+		sqlSession.delete("cartMapper.deleteCartOption",hmap);
+
+		
+	}
+
+	@Override
+	public void addUpdateCartOption(Map<String, Object> hmap) {
+		sqlSession.update("cartMapper.addUpdateCartOption",hmap);
 		
 	}
 
