@@ -150,43 +150,38 @@
 	}
 
     $(window).on('load',function(){
-
+     
     	startCart();
 
     	//수량변화 (+,-) 눌렀을때
         $('.cartDetail').on('click','.qtybtn','.pro-qty',function(){
-
-        	var url = "<%=cp%>/cart/updateCart.action";
+        	hide(); //옵션변경 hide
         	var parent = $(this).closest("tr");
             var cartQtyValue = parent.find('.cartQtyValue').val(); //선택한 상품의 수량
             var cartAmountValue = parent.find('.cart__total').text(); //선택한 상품의 총액 
-            var cartPriceValue = parent.find('.cart__price').text(); //선택한 상품의 한개의 가격    
+            var cartPriceValue = parent.find('.cart__price').text(); //선택한 상품의 한개의 가격
+        	var url = "<%=cp%>/cart/updateCart.action";
             var prod_code = parent.find('.cart_prod_code').val(); //선택한 상품의 prod_code
 
-         	//+ 눌렀을때
-    		if($(this).hasClass('inc')){
-
+        	if($(this).hasClass('inc')){
     			cartQtyValue = Number(cartQtyValue) + 1; //수량은 +1
     			cartAmountValue = Number(cartAmountValue) + Number(cartPriceValue) ; //지금 총액 + 원래 상품 한개의 가격
     			
-    			
     		}else{ //- 눌렀을때
-
+        		
     			if(Number(cartQtyValue) > 1) {	
     				cartQtyValue = Number(cartQtyValue) - 1; //수량 -1
     				cartAmountValue = Number(cartAmountValue) - Number(cartPriceValue) ; //지금 총액 - 원래 상품 한개의 가격
     			}
     		}
-
-    		 $.post(url,{cart_qty : cartQtyValue, prod_code : prod_code},function(args){
-    			//db 업데이트 성공했을시
-    			parent.find('.cartQtyValue').val(cartQtyValue); //뷰단에서 수량 변경
-    			parent.find('.cart__total').text(cartAmountValue); //총액 변경
-    			$('.total_amount').text(args); //모든 상품의 총액 변경			
-    			
-    		}); 		
-    		
-        });
+	    		$.post(url,{cart_qty : cartQtyValue, prod_code : prod_code},function(args){
+	    			//db 업데이트 성공했을시
+	    			parent.find('.cartQtyValue').val(cartQtyValue); //뷰단에서 수량 변경
+	    			parent.find('.cart__total').text(cartAmountValue); //총액 변경
+	    			$('.total_amount').text(args); //모든 상품의 총액 변경			
+	    			
+	    		});	
+      	});
 
     	//체크박스 선택한것들 삭제
         $('.cartDetail').on('click','.deleteCart',function(){
@@ -245,6 +240,7 @@
         });             
     		
 	});
+
 
 </script>
 

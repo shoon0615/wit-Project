@@ -21,9 +21,10 @@ function addOrChange(mode){
 		
    	var prod_color = $('#optionColor option:selected').text(); //선택한 컬러
    	var prod_size = $('#optionSize option:selected').text(); //선택한 사이즈
-   	var prod_code = "${prod_code}"; //옵션변경하기전 원래 prod_code
-	var prod_subcode = "${prod_subcode}"; //prod_subcode
-	var cart_qty = "${cart_qty}";
+   	var prod_code = "${dto.prod_code}"; //옵션변경하기전 원래 prod_code
+	var prod_subcode = "${dto.prod_subcode}"; //prod_subcode
+	var cart_qty = "${dto.cart_qty}";
+	var prod_price = "${dto.prod_price}";
 
 	if(mode == 'insert'){
 		var url = "<%=cp%>/cart/insertCartOption.action";
@@ -35,7 +36,8 @@ function addOrChange(mode){
 		 prod_size : prod_size,
 		 prod_code : prod_code,
 		 prod_subcode : prod_subcode,
-		 cart_qty : cart_qty
+		 cart_qty : cart_qty,
+		 prod_price : prod_price
 		 },function(args){
 			 //성공했을시
 			 //부모 jsp(shop-cart.jsp)의 startCart 함수 호출

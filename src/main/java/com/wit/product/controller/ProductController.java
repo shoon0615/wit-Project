@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wit.cart.dto.CartDTO;
+import com.wit.custom.dto.CustomDTO;
 import com.wit.product.dao.ProductDAO;
 import com.wit.product.dto.ProductDTO;
 import com.wit.product.dto.reviewDTO;
@@ -98,9 +99,13 @@ public class ProductController {
 			@RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
 
 		HttpSession session = req.getSession();
-
-		dao.insertBag("users", PROD_SUBCODE, PROD_INFO);
-
+		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");		
+		
+		if(dto != null) {
+			dao.insertBag(dto.getUser_id(), PROD_SUBCODE, PROD_INFO);
+		}else {
+			session.setAttribute("cart_lists", dao.insertBag_a(PROD_SUBCODE, PROD_INFO) );
+		}
 		return "";
 	}
 	
@@ -133,7 +138,6 @@ public class ProductController {
 		hMap.put("end", end);
 		hMap.put("sort", sort);
 		hMap.put("user_form", user_form);
-
 
 		if(mode == null || mode.equals("")){ //초기리뷰 (정렬: 최신순/ 체크박스 체크x)
 

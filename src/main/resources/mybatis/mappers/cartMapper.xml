@@ -46,7 +46,7 @@
 	where prod_subcode=#{prod_subcode}
 </select>
 <!-- 옵션변경에서 change클릭시 update  -->
-<update id="updateCartOption" parameterType="hashMap">
+<update id="updateCartOption" parameterType="cartDTO">
 	update cart set prod_code=
 		(select prod_code from product 
 		where prod_size=#{prod_size} 
@@ -57,16 +57,17 @@
 	and prod_code = #{prod_code}
 </update>
 <!-- 옵션변경에서 add 클릭시 update  -->
-<update id="addUpdateCartOption" parameterType="hashMap">
+<update id="addUpdateCartOption" parameterType="cartDTO">
 	update cart set cart_qty = #{cart_qty}
 	where user_id = #{user_id}
-	and prod_code = (select prod_code from product 
+	and prod_code = 
+	(select prod_code from product 
 		where prod_size=#{prod_size} 
 		and prod_color=#{prod_color} 
 		and prod_subcode=#{prod_subcode})
 </update>
 <!-- 옵션변경에서 add 클릭시 insert  -->
-<insert id="insertCartOption" parameterType="hashMap">
+<insert id="insertCartOption" parameterType="cartDTO">
 	insert into cart values 
 	(#{user_id},
 	(select prod_code from product 
@@ -78,7 +79,7 @@
 </insert>
 
 <!-- select 카트 prod_code가 존재하는지 검증 겸 수량가져오기  -->
-<select id="selectChk" parameterType="hashMap" resultType="int">
+<select id="selectChk" parameterType="CartDTO" resultType="int">
 	select cart_qty from cart
 	where prod_code = 
 	(select prod_code from product 
@@ -88,9 +89,18 @@
 	and user_id = #{user_id}
 </select>
 
-<delete id="deleteCartOption" parameterType="hashMap">
+<!-- select 카트 prod_code가 존재하는지 검증 겸 수량가져오기  -->
+<select id="selectChkProdCode" parameterType="CartDTO" resultType="String">
+	select prod_code from product
+	where prod_color  = #{prod_color}
+	and prod_size = #{prod_size}
+	and prod_subcode = #{prod_subcode}  
+</select>
+
+<delete id="deleteCartOption" parameterType="CartDTO">
 	delete from cart
-	where prod_code = (select prod_code from product 
+	where prod_code = 
+	(select prod_code from product 
 		where prod_size=#{prod_size} 
 		and prod_color=#{prod_color} 
 		and prod_subcode=#{prod_subcode})

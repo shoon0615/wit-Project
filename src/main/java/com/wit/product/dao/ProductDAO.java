@@ -19,6 +19,7 @@ public interface ProductDAO {
 	public ProductDTO choiceProd(ProductDTO dto);
 	public List<String> selectBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
 	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
+	public List<CartDTO> insertBag_a(String PROD_SUBCODE, List<String> PROD_INFO);
 	public List<reviewDTO> selectProductReview(Map<String,Object> hmap); //상품코드에대한 전체리뷰출력
 	public List<String> selectReviewImg(String review_num); //상품코드에대한 전체리뷰출력
 	public List<reviewDTO> selectPhotoReview(Map<String,Object> hmap); //포토리뷰 출력

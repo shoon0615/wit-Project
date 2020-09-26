@@ -12,6 +12,8 @@ public class CartDTO {
 	private int prod_price;
 	private String prod_code;
 	private int total_amount;
+	private String user_id;
+	private int select_cart_qty;
 
 	public String getProd_subcode() {
 		return prod_subcode;
@@ -66,6 +68,18 @@ public class CartDTO {
 	}
 	public void setTotal_amount(int total_amount) {
 		this.total_amount = total_amount;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public int getSelect_cart_qty() {
+		return select_cart_qty;
+	}
+	public void setSelect_cart_qty(int select_cart_qty) {
+		this.select_cart_qty = select_cart_qty;
 	}
 	
 	

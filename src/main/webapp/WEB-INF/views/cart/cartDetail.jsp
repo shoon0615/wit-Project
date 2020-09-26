@@ -58,7 +58,7 @@ function hide() {
                                             </div>
                                             <input type="button" class="optionChange" value="option 변경">
                                             <iframe class="my_iframe" 
-                                            SRC='<%=cp%>/cart/cartOptionChange.action?prod_code=${dto.prod_code}&prod_subcode=${dto.prod_subcode}&cart_qty=${dto.cart_qty}' 
+                                            SRC='<%=cp%>/cart/cartOptionChange.action?prod_code=${dto.prod_code}&prod_subcode=${dto.prod_subcode}&cart_qty=${dto.cart_qty}&prod_price=${dto.prod_price}' 
                                             style="display: none;"></iframe>
                                         </div>
                                     </td>

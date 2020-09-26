@@ -13,10 +13,11 @@ public interface CartDAO {
 	public void deleteCart(Map<String,Object> hmap); //카트삭제
 	public List<CartDTO> selectColor(String prod_subcode); //카트 옵션변경 컬러 셀렉트
 	public List<CartDTO> selectSize(String prod_subcode); //카트 옵션변경 size 셀렉트
-	public void updateCartOption(Map<String,Object> hmap); //카트업데이트(옵션변경)
-	public void addUpdateCartOption(Map<String,Object> hmap); //add click 카트업데이트(옵션변경)
-	public void insertCartOption(Map<String,Object> hmap); //카트insert(옵션변경)
-	public int selectChk(Map<String,Object> hmap);
-	public void deleteCartOption(Map<String,Object> hmap); //카트 delete (옵션변경)
+	public void updateCartOption(CartDTO dto); //카트업데이트(옵션변경)
+	public void addUpdateCartOption(CartDTO dto); //add click 카트업데이트(옵션변경)
+	public void insertCartOption(CartDTO dto); //카트insert(옵션변경)
+	public int selectChk(CartDTO dto);
+	public String selectChkProdCode(CartDTO dto);
+	public void deleteCartOption(CartDTO dto); //카트 delete (옵션변경)
 	
 }

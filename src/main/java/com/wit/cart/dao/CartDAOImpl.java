@@ -52,41 +52,46 @@ public class CartDAOImpl implements CartDAO{
 	}
 
 	@Override
-	public void updateCartOption(Map<String, Object> hmap) {
-		sqlSession.update("cartMapper.updateCartOption",hmap);
+	public void updateCartOption(CartDTO dto) {
+		sqlSession.update("cartMapper.updateCartOption",dto);
 
 	}
 
 	@Override
-	public void insertCartOption(Map<String, Object> hmap) {
-		sqlSession.insert("cartMapper.insertCartOption",hmap);
+	public void insertCartOption(CartDTO dto) {
+		sqlSession.insert("cartMapper.insertCartOption",dto);
 
 	}
 
 	@Override
-	public int selectChk(Map<String, Object> hmap) {
+	public int selectChk(CartDTO dto) {
 
-		if(sqlSession.selectOne("cartMapper.selectChk",hmap) == null) {
+		if(sqlSession.selectOne("cartMapper.selectChk",dto) == null) {
 			return -1;
 		}else {
-
-			int cart_qty = sqlSession.selectOne("cartMapper.selectChk",hmap);
+			int cart_qty = sqlSession.selectOne("cartMapper.selectChk",dto);
 			return cart_qty;
 		}
 
 	}
 
 	@Override
-	public void deleteCartOption(Map<String, Object> hmap) {
-		sqlSession.delete("cartMapper.deleteCartOption",hmap);
+	public void deleteCartOption(CartDTO dto) {
+		sqlSession.delete("cartMapper.deleteCartOption",dto);
 
 		
 	}
 
 	@Override
-	public void addUpdateCartOption(Map<String, Object> hmap) {
-		sqlSession.update("cartMapper.addUpdateCartOption",hmap);
+	public void addUpdateCartOption(CartDTO dto) {
+		sqlSession.update("cartMapper.addUpdateCartOption",dto);
 		
+	}
+
+	@Override
+	public String selectChkProdCode(CartDTO dto) {	
+		String select_prod_code = sqlSession.selectOne("cartMapper.selectChkProdCode",dto);
+		return select_prod_code;
 	}
 
 }
