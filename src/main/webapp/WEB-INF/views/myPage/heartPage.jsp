@@ -5,7 +5,10 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-
+<div class="myPage__heart__tags">
+	<a>Select All</a>
+	<a>Delete</a>
+</div>
 <div class="myPage__heart__text">
 	<c:forEach var="dto" items="${lists }">
 		<div class="myPage__heart__item">

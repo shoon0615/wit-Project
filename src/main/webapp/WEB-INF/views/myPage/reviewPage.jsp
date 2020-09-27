@@ -19,9 +19,9 @@
 	            <span class="fa fa-star"></span>
 	        </div>
 		</div>
-	   	<div class="myPage__review__tags">
-	          <a href="#">Show Detail</a>
-	          <a href="#">Delete This</a>
+	   	<div id="${dto.review_num }" class="myPage__review__tags">
+	          <a>Show Detail</a>
+	          <a>Delete This</a>
 	    </div>
 	   	<p>${dto.review_contents }</p>
 	</div>

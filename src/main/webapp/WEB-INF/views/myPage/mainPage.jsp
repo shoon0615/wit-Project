@@ -66,29 +66,41 @@
     
     <script type="text/javascript">
 
+    	// 화면마다의 url 셋팅
+	    var urlArr = new Array(
+	    		"orderPage.action",
+	    		"reviewPage.action",
+	    		"heartPage.action"
+	    		);
+		var reviewWrite = false;
+		var fileArr = new Array();
+
     	// 페이지 호출(1: orderPage, 2: reviewPage, 3: heartPage)
     	function getPage(choice){
-        	var url = "";
-
-			if(choice == 1) {
-				url = "orderPage.action";
-			} else if(choice == 2) {
-				url = "reviewPage.action";
-			} else if(choice == 3) {
-				url = "heartPage.action";
-			}
-        	
-       		$.post(url,function(args){
-   				$('#tabs-' + choice).html(args);
-   			});
+			$.ajax({
+				type: 'POST',
+	        	url: urlArr[choice-1],
+	        	async: false,
+	        	success: function(args) {
+	        		$('#tabs-' + choice).html(args);
+	        	}
+			});
         }
 
     	$(function(){
 			// 페이지가 로드되면 첫 화면을 미리 셋팅해둠
-    		for(var i=1;i<=3;i++) {
+    		for(var i=1;i<=urlArr.length;i++) {
     			getPage(i);
    			}
-        	
+
+			// Review 클릭 시(리뷰 작성 창이라면 초기화)
+    		$('.nav-item:eq(1)').on('click', "a", function(){
+				if(reviewWrite) {
+					getPage(2);	
+					reviewWrite = false;
+				}
+        	});
+    		
         	// heart의 체크박스 라벨 클릭 시
 			$('.tab-pane').on('click', '.myPage__heart__item', function(){
 				var children = $(this).children().first();
@@ -97,8 +109,97 @@
 				    return prop == true ? false : true;
 				});
 			});
-			
-        });
+
+        	// Order의 Write Review 클릭 시
+			$('#tabs-1').on('click', "a", function(){
+				var order_code = $(this).closest("tr").children().first().text();
+				var prod_code = $(this).parent().attr("id");
+				var url = "reviewWritePage.action";
+
+				$.post(url, {order_code:order_code, prod_code:prod_code}, function(args){
+					reviewWrite = false;
+					$(window).scrollTop(200);
+	   				$('#tabs-2').html(args);
+	   				$(".nav-item:eq(1)").children().trigger("click");
+					reviewWrite = true;
+	   			});
+			});
+
+        	// Write Review의 File Upload 클릭 시
+			$('#tabs-2').on('click', '.file__upload', function(){
+				$(this).parent().children().last().trigger("click");
+			});
+
+			// Write Review의 File을 올렸을 시
+			$('#tabs-2').on('change', 'input[type=file]', function(){
+				var fileLength = fileArr.length;
+			  	Array.prototype.push.apply(fileArr, $(this)[0].files);	// object File, object File... 으로 보내짐
+			  	//fileArr.push($(this)[0].files);						// object FileList 로 보내짐	
+			  	
+			  	if(fileArr.length<=4) {
+			  		$(this).parent().append($(this).clone());
+			  		$(this).next().val("");
+			  		$(this).parent().children("span").text(fileArr.length + " files");
+			  	} else {
+			  		fileArr.splice(fileLength);
+			  		$(this).val("");	
+					alert("이미지는 4개까지만 첨부가능합니다");
+				}  	
+			});
+
+			// Write Review의 Write Review(submit) 클릭 시
+			$('#tabs-2').on('click', "input[type=submit]", function(){
+				fileArr = new Array();
+			});
+
+			// Review의 Show Detail 클릭 시
+			$('#tabs-2').on('click', "a:first-child", function(){
+				alert($(this).parent().attr("id"));
+			});
+
+			// Review의 Delete This 클릭 시
+    		$('#tabs-2').on('click', "a:last-child", function(){
+				var ok = confirm("Are you sure you want to delete?");
+				
+				if(ok) {
+					var url = "reviewDelete.action";
+					var param = $(this).parent().attr("id");
+					
+					$.post(url, {review_num:param}, function(args){
+						getPage(2);
+		   			});
+				}
+			});
+
+    		// Heart의 Select All 클릭 시
+			$('#tabs-3').on('click', "a:first-child", function(){
+				if($('.myPage__heart__item input').length == $('.myPage__heart__item input:checked').length) {
+					$('.myPage__heart__item label').removeClass("active"); 	//체크박스 초기화
+					$('.myPage__heart__item input').prop("checked", false); //체크박스 초기화
+				} else {
+					$('.myPage__heart__item label').addClass("active"); 	//체크박스 초기화
+					$('.myPage__heart__item input').prop("checked", true); 	//체크박스 초기화
+				}	
+			});
+
+			// Heart의 Delete 클릭 시
+			$('#tabs-3').on('click', "a:last-child", function(){
+				var ok = confirm("Are you sure you want to delete?");
+				
+				if(ok) {
+					var url = "heartDelete.action";
+					var prod_subcode = "";
+					
+					$('.myPage__heart__item input:checked').each(function(i){
+						prod_subcode += "'" + $(this).parent().children("h6").text() + "',";
+					});
+					
+					$.post(url, {prod_subcode:prod_subcode.slice(0, -1)}, function(args){
+						getPage(3);
+		   			});
+				}
+			});
+    	});
 
     </script>
 </head>
@@ -254,6 +355,7 @@
     <script src="/wit/resources/js/owl.carousel.min.js"></script>
     <script src="/wit/resources/js/jquery.nicescroll.min.js"></script>
     <script src="/wit/resources/js/main.js"></script>
+    
 </body>
 
 </html>

@@ -1,5 +1,9 @@
 package com.wit.myPage.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class MyPageDTO {
 
 	// Review
@@ -25,7 +29,11 @@ public class MyPageDTO {
 	
 	// Order_Detail
 	private int prod_qty;				// 상품 주문 개수
-
+	
+	// Void Variable
+	private int order_code_cnt;				// 주문 번호 상품 개수
+	private List<MultipartFile> upload_img;	// 파일 이미지
+	
 	public int getReview_num() {
 		return review_num;
 	}
@@ -109,6 +117,18 @@ public class MyPageDTO {
 	}
 	public void setProd_qty(int prod_qty) {
 		this.prod_qty = prod_qty;
+	}
+	public int getOrder_code_cnt() {
+		return order_code_cnt;
+	}
+	public void setOrder_code_cnt(int order_code_cnt) {
+		this.order_code_cnt = order_code_cnt;
+	}
+	public List<MultipartFile> getUpload_img() {
+		return upload_img;
+	}
+	public void setUpload_img(List<MultipartFile> upload_img) {
+		this.upload_img = upload_img;
 	}
 	
 }	
