@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wit.payment.dto.PaymentDTO;
 import com.wit.product.dto.ProductDTO;
 
@@ -70,15 +72,23 @@ public class PaymentDAOImpl implements PaymentDAO {
 	
 	// Order_Detail 테이블 삽입
 	@Override
-	public void insertOrderDetail(List<Map<String, Object>> list, String order_code) {
+	public void insertOrderDetail(String prod_list, String order_code) {
+		ObjectMapper mapper = new ObjectMapper();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> hMap = new HashMap<String, Object>();
-		hMap.put("order_code", order_code);
 		
-		for(int i=0;i<list.size();i++) {
-			hMap.put("prod_code", list.get(i).get("PROD_CODE"));
-			hMap.put("prod_qty", list.get(i).get("CART_QTY"));
-			sqlSession.insert("paymentMapper.insertOrderDetail", hMap);
-		}	
+		try {
+			list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});	
+			hMap.put("order_code", order_code);
+			
+			for(int i=0;i<list.size();i++) {
+				hMap.put("prod_code", list.get(i).get("PROD_CODE"));
+				hMap.put("prod_qty", list.get(i).get("CART_QTY"));
+				sqlSession.insert("paymentMapper.insertOrderDetail", hMap);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	
 }

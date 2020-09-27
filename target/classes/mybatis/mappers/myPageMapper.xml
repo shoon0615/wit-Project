@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myPageMapper">
+
+<!-- 내가 주문한 내역 -->
+<select id="getOrder" parameterType="String" resultType="myPageDTO">
+	select 	row_number() over (partition by om.order_code order by p.prod_code desc) as review_num,
+			p.prod_code, om.order_code, i.prod_img, p.prod_subcode, od.prod_qty, p.prod_color, p.prod_size, 
+			to_char(om.order_created,'yyyy.mm.dd') as review_created, (od.prod_qty*pi.prod_price) as prod_price,
+			od.order_code_cnt
+	from	order_main om, 
+			(
+				select 	oda.*, odb.order_code_cnt
+	 	 		from	order_detail oda,
+	 	 		(select order_code, count(*) as order_code_cnt from order_detail group by order_code) odb
+	 	 		where	oda.order_code = odb.order_code
+	 	 	) od,
+			product p, product_info pi, product_img i
+	where	om.order_code = od.order_code
+	and 	od.prod_code = p.prod_code
+	and 	p.prod_subcode = pi.prod_subcode
+	and 	pi.prod_subcode = i.prod_subcode(+)
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	om.user_id = #{user_id}
+	order by om.order_created desc, p.prod_code asc
+</select>
+
+<!-- 다음 자리의 리뷰번호 호출 -->
+<select id="getMaxReview_Num" resultType="int">
+	select	max(review_num) from review
+</select>
+
+<!-- 리뷰 작성 -->
+<insert id="insertReview" parameterType="myPageDTO">
+	insert into review 
+	(review_num, order_code, prod_code, user_id, review_contents, ceo_contents, review_score, review_created)
+	values
+	(#{review_num}, #{order_code}, #{prod_code}, #{user_id}, #{review_contents}, '', #{review_score}, sysdate)
+</insert>
+
+<!-- 리뷰 이미지 저장 -->
+<insert id="insertReview_Img" parameterType="hashMap">
+	insert into review_img
+	(review_num, review_img)
+	values
+	(#{review_num}, #{review_img})
+</insert>
+
+<!-- 내가 리뷰 작성한 내역 -->
+<select id="getReview" parameterType="String" resultType="myPageDTO">
+	select	r.review_num, i.prod_img, to_char(r.review_created,'yyyy.mm.dd') review_created, 
+			p.prod_subcode, p.prod_color, p.prod_size, r.review_score, r.review_contents
+	from 	review r, product p, product_img i
+	where	r.prod_code = p.prod_code
+	and		p.prod_subcode = i.prod_subcode(+)
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	r.user_id = #{user_id}
+	order by r.review_created desc
+</select>
+
+<!-- 선택한 리뷰 삭제 -->
+<delete id="deleteReview" parameterType="String">
+	delete review where review_num = #{review_num}
+</delete>
+
+<!-- 내가 찜한 상품 목록 -->
+<select id="getHeart" parameterType="String" resultType="myPageDTO">
+	select 	i.prod_img, pi.prod_subcode, pi.prod_price, nvl(round(avg(r.review_score),1),0) review_score
+	from 	review r,product p,product_info pi,product_img i, heart h
+	where 	p.prod_code = r.prod_code(+)
+	and 	p.prod_subcode = pi.prod_subcode
+	and 	pi.prod_subcode = i.prod_subcode(+)
+	and		pi.prod_subcode = h.prod_subcode
+	and 	nvl(i.prod_mainimg, '1') != '0'
+	and 	h.user_id = #{user_id}
+	group by i.prod_img, pi.prod_subcode, pi.prod_price
+	order by pi.prod_subcode
+</select>
+
+<!-- 선택한 찜한 상품 삭제 -->
+<delete id="deleteHeart" parameterType="myPageDTO">
+	delete heart where user_id = #{user_id} and prod_subcode in (${prod_subcode})
+</delete>
+
+</mapper>

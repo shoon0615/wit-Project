@@ -1,6 +1,7 @@
 package com.wit.payment.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,12 +39,11 @@ public class PaymentController {
 	@RequestMapping(value = "/checkout", method = {RequestMethod.GET, RequestMethod.POST})
 	public String checkout(HttpServletRequest request, HttpSession session, String prodStr) {	
 		
-		ObjectMapper mapper = new ObjectMapper();
-		
+		ObjectMapper mapper = new ObjectMapper();	
 		List<Map<String, Object>> list = dao.getProdCode(prodStr);
 		
 		try {
-			// json 방식으로 가능한지 테스트를 위해 시험해봄
+			// list에 qty를 가져올수없어 map에 추가했기 때문에 이대로 json 형태로 보냄
 			String list_json = mapper.writeValueAsString(list);
 			
 			request.setAttribute("prod_list", list);
@@ -58,25 +58,16 @@ public class PaymentController {
 	@RequestMapping(value = "/insertOrder", method = RequestMethod.POST)
 	public @ResponseBody String insertOrder(HttpServletRequest request, PaymentDTO dto, String prod_list) {
 		
-		// 현재 날짜를 to_char('yyyymmdd')와 동일하게 받아옴
+		// 현재 날짜를 to_char형식으로 동일하게 받아옴
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date sysdate = new Date();		
 		String toDate = dateFormat.format(sysdate);
 		
 		dto.setOrder_code(toDate);					// order_code를 컨트롤러에서 생성
 		String order_code = dto.getOrder_code();
-
-		ObjectMapper mapper = new ObjectMapper();
-		
-		try {
-			List<Map<String, Object>> list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});
 			
-			dao.insertOrderMain(dto);
-			dao.insertOrderDetail(list, order_code);
-			
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
+		dao.insertOrderMain(dto);
+		dao.insertOrderDetail(prod_list, order_code);
 
 		return order_code;
 	}
