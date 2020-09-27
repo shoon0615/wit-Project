@@ -55,7 +55,7 @@
 
 <!-- 옵션 선택시 생성되는 상품 코드 정보 -->
 <select id="choiceProd" parameterType="productDTO" resultType="productDTO">
-	SELECT	A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE	
+	SELECT	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE	
 	FROM	PRODUCT A, PRODUCT_INFO B
 	WHERE	A.PROD_SUBCODE = B.PROD_SUBCODE
 	AND 	A.PROD_SUBCODE = #{PROD_SUBCODE}
@@ -243,33 +243,4 @@
 <delete id="deleteReport">
 	delete report where review_num = (select review_num from report group by review_num having count(*)>=2)
 </delete>
-
-<select id="selectCart" parameterType="String" resultType="cartDTO">
-	select c.prod_code,p.prod_subcode,p.prod_color,p.prod_size,c.cart_qty,pi.prod_price,c.cart_qty*pi.prod_price as cart_amount,img.prod_img
-	from cart c,product_info pi,product p,product_img img
-	where c.prod_code=p.prod_code
-	and p.prod_subcode=pi.prod_subcode
-	and pi.prod_subcode=img.prod_subcode(+)
-	and nvl(img.prod_mainimg,'1')='1'
-	and c.user_id = #{user_id}
-</select>
-
-<update id="updateCart" parameterType="hashMap">
-	update cart set cart_qty=#{cart_qty} where prod_code=#{prod_code}
-</update>
-
-<select id="selectTotalAmount" parameterType="String" resultType="int">
-	select nvl(sum(c.cart_qty*pi.prod_price),0) as total_amount
-	from cart c, product p, product_info pi
-	where c.prod_code=p.prod_code
-	and p.prod_subcode=pi.prod_subcode
-	and c.user_id = #{user_id}
-</select>
-
-<delete id="deleteCart" parameterType="hashMap">
-	delete from cart 
-	where user_id = #{user_id} 
-	and prod_code = #{prod_code}
-</delete>
-
 </mapper>

@@ -42,7 +42,11 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
 			sendReview(sortChk, pageNum); //성공했을시 정렬과 체크박스 페이지넘 유지를 위해 sendReview 함수를 탐	
 		},		
 		error:function(e){
-			alert("이미 신고하셨습니다!");
+			if(${!empty sessionScope.customInfo.id }){
+				alert("이미 신고하셨습니다!");
+			}else{
+				alert("로그인 후 이용해주세요!");
+			}
 		}	
 	});
 	

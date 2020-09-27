@@ -6,11 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.wit.product.dto.CartDTO;
+import com.wit.cart.dto.CartDTO;
 import com.wit.product.dto.ProductDTO;
 import com.wit.product.dto.reviewDTO;
 
@@ -151,7 +153,38 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 		}
 	}
+	
+	@Override
+	public List<CartDTO> insertBag_a(String PROD_SUBCODE, List<String> PROD_INFO) {
+		
+		List<CartDTO> lists = new ArrayList<CartDTO>();
+		
+		Iterator<String> it = PROD_INFO.iterator();
+		
+		while(it.hasNext()) {
+			String[] info = it.next().split("-");
+			
+			ProductDTO dto = new ProductDTO();
+			CartDTO dtoC = new CartDTO();
+			
+			dto.setPROD_SUBCODE(PROD_SUBCODE);
+			dto.setPROD_COLOR(info[0]);
+			dto.setPROD_SIZE(info[1]);	
+			
+			dto = sqlSession.selectOne("productMapper.choiceProd", dto);
+			
+			dtoC.setProd_code(dto.getPROD_CODE());
+			dtoC.setCart_qty(Integer.parseInt(info[2]));
+			dtoC.setProd_price(dto.getPROD_PRICE());
+			dtoC.setCart_amount(dtoC.getCart_qty() * dtoC.getProd_price());
+			dtoC.setProd_subcode(dto.getPROD_SUBCODE());
 
+			lists.add(dtoC);
+		}
+		
+		return lists;
+	}
+	
 	@Override
 	public List<reviewDTO> selectProductReview(Map<String, Object> hmap) {
 		List<reviewDTO> list = sqlSession.selectList("productMapper.selectProductReview",hmap);
@@ -221,30 +254,5 @@ public class ProductDAOImpl implements ProductDAO {
 		sqlSession.delete("productMapper.deleteReport");
 		
 	}
-
-	@Override
-	public List<CartDTO> selectCart(String user_id) {
-		List<CartDTO> list = sqlSession.selectList("productMapper.selectCart",user_id);
-		return list;
-	}
-
-	@Override
-	public void updateCart(Map<String, Object> hmap) {
-		sqlSession.update("productMapper.updateCart",hmap);
-		
-	}
-
-	@Override
-	public int selectTotalAmount(String user_id) {
-		int total_amount =  sqlSession.selectOne("productMapper.selectTotalAmount", user_id);
-		return total_amount;
-	}
-
-	@Override
-	public void deleteCart(Map<String, Object> hmap) {
-		sqlSession.delete("productMapper.deleteCart",hmap);
-		
-	}
-
 
 }

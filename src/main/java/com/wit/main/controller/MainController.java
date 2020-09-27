@@ -36,11 +36,6 @@ public class MainController {
 	 * 
 	 * //타일즈/내가 설정하는 jsp경로 return ".tiles/views/index"; }
 	 */
-	
-	@RequestMapping(value = "/test", method = {RequestMethod.GET, RequestMethod.POST})
-	public String test() {
-		return "blog-details";
-	}
 
 	@RequestMapping(value = "/main", method = {RequestMethod.GET, RequestMethod.POST})
 	public String main(HttpServletRequest req,MainDTO dto) {	

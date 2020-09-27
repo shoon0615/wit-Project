@@ -1,8 +1,7 @@
-package com.wit.product.dto;
+package com.wit.cart.dto;
 
 public class CartDTO {
 	
-	//p.prod_subcode,p.prod_color,p.prod_size,c.cart_qty,c.cart_qty*pi.prod_price as cart_amount,img.prod_img
 	private String prod_subcode;
 	private String prod_color;
 	private String prod_size;
@@ -12,10 +11,8 @@ public class CartDTO {
 	private int prod_price;
 	private String prod_code;
 	private int total_amount;
-	
-	
-	
-	
+	private String user_id;
+
 	public String getProd_subcode() {
 		return prod_subcode;
 	}
@@ -70,8 +67,12 @@ public class CartDTO {
 	public void setTotal_amount(int total_amount) {
 		this.total_amount = total_amount;
 	}
-	
-	
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}	
 	
 
 }

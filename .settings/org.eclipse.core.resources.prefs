@@ -16,5 +16,5 @@ encoding//src/main/java/com/wit/payment/dao/PaymentDAOImpl.java=UTF-8
 encoding//src/main/java/com/wit/product/dao/ProductDAOImpl.java=UTF-8
 encoding//src/main/java/com/wit/product/dto/ProductDTO.java=UTF-8
 encoding//src/main/java/com/wit/util/MenuPreparer.java=EUC-KR
+encoding//src/main/webapp/WEB-INF/views/cart/cartOptionModal.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/custom/join.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/product/cartOptionModal.jsp=UTF-8

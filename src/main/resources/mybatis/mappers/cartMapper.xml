@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cartMapper">
+<!-- 카트 리스트 셀렉트  -->
+<select id="selectCart" parameterType="String" resultType="cartDTO">
+	select c.prod_code,p.prod_subcode,p.prod_color,p.prod_size,c.cart_qty,pi.prod_price,c.cart_qty*pi.prod_price as cart_amount,img.prod_img
+	from cart c,product_info pi,product p,product_img img
+	where c.prod_code=p.prod_code
+	and p.prod_subcode=pi.prod_subcode
+	and pi.prod_subcode=img.prod_subcode(+)
+	and nvl(img.prod_mainimg,'1')='1'
+	and c.user_id = #{user_id}
+</select>
+<!-- 카트상에서 +,- 수량변경시 update  -->
+<update id="updateCart" parameterType="hashMap">
+	update cart set cart_qty=#{cart_qty} 
+	where prod_code=#{prod_code} 
+	and user_id = #{user_id}
+</update>
+<!-- 고객이 담은 장바구니 상품의 전체총액  -->
+<select id="selectTotalAmount" parameterType="String" resultType="int">
+	select nvl(sum(c.cart_qty*pi.prod_price),0) as total_amount
+	from cart c, product p, product_info pi
+	where c.prod_code=p.prod_code
+	and p.prod_subcode=pi.prod_subcode
+	and c.user_id = #{user_id}
+</select>
+<!-- 하나씩상품삭제  -->
+<delete id="deleteCart" parameterType="hashMap">
+	delete from cart 
+	where user_id = #{user_id} 
+	and prod_code = #{prod_code}
+</delete>
+<!-- prod_subcode의 전체 색상  -->
+<select id="selectColor" parameterType="String" resultType="cartDTO">
+	select DISTINCT prod_color
+	from product
+	where prod_subcode=#{prod_subcode}
+</select>
+<!-- prod_subcode의 전체 사이즈  -->
+<select id="selectSize" parameterType="String" resultType="cartDTO">
+	select DISTINCT prod_size
+	from product
+	where prod_subcode=#{prod_subcode}
+</select>
+<!-- 옵션변경에서 change클릭시 update  -->
+<update id="updateCartOption" parameterType="cartDTO">
+	update cart set prod_code=
+		(select prod_code from product 
+		where prod_size=#{prod_size} 
+		and prod_color=#{prod_color} 
+		and prod_subcode=#{prod_subcode}),
+		cart_qty = #{cart_qty}
+	where user_id = #{user_id}
+	and prod_code = #{prod_code}
+</update>
+<!-- 옵션변경에서 add 클릭시 update  -->
+<update id="addUpdateCartOption" parameterType="cartDTO">
+	update cart set cart_qty = #{cart_qty}
+	where user_id = #{user_id}
+	and prod_code = 
+	(select prod_code from product 
+		where prod_size=#{prod_size} 
+		and prod_color=#{prod_color} 
+		and prod_subcode=#{prod_subcode})
+</update>
+<!-- 옵션변경에서 add 클릭시 insert  -->
+<insert id="insertCartOption" parameterType="cartDTO">
+	insert into cart values 
+	(#{user_id},
+	(select prod_code from product 
+	where prod_size=#{prod_size} 
+	and prod_color=#{prod_color} 
+	and prod_subcode=#{prod_subcode}),
+	1,
+	sysdate)
+</insert>
+
+<!-- select 카트 prod_code가 존재하는지 검증 겸 수량가져오기  -->
+<select id="selectChk" parameterType="CartDTO" resultType="int">
+	select cart_qty from cart
+	where prod_code = 
+	(select prod_code from product 
+		where prod_size=#{prod_size} 
+		and prod_color=#{prod_color} 
+		and prod_subcode=#{prod_subcode})
+	and user_id = #{user_id}
+</select>
+
+<!-- select 카트 prod_code가 존재하는지 검증 겸 수량가져오기  -->
+<select id="selectChkProdCode" parameterType="CartDTO" resultType="String">
+	select prod_code from product
+	where prod_color  = #{prod_color}
+	and prod_size = #{prod_size}
+	and prod_subcode = #{prod_subcode}  
+</select>
+
+<delete id="deleteCartOption" parameterType="CartDTO">
+	delete from cart
+	where prod_code = 
+	(select prod_code from product 
+		where prod_size=#{prod_size} 
+		and prod_color=#{prod_color} 
+		and prod_subcode=#{prod_subcode})
+	and cart_qty = #{cart_qty}
+	and user_id = #{user_id}
+</delete>
+</mapper>

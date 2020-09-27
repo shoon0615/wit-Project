@@ -1,7 +1,6 @@
 package com.wit.product.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,14 +11,17 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.
+Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.wit.cart.dto.CartDTO;
+import com.wit.custom.dto.CustomDTO;
 import com.wit.product.dao.ProductDAO;
-import com.wit.product.dto.CartDTO;
 import com.wit.product.dto.ProductDTO;
 import com.wit.product.dto.reviewDTO;
 import com.wit.util.MyUtil;
@@ -59,10 +61,6 @@ public class ProductController {
 		mav.addObject("PROD_IMG", PROD_IMG);		
 		mav.addObject("PROD_COLOR", PROD_COLOR);
 		mav.addObject("PROD_SIZE", PROD_SIZE);
-		
-		String[] testarray = {"AA", "BB", "CC"};
-		//List<String> testyo = new ArrayList<String>(Arrays.asList(testarray));
-		mav.addObject("testyo", testarray);
 
 		mav.setViewName(".tiles/product/productPage");
 
@@ -101,73 +99,16 @@ public class ProductController {
 			@RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
 
 		HttpSession session = req.getSession();
-
-		dao.insertBag("users", PROD_SUBCODE, PROD_INFO);
-
+		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");		
+		
+		if(dto != null) {
+			dao.insertBag(dto.getUser_id(), PROD_SUBCODE, PROD_INFO);
+		}else {
+			session.setAttribute("cart_lists", dao.insertBag_a(PROD_SUBCODE, PROD_INFO) );
+		}
 		return "";
 	}
 	
-	@RequestMapping(value = "/shopcart", method = {RequestMethod.GET})
-	public String shopcart(HttpServletRequest req) {
-	
-		return ".tiles/product/shop-cart";
-	}
-
-	@RequestMapping(value = "/shopcart_ok", method = {RequestMethod.POST})
-	public String shopcart_ok(HttpServletRequest req) {
-		
-		String user_id = "users";
-		List<CartDTO> lists = dao.selectCart(user_id);
-		int total_amount = dao.selectTotalAmount(user_id);
-		req.setAttribute("lists", lists);
-		req.setAttribute("total_amount", total_amount);
-		
-		return "/product/cartDetail";
-	}
-	
-	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
-	public @ResponseBody int updateCart(HttpServletRequest req,String prod_code) {
-		
-		String user_id = "users";
-		int cart_qty = Integer.parseInt(req.getParameter("cart_qty"));
-		Map<String, Object> hMap = new HashMap<String, Object>();
-		hMap.put("cart_qty", cart_qty);
-		hMap.put("prod_code", prod_code);
-		dao.updateCart(hMap);
-		
-		int total_amount = dao.selectTotalAmount(user_id);
-		
-		return total_amount;
-	}
-	
-	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
-	public String deleteCart(HttpServletRequest req,String prod_code) {
-		
-		System.out.println(prod_code);
-		
-		String[] prod_code_arr = null;
-		String user_id = "users";
-		Map<String, Object> hMap = new HashMap<String, Object>();
-		
-		prod_code = prod_code.substring(0, prod_code.length()-1);
-		prod_code_arr = prod_code.split(",");
-		
-		for(int i=0; i<prod_code_arr.length; i++) {
-			
-			hMap.put("user_id", user_id);
-			hMap.put("prod_code", prod_code_arr[i]);
-			
-			System.out.println(prod_code_arr[i]);
-			dao.deleteCart(hMap);
-		}
-		
-		List<CartDTO> lists = dao.selectCart(user_id);
-		
-		req.setAttribute("lists", lists);
-		
-		return "product/cartDetail";
-	}
-
 	@RequestMapping(value = "/kakao", method = RequestMethod.GET)
 	public String kakao() {		
 		// log.debug("AAA");
@@ -197,7 +138,6 @@ public class ProductController {
 		hMap.put("end", end);
 		hMap.put("sort", sort);
 		hMap.put("user_form", user_form);
-
 
 		if(mode == null || mode.equals("")){ //�ʱ⸮�� (����: �ֽż�/ üũ�ڽ� üũx)
 
@@ -248,7 +188,7 @@ public class ProductController {
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public String report(HttpServletRequest req) {
 
-		String user_id = "users";
+		String user_id = "user";
 		int review_num = Integer.parseInt(req.getParameter("review_num"));
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
@@ -262,12 +202,5 @@ public class ProductController {
 
 		return "product/review";
 	}
-	
-	//�Ű�
-		@RequestMapping(value = "cartOptionChange", method = RequestMethod.GET)
-		public String cartOptionChange(HttpServletRequest req) {
-
-			return "product/cartOptionModal";
-		}
 
 }
