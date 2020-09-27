@@ -65,18 +65,17 @@ public class CartController {
 
 	//카트에서 수량 +,-클릭시 업데이트
 	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
-	public @ResponseBody int updateCart(HttpServletRequest req,String prod_code) {
+	public @ResponseBody int updateCart(HttpServletRequest req,CartDTO dto) {
 
 		HttpSession session = req.getSession();
 		CustomDTO dtoSession = (CustomDTO)session.getAttribute("customInfo");	
-		int cart_qty = Integer.parseInt(req.getParameter("cart_qty"));
 		int total_amount = 0;
 
 		if(dtoSession != null) {
 			Map<String, Object> hMap = new HashMap<String, Object>();
 			hMap.put("user_id", dtoSession.getUser_id());
-			hMap.put("cart_qty", cart_qty);
-			hMap.put("prod_code", prod_code);
+			hMap.put("cart_qty", dto.getCart_qty());
+			hMap.put("prod_code", dto.getProd_code());
 
 			dao.updateCart(hMap);
 
@@ -85,12 +84,18 @@ public class CartController {
 		}else {
 			@SuppressWarnings("unchecked")
 			List<CartDTO> lists = (List<CartDTO>)session.getAttribute("cart_lists");
+			
 			for(int i=0; i<lists.size(); i++) {
-				if(lists.get(i).getProd_code().equals(prod_code)) {
-					lists.get(i).setCart_qty(cart_qty);
+				if(lists.get(i).getProd_code().equals(dto.getProd_code())) {
+					lists.get(i).setCart_qty(dto.getCart_qty()); //수량 세팅
+					lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); //총액 세팅
 				}
-				total_amount += lists.get(i).getCart_qty() * lists.get(i).getProd_price();
-			}		
+			}
+			
+			//리스트 업데이트 끝난 후 전체 총액 세팅
+			for(int j=0; j<lists.size(); j++) {
+				total_amount += lists.get(j).getCart_qty() * lists.get(j).getProd_price(); 
+			}
 		}
 
 		return total_amount;
@@ -144,7 +149,8 @@ public class CartController {
 				for(int j=0; j<lists.size(); j++) { 
 					//list에있는 j번째 코드가 내가 옵션변경할 prod_code면 
 					if(lists.get(j).getProd_code().equals(select_prod_code)) {
-						lists.get(j).setCart_qty(lists.get(j).getCart_qty() + select_cart_qty); //수량더해서 set
+						lists.get(j).setCart_qty(lists.get(j).getCart_qty() + select_cart_qty); //수량 더해서 set
+						lists.get(j).setCart_amount(lists.get(j).getCart_qty() * dto.getProd_price()); //총액 set
 					//list에있는 j번째 prod_code가 내 원래 prod_code고, 내가 선택한 옵션(prod_code)가 장바구니안에 있을 경우
 					}else if(lists.get(j).getProd_code().equals(dto.getProd_code()) && chk ==true) { 
 						temp = j; //인덱스 저장 
@@ -201,6 +207,7 @@ public class CartController {
 				for(int i=0; i<lists.size(); i++) {
 					if(lists.get(i).getProd_code().equals(select_prod_code)) {
 						lists.get(i).setCart_qty(lists.get(i).getCart_qty()+1); // 선택한 prod_code의 수량 + 1
+						lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); // 총액 set
 					}
 				}
 			//장바구니에 데이터가 없으면
@@ -232,7 +239,8 @@ public class CartController {
 
 		prod_code = prod_code.substring(0, prod_code.length()-1);
 		prod_code_arr = prod_code.split(",");
-
+		
+		//회원
 		if(dtoSession != null) {
 
 			for(int i=0; i<prod_code_arr.length; i++) {
@@ -249,11 +257,13 @@ public class CartController {
 			req.setAttribute("lists", lists);
 			req.setAttribute("total_amount", total_amount);
 
-
+		//비회원
 		}else {
 
 			@SuppressWarnings("unchecked")
 			List<CartDTO> lists = (List<CartDTO>)session.getAttribute("cart_lists");
+			
+			//리스트 데이터 삭제
 			for(int j=0; j<prod_code_arr.length; j++) { 
 				for(int i=0; i<lists.size(); i++) { 	
 					if(lists.get(i).getProd_code().equals(prod_code_arr[j])) {
@@ -261,6 +271,7 @@ public class CartController {
 					}		
 				}
 			}
+			// 리스트 삭제 후 상품 전체 총액 set
 			for(int i=0; i<lists.size(); i++) {
 				total_amount += lists.get(i).getCart_qty() * lists.get(i).getProd_price();
 			}

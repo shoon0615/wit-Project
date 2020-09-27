@@ -163,6 +163,7 @@
         	var url = "<%=cp%>/cart/updateCart.action";
             var prod_code = parent.find('.cart_prod_code').val(); //선택한 상품의 prod_code
 
+			// +를 눌렀을때
         	if($(this).hasClass('inc')){
     			cartQtyValue = Number(cartQtyValue) + 1; //수량은 +1
     			cartAmountValue = Number(cartAmountValue) + Number(cartPriceValue) ; //지금 총액 + 원래 상품 한개의 가격
@@ -174,7 +175,7 @@
     				cartAmountValue = Number(cartAmountValue) - Number(cartPriceValue) ; //지금 총액 - 원래 상품 한개의 가격
     			}
     		}
-	    		$.post(url,{cart_qty : cartQtyValue, prod_code : prod_code},function(args){
+	    		$.post(url,{cart_qty : cartQtyValue, prod_code : prod_code, prod_price : cartPriceValue},function(args){
 	    			//db 업데이트 성공했을시
 	    			parent.find('.cartQtyValue').val(cartQtyValue); //뷰단에서 수량 변경
 	    			parent.find('.cart__total').text(cartAmountValue); //총액 변경

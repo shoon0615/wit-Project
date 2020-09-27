@@ -23,8 +23,8 @@ function addOrChange(mode){
    	var prod_size = $('#optionSize option:selected').text(); //선택한 사이즈
    	var prod_code = "${dto.prod_code}"; //옵션변경하기전 원래 prod_code
 	var prod_subcode = "${dto.prod_subcode}"; //prod_subcode
-	var cart_qty = "${dto.cart_qty}";
-	var prod_price = "${dto.prod_price}";
+	var cart_qty = "${dto.cart_qty}"; //수량
+	var prod_price = "${dto.prod_price}"; //이 상품코드의 하나의 가격
 
 	if(mode == 'insert'){
 		var url = "<%=cp%>/cart/insertCartOption.action";
@@ -63,8 +63,8 @@ $(window).on('load',function(){
 </div>
 <br/>
 <div id="cartOptionModal" align="center">
-	product&nbsp;:&nbsp;${prod_subcode }<br/>
- 	option&nbsp;:&nbsp;${prod_code }<br/>	
+	product&nbsp;:&nbsp;${dto.prod_subcode }<br/>
+ 	option&nbsp;:&nbsp;${dto.prod_code }<br/>	
  	
  	<select id="optionColor">
  	<c:forEach var="color" items="${color_lists }">

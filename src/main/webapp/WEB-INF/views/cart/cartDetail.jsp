@@ -65,9 +65,9 @@ function hide() {
                                     <td class="cart__price">${dto.prod_price}</td>
                                     <td class="cart__quantity">
                                         <div class="pro-qty">
-                                        	<input class="inc qtybtn" type="button" value="+">
-                                            <input class="cartQtyValue" type="text" value="${dto.cart_qty }">
-                                            <input class="dec qtybtn" type="button" value="-">
+                                        	<input class="dec qtybtn" type="button" value="-">
+                                            <input class="cartQtyValue" disabled="disabled" type="text" value="${dto.cart_qty }">
+                                            <input class="inc qtybtn" type="button" value="+">            
                                         </div>
                                     </td>
                                     <td class="cart__total">${dto.cart_amount}</td>
