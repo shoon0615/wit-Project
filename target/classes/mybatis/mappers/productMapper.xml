@@ -63,6 +63,16 @@
 	AND 	A.PROD_SIZE = #{PROD_SIZE}
 </select>
 
+<!-- 옵션 선택시 생성되는 상품 코드 정보(비회원) -->
+<select id="choiceProdCart" parameterType="productDTO" resultType="cartDTO">
+	SELECT	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE	
+	FROM	PRODUCT A, PRODUCT_INFO B
+	WHERE	A.PROD_SUBCODE = B.PROD_SUBCODE
+	AND 	A.PROD_SUBCODE = #{PROD_SUBCODE}
+	AND 	A.PROD_COLOR = #{PROD_COLOR}
+	AND 	A.PROD_SIZE = #{PROD_SIZE}
+</select>
+
 <!-- 옵션 선택시 생성되는 상품 코드(insert용) -->
 <select id="choiceProdCode" parameterType="productDTO" resultType="String">
 	SELECT 	PROD_CODE

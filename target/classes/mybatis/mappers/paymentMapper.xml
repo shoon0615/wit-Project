@@ -25,19 +25,6 @@
 	ON 		(B.PROD_SUBCODE = C.PROD_SUBCODE)
 </select>
 
-<!-- 은행사 확인  -->
-<select id="getPaymentBank" parameterType="String" resultType="String">
-	SELECT CODE FROM COMMON_CODE WHERE CODE_NAME LIKE '%' || NVL(#{payment_bank}, '기타') || '%'
-</select>
-
-<!-- 결제테이블 인서트  -->
-<insert id="insertPayment" parameterType="paymentDTO">
-	INSERT INTO payment 
-	(order_code, payment_type, payment_account, payment_bank, payment_point, payment_amount, payment_created)
-	values 
-	(#{order_code}, #{payment_type}, #{payment_account}, #{payment_bank}, #{payment_point}, #{payment_amount}, sysdate)
-</insert>
-
 <!-- 주문테이블 인서트  -->
 <insert id="insertOrderMain" parameterType="paymentDTO">
 	INSERT INTO order_main 
@@ -54,6 +41,19 @@
 	(order_code, prod_code, prod_qty) 
 	values 
 	(#{order_code}, #{prod_code}, #{prod_qty})
+</insert>
+
+<!-- 은행사 확인  -->
+<select id="getPaymentBank" parameterType="String" resultType="String">
+	SELECT CODE FROM COMMON_CODE WHERE CODE_NAME LIKE '%' || NVL(#{payment_bank}, '기타') || '%'
+</select>
+
+<!-- 결제테이블 인서트  -->
+<insert id="insertPayment" parameterType="paymentDTO">
+	INSERT INTO payment 
+	(order_code, payment_type, payment_account, payment_bank, payment_point, payment_amount, payment_created)
+	values 
+	(#{order_code}, #{payment_type}, #{payment_account}, #{payment_bank}, #{payment_point}, #{payment_amount}, sysdate)
 </insert>
 
 </mapper>

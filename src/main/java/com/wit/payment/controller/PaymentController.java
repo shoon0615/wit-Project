@@ -62,21 +62,14 @@ public class PaymentController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date sysdate = new Date();		
 		String toDate = dateFormat.format(sysdate);
-		
+
 		dto.setOrder_code(toDate);					// order_code를 컨트롤러에서 생성
 		String order_code = dto.getOrder_code();
 			
 		dao.insertOrderMain(dto);
 		dao.insertOrderDetail(prod_list, order_code);
-
-		return order_code;
-	}
-	
-	@RequestMapping(value = "/insertPayment", method = RequestMethod.POST)
-	public @ResponseBody String insertPayment(PaymentDTO dto) {
-		dto.setPayment_bank(dao.getPaymentBank(dto.getPayment_bank().replace("카드", "")));
 		dao.insertPayment(dto);
-		
+
 		return "";
 	}
 	

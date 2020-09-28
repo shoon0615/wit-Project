@@ -50,19 +50,6 @@ public class PaymentDAOImpl implements PaymentDAO {
 		
 		return lists;
 	}
-	
-	// 은행사 code 출력
-	@Override
-	public String getPaymentBank(String paymentBank) {
-		String paymentBankCode = sqlSession.selectOne("paymentMapper.getPaymentBank", paymentBank);
-		return paymentBankCode;
-	}
-	
-	// Payment 테이블 삽입
-	@Override
-	public void insertPayment(PaymentDTO dto) {
-		sqlSession.insert("paymentMapper.insertPayment", dto);
-	}	
 
 	// Order_Main 테이블 삽입
 	@Override
@@ -90,5 +77,19 @@ public class PaymentDAOImpl implements PaymentDAO {
 			System.out.println(e.toString());
 		}
 	}
+	
+	// Payment 테이블 삽입
+	@Override
+	public void insertPayment(PaymentDTO dto) {
+		// 삼항연산자로 처리가 안되어 부득이하게 if문으로 진행(javascript에서 글자 null로 넘겨짐)
+		if(dto.getPayment_bank() == null || dto.getPayment_bank().equals("null")) {
+			dto.setPayment_bank("");
+		} else {
+			dto.setPayment_bank(dto.getPayment_bank().replace("카드", ""));
+		}
+		
+		dto.setPayment_bank((String)sqlSession.selectOne("paymentMapper.getPaymentBank", dto.getPayment_bank()));	// 은행사 code 출력
+		sqlSession.insert("paymentMapper.insertPayment", dto);
+	}	
 	
 }

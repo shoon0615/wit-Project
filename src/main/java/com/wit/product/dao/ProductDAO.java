@@ -18,20 +18,21 @@ public interface ProductDAO {
 	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE);
 	public ProductDTO choiceProd(ProductDTO dto);
 	public List<String> selectBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
+	public List<String> selectBag(String PROD_SUBCODE, List<String> PROD_INFO, List<CartDTO> lcdto);
 	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO);
-	public List<CartDTO> insertBag_a(String PROD_SUBCODE, List<String> PROD_INFO);
-	public List<reviewDTO> selectProductReview(Map<String,Object> hmap); //»óÇ°ÄÚµå¿¡´ëÇÑ ÀüÃ¼¸®ºäÃâ·Â
-	public List<String> selectReviewImg(String review_num); //»óÇ°ÄÚµå¿¡´ëÇÑ ÀüÃ¼¸®ºäÃâ·Â
-	public List<reviewDTO> selectPhotoReview(Map<String,Object> hmap); //Æ÷Åä¸®ºä Ãâ·Â
-	public List<reviewDTO> selectUserFormReview(Map<String,Object> hmap); //³» Ã¼Çüº° ¸®ºä Ãâ·Â
-	public List<reviewDTO> selectAllChkReview(Map<String,Object> hmap); //³» Ã¼Çüº°+Æ÷Åäº° ¸®ºä Ãâ·Â
-	public int selectCountReview(String PROD_SUBCODE); //ÀüÃ¼ ¸®ºä Ä«¿îÆ®
-	public int selectCountPhotoReview(String PROD_SUBCODE); //Æ÷Åä¸®ºä Ä«¿îÆ®
-	public int selectCountFormReview(Map<String,Object> hmap); //Ã¼Çüº° ¸®ºä Ä«¿îÆ®
-	public int selectCountAllChkReview(Map<String,Object> hmap); //Æ÷Åä + Ã¼Çüº° ¸®ºä Ä«¿îÆ®
-	public void insertReport(Map<String,Object> hmap); //½Å°íÅ×ÀÌºí ÀÎ¼­Æ®
-	public void deleteReview(); //½Å°í 3¹øµÆÀ»½Ã ¸®ºäÅ×ÀÌºí¿¡¼­ ¸®ºä »èÁ¦
-	public void deleteReport(); //½Å°í 3¹øµÆÀ»½Ã ½Å°íÅ×ÀÌºí¿¡¼­ ½Å°í³»¿ª »èÁ¦
+	public List<CartDTO> insertBag(String PROD_SUBCODE, List<String> PROD_INFO, List<CartDTO> lcdto);
+	public List<reviewDTO> selectProductReview(Map<String,Object> hmap); //ï¿½ï¿½Ç°ï¿½Úµå¿¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public List<String> selectReviewImg(String review_num); //ï¿½ï¿½Ç°ï¿½Úµå¿¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public List<reviewDTO> selectPhotoReview(Map<String,Object> hmap); //ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½
+	public List<reviewDTO> selectUserFormReview(Map<String,Object> hmap); //ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	public List<reviewDTO> selectAllChkReview(Map<String,Object> hmap); //ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½äº° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	public int selectCountReview(String PROD_SUBCODE); //ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
+	public int selectCountPhotoReview(String PROD_SUBCODE); //ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
+	public int selectCountFormReview(Map<String,Object> hmap); //Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
+	public int selectCountAllChkReview(Map<String,Object> hmap); //ï¿½ï¿½ï¿½ï¿½ + Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®
+	public void insertReport(Map<String,Object> hmap); //ï¿½Å°ï¿½ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Î¼ï¿½Æ®
+	public void deleteReview(); //ï¿½Å°ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void deleteReport(); //ï¿½Å°ï¿½ 3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	
 }

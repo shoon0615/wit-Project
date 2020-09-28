@@ -81,37 +81,37 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/selectBag", method = RequestMethod.POST)
-	public @ResponseBody List<String> selectBag(HttpServletRequest req,
-			String PROD_SUBCODE, 
+	public @ResponseBody List<String> selectBag(HttpSession session, String PROD_SUBCODE, 
 			@RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
 
-		HttpSession session = req.getSession();
-
-		List<String> lists = dao.selectBag("users", PROD_SUBCODE, PROD_INFO);
-
+		CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");	
+		@SuppressWarnings("unchecked")
+		List<CartDTO> lcdto = (List<CartDTO>)session.getAttribute("cart_lists");
+		List<String> lists = new ArrayList<String>();
+		
+		if(cdto != null) {
+			lists = dao.selectBag("users", PROD_SUBCODE, PROD_INFO);
+		} else if(lcdto != null) {
+			lists = dao.selectBag(PROD_SUBCODE, PROD_INFO, lcdto);
+		}
+		
 		return lists;
 	}
 
 	@RequestMapping(value = "/insertBag", method = RequestMethod.POST)
-	public @ResponseBody String insertBag(HttpServletRequest req,
-			String PROD_SUBCODE, 
+	public @ResponseBody String insertBag(HttpSession session, String PROD_SUBCODE, 
 			@RequestParam(value="PROD_INFO[]") List<String> PROD_INFO) {		
 
-		HttpSession session = req.getSession();
-		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");		
+		CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");		
+		@SuppressWarnings("unchecked")
+		List<CartDTO> lcdto = (List<CartDTO>)session.getAttribute("cart_lists");
 		
-		if(dto != null) {
-			dao.insertBag(dto.getUser_id(), PROD_SUBCODE, PROD_INFO);
-		}else {
-			session.setAttribute("cart_lists", dao.insertBag_a(PROD_SUBCODE, PROD_INFO) );
+		if(cdto != null) {
+			dao.insertBag(cdto.getUser_id(), PROD_SUBCODE, PROD_INFO);
+		} else {
+			session.setAttribute("cart_lists", dao.insertBag(PROD_SUBCODE, PROD_INFO, lcdto));
 		}
 		return "";
-	}
-	
-	@RequestMapping(value = "/kakao", method = RequestMethod.GET)
-	public String kakao() {		
-		// log.debug("AAA");
-		return "product/kakao";
 	}
 
 	//����

@@ -17,11 +17,12 @@
 			<img src="/wit/resources/img/shop-cart/cp-1.jpg" alt="">
 			<h6>${dto.prod_subcode }</h6>
 			<div class="rating">
-				<i class="fa fa-star"></i>
-               	<i class="fa fa-star"></i>
-            	<i class="fa fa-star"></i>
-             	<i class="fa fa-star"></i>
-               	<i class="fa fa-star"></i>
+				<c:forEach begin="1" end="${dto.review_score }">
+                   	<i class="fa fa-star"></i>
+                </c:forEach>
+                <c:forEach begin="1" end="${5 - dto.review_score }">
+                   	<span class="fa fa-star"></span>
+                </c:forEach>
 			</div>
 			<div class="myPage__heart__item__price">￦ <fmt:formatNumber value="${dto.prod_price }" type="number"/></div>
 		</div>

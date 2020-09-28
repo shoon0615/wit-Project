@@ -167,49 +167,45 @@
 				}
 
 				if(result) {
-					var f = document.payForm;
-			    	var url = "insertOrder.action";
+					IMP.init("imp17939014"); 
+					IMP.request_pay({
+						  pg : 'inicis',
+						  pay_method : 'card',
+						  merchant_uid : 'merchant_' + new Date().getTime(),	
+						  name: "이상훈",
+				          amount: 100,
+				          buyer_email: "shoon0615@gmail.com",
+				          buyer_name: "wit",
+				          buyer_tel: "010-6664-5210",
+				          buyer_addr: "서울특별시 강동구 ",
+				          buyer_postcode: "1004"
+					}, function(rsp) {
+						if (rsp.success) {
+					    	var f = document.payForm;
+					    	var url = "insertOrder.action";
+					    	var param = $(f).serialize();
+							param += "&payment_type=" + rsp.pay_method.toUpperCase();			// 결제 방법
+							param += "&payment_account=" + rsp.card_number;						// 계좌,카드번호
+							param += "&payment_bank=" + rsp.card_name;							// 결제 은행사
+							param += "&payment_point=" + 0;										// 사용 포인트
+							param += "&payment_amount=" + $('input[name=order_amount]').val();	// 최종 결제 총액(rsp.paid_amount)
 
-					$.ajax({
-						type: 'POST',
-			        	url: url,
-			       		data: $(f).serialize(),
-			        	success: function(orderCode) {
-			        		IMP.init("imp17939014"); 
-							IMP.request_pay({
-								  pg : 'inicis',
-								  pay_method : 'card',
-								  merchant_uid : 'merchant_' + new Date().getTime(),	
-								  name: "이상훈",
-						          amount: 100,
-						          buyer_email: "shoon0615@gmail.com",
-						          buyer_name: "wit",
-						          buyer_tel: "010-6664-5210",
-						          buyer_addr: "서울특별시 강동구 ",
-						          buyer_postcode: "1004"
-							}, function(rsp) {
-							    if (rsp.success) {
-							    	url = "insertPayment.action";
-			                       	alert("결제가 완료되었습니다");
-
-			                       	$.post(url,{
-			                       		order_code : orderCode,									// 카드 승인번호(rsp.apply_num)
-			                       		payment_type : rsp.pay_method.toUpperCase(),			// 결제 방법
-			                       		payment_account : rsp.card_number,						// 계좌,카드번호
-			                       		payment_bank : rsp.card_name,							// 결제 은행사
-			                       		payment_point : 0,										// 사용 포인트
-			                       		payment_amount : $('input[name=order_amount]').val()	// 최종 결제 총액(rsp.paid_amount)
-		    	                       	},function(args){
-		    	                       	f.submit();
-			        				});
-							    } else {
-							        alert(rsp.error_msg);
-								}
+					    	$.ajax({
+	    						type: 'POST',
+	    			        	url: url,
+	    			       		data: param,
+	    			        	success: function(args) {
+	    			        		alert("Success");
+	    			        		f.submit();
+	    			        	}
 							});
-			            }
+
+					    } else {
+					        alert(rsp.error_msg);
+						}
 					});
 				} else {
-					alert("fail");
+					alert("Fail");
 				}
 			});
 			

@@ -64,7 +64,6 @@ public class PaymentDTO {
 	public void setPayment_created(String payment_created) {
 		this.payment_created = payment_created;
 	}
-	
 	public String getUser_id() {
 		return user_id;
 	}

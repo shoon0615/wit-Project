@@ -103,6 +103,8 @@ public class ProductDAOImpl implements ProductDAO {
 		List<String> lists = new ArrayList<String>();	
 		Iterator<String> it = PROD_INFO.iterator();
 		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
 		while(it.hasNext()) {
 			String[] info = it.next().split("-");	// [색상-사이즈] 배열로 들어옴 (예시: {RED,250}, {RED,260})
 				
@@ -111,8 +113,6 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);	// 매번 DTO의 값을 덮어써서 보냄
 			
-			HashMap<String, Object> params = new HashMap<String, Object>();
-
 			params.put("USER_ID", USER_ID);
 			params.put("PROD_CODE", PROD_CODE);		// 조회한 상품코드를 map에 넣고 보냄
 			
@@ -123,7 +123,36 @@ public class ProductDAOImpl implements ProductDAO {
 		
 		return lists;
 	}
+	
+	// 상품 리스트가 cart에 존재하는지 비교(비회원) - 오버로딩
+	@Override
+	public List<String> selectBag(String PROD_SUBCODE, List<String> PROD_INFO, List<CartDTO> lcdto) {
+		
+		ProductDTO dto = new ProductDTO();
+		dto.setPROD_SUBCODE(PROD_SUBCODE);			// SUBCODE는 고정으로 받아둠
 
+		List<String> lists = new ArrayList<String>();	
+		Iterator<String> it = PROD_INFO.iterator();
+		
+		while(it.hasNext()) {
+			String[] info = it.next().split("-");	// [색상-사이즈] 배열로 들어옴 (예시: {RED,250}, {RED,260})
+				
+			dto.setPROD_COLOR(info[0]);				// info[0] : 색상
+			dto.setPROD_SIZE(info[1]);				// info[1] : 사이즈
+			
+			String PROD_CODE = sqlSession.selectOne("productMapper.choiceProdCode", dto);	// 매번 DTO의 값을 덮어써서 보냄
+
+			for(int i=0;i<lcdto.size();i++) {
+				if(lcdto.get(i).getProd_code().equals(PROD_CODE)) {
+					lists.add(PROD_SUBCODE + ", " + info[0] + ", " + info[1]);
+				}
+			}
+		}
+		
+		return lists;
+	}
+
+	// 상품 리스트가 cart에 존재하면 update, 존재하지않다면 insert 작업
 	@Override
 	public void insertBag(String USER_ID, String PROD_SUBCODE, List<String> PROD_INFO) {
 		
@@ -154,35 +183,45 @@ public class ProductDAOImpl implements ProductDAO {
 		}
 	}
 	
+	// 상품 리스트가 cartDTO에 존재하면 update, 존재하지않다면 insert 작업(비회원) - 오버로딩
 	@Override
-	public List<CartDTO> insertBag_a(String PROD_SUBCODE, List<String> PROD_INFO) {
-		
-		List<CartDTO> lists = new ArrayList<CartDTO>();
+	public List<CartDTO> insertBag(String PROD_SUBCODE, List<String> PROD_INFO, List<CartDTO> lcdto) {
+
+		ProductDTO dto = new ProductDTO();
+		dto.setPROD_SUBCODE(PROD_SUBCODE);
 		
 		Iterator<String> it = PROD_INFO.iterator();
 		
+		if(lcdto == null) {
+			lcdto = new ArrayList<CartDTO>();
+		}			
+		
 		while(it.hasNext()) {
 			String[] info = it.next().split("-");
+			boolean prod_check = false;
 			
-			ProductDTO dto = new ProductDTO();
-			CartDTO dtoC = new CartDTO();
-			
-			dto.setPROD_SUBCODE(PROD_SUBCODE);
 			dto.setPROD_COLOR(info[0]);
 			dto.setPROD_SIZE(info[1]);	
 			
-			dto = sqlSession.selectOne("productMapper.choiceProd", dto);
-			
-			dtoC.setProd_code(dto.getPROD_CODE());
-			dtoC.setCart_qty(Integer.parseInt(info[2]));
-			dtoC.setProd_price(dto.getPROD_PRICE());
-			dtoC.setCart_amount(dtoC.getCart_qty() * dtoC.getProd_price());
-			dtoC.setProd_subcode(dto.getPROD_SUBCODE());
+			CartDTO cdto = sqlSession.selectOne("productMapper.choiceProdCart", dto);
 
-			lists.add(dtoC);
+			cdto.setCart_qty(Integer.parseInt(info[2]));
+			cdto.setCart_amount(cdto.getCart_qty() * cdto.getProd_price());
+
+			for(int i=0;i<lcdto.size();i++) {
+				if(lcdto.get(i).getProd_code().equals(cdto.getProd_code())) {
+					lcdto.get(i).setCart_qty(lcdto.get(i).getCart_qty() + cdto.getCart_qty());
+					lcdto.get(i).setCart_amount(lcdto.get(i).getCart_amount() + cdto.getCart_amount());
+					prod_check = true;
+				} 
+			}
+
+			if(prod_check == false) {
+				lcdto.add(cdto);
+			}
 		}
 		
-		return lists;
+		return lcdto;
 	}
 	
 	@Override

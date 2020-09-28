@@ -11,13 +11,14 @@
 		<div class="myPage__review__item">
 			<span>${dto.review_created }</span>
 	        <h3>${dto.prod_subcode } <span>[ ${dto.prod_color }/${dto.prod_size } ]</span></h3>
-	        <div class="rating">
-	            <i class="fa fa-star"></i>
-	            <i class="fa fa-star"></i>
-	            <i class="fa fa-star"></i>
-	            <i class="fa fa-star"></i>
-	            <span class="fa fa-star"></span>
-	        </div>
+			<div class="rating">
+				<c:forEach begin="1" end="${dto.review_score }">
+                   	<i class="fa fa-star"></i>
+                </c:forEach>
+                <c:forEach begin="1" end="${5 - dto.review_score }">
+                   	<span class="fa fa-star"></span>
+                </c:forEach>
+			</div>
 		</div>
 	   	<div id="${dto.review_num }" class="myPage__review__tags">
 	          <a>Show Detail</a>

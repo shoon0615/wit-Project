@@ -112,7 +112,7 @@
 
         	// Order의 Write Review 클릭 시
 			$('#tabs-1').on('click', "a", function(){
-				var order_code = $(this).closest("tr").children().first().text();
+				var order_code = $(this).closest("tr").attr("id");
 				var prod_code = $(this).parent().attr("id");
 				var url = "reviewWritePage.action";
 

@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <c:forEach var="dto" items="${lists }">
-	            <tr>
+	            <tr id="${dto.order_code }">
 	            	<c:if test="${dto.review_num == dto.order_code_cnt }">
 	            		<td class="cart__ordercode" rowspan="${dto.order_code_cnt }" style="padding-left: 26px;">${dto.order_code }</td>
 	            	</c:if>
