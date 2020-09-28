@@ -35,33 +35,33 @@ public class CustomController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	//ÆäÀÌÁö¸ÅÇÎ**********************************************************************
+	//í˜ì´ì§€ë§¤í•‘**********************************************************************
 	
-	//	È¸¿ø°¡ÀÔ ÆäÀÌÁö
+	//	íšŒì›ê°€ì… í˜ì´ì§€
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String join() throws Exception {
 		return ".tiles/custom/join";
 	}
 
-	//	·Î±×ÀÎ ÆäÀÌÁö
+	//	ë¡œê·¸ì¸ í˜ì´ì§€
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() throws Exception {
 		return ".tiles/custom/login";
 	}
 	
-	//	¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£ Ã£±â ÆäÀÌÁö
+	//	ì•„ì´ë””, ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° í˜ì´ì§€
 	@RequestMapping(value = "/find_account", method = RequestMethod.GET)
 	public String fine_account() throws Exception {
 		return ".tiles/custom/findAccount";
 	}
 	
-	//	È¸¿ø Á¤º¸ ¼öÁ¤ ½Ãµµ ÆäÀÌÁö
+	//	íšŒì› ì •ë³´ ìˆ˜ì • ì‹œë„ í˜ì´ì§€
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String try_modify() throws Exception {
 		return ".tiles/custom/tryModify";
 	}
 	
-	//	È¸¿ø Á¤º¸ ¼öÁ¤  ÆäÀÌÁö
+	//	íšŒì› ì •ë³´ ìˆ˜ì •  í˜ì´ì§€
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modify() throws Exception {
 		return ".tiles/custom/modify";
@@ -69,7 +69,7 @@ public class CustomController {
 	
 	//******************************************************************************
 
-	//	È¸¿ø°¡ÀÔ ½Ã Áßº¹ ¾ÆÀÌµğ Ã¼Å©
+	//	íšŒì›ê°€ì… ì‹œ ì¤‘ë³µ ì•„ì´ë”” ì²´í¬
 	@ResponseBody
 	@RequestMapping(value = "/check_id", method = RequestMethod.POST)
 	public String check_id(String id) throws Exception {
@@ -77,57 +77,57 @@ public class CustomController {
 		return result;
 	}
 
-	//	È¸¿ø°¡ÀÔ ¿Ï·á -> DB¿¡ INSERT
+	//	íšŒì›ê°€ì… ì™„ë£Œ -> DBì— INSERT
 	@RequestMapping(value = "/add_custom", method = RequestMethod.POST)
 	public String add_custom(CustomDTO dto) throws Exception {
 
-		//Ã¼Çü °è»ê
+		//ì²´í˜• ê³„ì‚°
 		double bmi = dto.getUser_weight() / (dto.getUser_height() * dto.getUser_height() * 0.0001);
 
-		if(bmi<18.5) {//¸¶¸§
+		if(bmi<18.5) {//ë§ˆë¦„
 			dto.setUser_form("SLIM");
-		}else if(bmi<25) {//º¸Åë
+		}else if(bmi<25) {//ë³´í†µ
 			dto.setUser_form("NORMAL");
-		}else {//ÅëÅë
+		}else {//í†µí†µ
 			dto.setUser_form("FAT");
 		}
 
-		//È®ÀÎ¿ë
-		log.debug("Å°: " + dto.getUser_height());
-		log.debug("¸ö¹«°Ô: " + dto.getUser_weight());
+		//í™•ì¸ìš©
+		log.debug("í‚¤: " + dto.getUser_height());
+		log.debug("ëª¸ë¬´ê²Œ: " + dto.getUser_weight());
 		log.debug("bmi: " + bmi);
 
-		//DB¿¡ INSERT
+		//DBì— INSERT
 		customDAO.addCustom(dto);
 		
 		return "redirect:/main/main";
 		
 	}
 	
-	//	·Î±×ÀÎ Ã³¸®
+	//	ë¡œê·¸ì¸ ì²˜ë¦¬
 	@ResponseBody
 	@RequestMapping(value = "/check_login", method = RequestMethod.POST)
 	public String check_login(CustomDTO dto, HttpSession session) throws Exception {
 		
-		log.debug("ÀÔ·ÂÇÑ id: " + dto.getUser_id());
-		log.debug("ÀÔ·ÂÇÑ pwd: " + dto.getUser_pwd());
+		log.debug("ì…ë ¥í•œ id: " + dto.getUser_id());
+		log.debug("ì…ë ¥í•œ pwd: " + dto.getUser_pwd());
 		
-		//ÇØ´ç id,pwd·Î °èÁ¤ÀÌ ÀÖ´ÂÁö È®ÀÎ -> °ÔÁ¤ ÀÖÀ¸¸é Á¤º¸ °¡Á®¿È
+		//í•´ë‹¹ id,pwdë¡œ ê³„ì •ì´ ìˆëŠ”ì§€ í™•ì¸ -> ê²Œì • ìˆìœ¼ë©´ ì •ë³´ ê°€ì ¸ì˜´
 		CustomDTO dtoC = customDAO.loginCheck(dto);
 		
-		//Ajax ¹İÈ¯ data
+		//Ajax ë°˜í™˜ data
 		String result = "false";
 		
-		//°èÁ¤ÀÌ ÀÖÀ¸¸é
+		//ê³„ì •ì´ ìˆìœ¼ë©´
 		if(dtoC != null) {
-			session.setAttribute("customInfo", dtoC);	//¼¼¼Ç¿¡ °èÁ¤Á¤º¸ ¿Ã¸®±â
-			result = "true";	//Ajax ¹İÈ¯ data
-			//¼¼¼ÇÈ®ÀÎ
+			session.setAttribute("customInfo", dtoC);	//ì„¸ì…˜ì— ê³„ì •ì •ë³´ ì˜¬ë¦¬ê¸°
+			result = "true";	//Ajax ë°˜í™˜ data
+			//ì„¸ì…˜í™•ì¸
 			CustomDTO dtoS = (CustomDTO)session.getAttribute("customInfo");			
-			log.debug("¼¼¼Ç name: " + dtoS.getUser_name());
-			log.debug("¼¼¼Ç tel: " + dtoS.getUser_tel());
-			log.debug("¼¼¼Ç form: " + dtoS.getUser_form());
-			log.debug("¼¼¼Ç style: " + dtoS.getUser_style());
+			log.debug("ì„¸ì…˜ name: " + dtoS.getUser_name());
+			log.debug("ì„¸ì…˜ tel: " + dtoS.getUser_tel());
+			log.debug("ì„¸ì…˜ form: " + dtoS.getUser_form());
+			log.debug("ì„¸ì…˜ style: " + dtoS.getUser_style());
 		}
 		
 		log.debug("result: " + result);
@@ -136,19 +136,19 @@ public class CustomController {
 		
 	}
 	
-	//	Ä«Ä«¿À °èÁ¤À¸·Î ·Î±×ÀÎ
+	//	ì¹´ì¹´ì˜¤ ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸
 	@RequestMapping(value = "/kakaoLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
 
-		// ÀÎÁõ code·Î access_token ¹Ş¾Æ¿À±â
+		// ì¸ì¦ codeë¡œ access_token ë°›ì•„ì˜¤ê¸°
 		String access_Token = kakao.getAccessToken(code);
 		System.out.println("controller access_token : " + access_Token);
 		
-		// access_token À¸·Î »ç¿ëÀÚ Á¤º¸ °¡Á®¿À±â
+		// access_token ìœ¼ë¡œ ì‚¬ìš©ì ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);	   
 	    System.out.println("login Controller : " + userInfo);
 	    
-	    //	    Å¬¶óÀÌ¾ğÆ®ÀÇ ÀÌ¸ŞÀÏÀÌ Á¸ÀçÇÒ ¶§ ¼¼¼Ç¿¡ ÇØ´ç ÀÌ¸ŞÀÏ,´Ğ³×ÀÓ ÅäÅ« µî·Ï
+	    //	    í´ë¼ì´ì–¸íŠ¸ì˜ ì´ë©”ì¼ì´ ì¡´ì¬í•  ë•Œ ì„¸ì…˜ì— í•´ë‹¹ ì´ë©”ì¼,ë‹‰ë„¤ì„ í† í° ë“±ë¡
 	    if (userInfo.get("email") != null) {
 	        session.setAttribute("email", (String)userInfo.get("email"));
 	        session.setAttribute("nickname", (String)userInfo.get("nickname"));
@@ -160,14 +160,14 @@ public class CustomController {
 		
 	}
 	
-	//	·Î±×¾Æ¿ô Ã³¸®
+	//	ë¡œê·¸ì•„ì›ƒ ì²˜ë¦¬
 	@RequestMapping(value = "/logout", method = {RequestMethod.GET,RequestMethod.POST})
 	public String logout(HttpSession session) throws Exception {
 		
-		//ÀÏ¹İ ·Î±×ÀÎ µÇÀÖÀ» ½Ã ¼¼¼Ç¿¡¼­ Á¤º¸ »èÁ¦ÇÏ±â
+		//ì¼ë°˜ ë¡œê·¸ì¸ ë˜ìˆì„ ì‹œ ì„¸ì…˜ì—ì„œ ì •ë³´ ì‚­ì œí•˜ê¸°
 		session.removeAttribute("customInfo");
 		
-		//Ä«Ä«¿À °èÁ¤À¸·Î ·Î±×ÀÎ µÇ¾î ÀÖÀ¸¸é
+		//ì¹´ì¹´ì˜¤ ê³„ì •ìœ¼ë¡œ ë¡œê·¸ì¸ ë˜ì–´ ìˆìœ¼ë©´
 		if(session.getAttribute("access_Token") != null) {
 		    session.removeAttribute("access_Token");
 		    session.removeAttribute("nickname");
@@ -180,27 +180,27 @@ public class CustomController {
 		
 	}
 	
-	//	¾ÆÀÌµğ Ã£±â Ã³¸®
+	//	ì•„ì´ë”” ì°¾ê¸° ì²˜ë¦¬
 	@ResponseBody
 	@RequestMapping(value = "/find_id", method = RequestMethod.POST)
 	public String find_id(String user_name, String user_email) throws Exception {
 
-		//ÀÔ·ÂÇÑ name,emailÀ» map¿¡ ¼¼ÆÃ
+		//ì…ë ¥í•œ name,emailì„ mapì— ì„¸íŒ…
 		Map<String, String> hMap = new HashMap<String, String>();
 		hMap.put("user_name", user_name);
 		hMap.put("user_email", user_email);
 		
-		//ÇØ´ç name,email·Î °èÁ¤ÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+		//í•´ë‹¹ name,emailë¡œ ê³„ì •ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
 		String result = customDAO.findID(hMap);
 		
-		//°èÁ¤ÀÌ ÀÖ´Ù¸é ÀÌ¸ŞÀÏ·Î ¾ÆÀÌµğ Àü¼Û
+		//ê³„ì •ì´ ìˆë‹¤ë©´ ì´ë©”ì¼ë¡œ ì•„ì´ë”” ì „ì†¡
 		if(result!=null) {
 			
-			MailHandler sendMail = new MailHandler(mailSender);	//¸ŞÀÏº¸³»±â À¯Æ¿ Å¬·¡½º
+			MailHandler sendMail = new MailHandler(mailSender);	//ë©”ì¼ë³´ë‚´ê¸° ìœ í‹¸ í´ë˜ìŠ¤
 			
-			sendMail.setSubject("[ WIT È¨ÆäÀÌÁö ¾ÆÀÌµğ È®ÀÎ ]");
-			sendMail.setText("<h3>¾È³çÇÏ¼¼¿ä. WIT ¾ÆÀÌµğ Ã£±â ¸ŞÀÏÀÔ´Ï´Ù.</h3><br>"
-					+ "È¸¿ø´ÔÀÇ ¾ÆÀÌµğ´Â <b>" + result + "</b> ÀÔ´Ï´Ù.");
+			sendMail.setSubject("[ WIT í™ˆí˜ì´ì§€ ì•„ì´ë”” í™•ì¸ ]");
+			sendMail.setText("<h3>ì•ˆë…•í•˜ì„¸ìš”. WIT ì•„ì´ë”” ì°¾ê¸° ë©”ì¼ì…ë‹ˆë‹¤.</h3><br>"
+					+ "íšŒì›ë‹˜ì˜ ì•„ì´ë””ëŠ” <b>" + result + "</b> ì…ë‹ˆë‹¤.");
 			sendMail.setFrom("hyeona73@gamil.com", "[WIT]");
 			sendMail.setTo(user_email);
 			sendMail.send();
@@ -213,40 +213,40 @@ public class CustomController {
 		
 	}
 	
-	//	ºñ¹Ğ¹øÈ£ Ã£±â Ã³¸®
+	//	ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì²˜ë¦¬
 	@ResponseBody
 	@RequestMapping(value = "/find_pwd", method = RequestMethod.POST)
 	public String find_pwd(String user_id, String user_email) throws Exception {
 
-		//ÀÔ·ÂÇÑ id,emailÀ» map¿¡ ¼¼ÆÃ
+		//ì…ë ¥í•œ id,emailì„ mapì— ì„¸íŒ…
 		Map<String, String> hMap = new HashMap<String, String>();
 		hMap.put("user_id", user_id);
 		hMap.put("user_email", user_email);
 		
-		//ÇØ´ç id,email·Î °èÁ¤ÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+		//í•´ë‹¹ id,emailë¡œ ê³„ì •ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
 		String result = customDAO.findPWD(hMap);
 		
 		log.debug("result: " + result);
 		
-		//°èÁ¤ÀÌ ÀÖ´Ù¸é ÀÌ¸ŞÀÏ Àü¼Û
+		//ê³„ì •ì´ ìˆë‹¤ë©´ ì´ë©”ì¼ ì „ì†¡
 		if(result.equals("true") || result=="true") {
 			
-			MailHandler sendMail = new MailHandler(mailSender);	//¸ŞÀÏº¸³»±â À¯Æ¿ Å¬·¡½º
-			TempKey tempkey = new TempKey();	//ÀÓ½Ã ºñ¹Ğ¹øÈ£ »ı¼º Å¬·¡½º
+			MailHandler sendMail = new MailHandler(mailSender);	//ë©”ì¼ë³´ë‚´ê¸° ìœ í‹¸ í´ë˜ìŠ¤
+			TempKey tempkey = new TempKey();	//ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ìƒì„± í´ë˜ìŠ¤
 			
-			String key = tempkey.getKey(10, true);	//ÀÓ½Ã ºñ¹Ğ¹øÈ£ »ı¼ºÇÏ±â
+			String key = tempkey.getKey(10, true);	//ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ìƒì„±í•˜ê¸°
 			log.debug("key: " + key);
 			
-			//¸ŞÀÏÀü¼Û
-			sendMail.setSubject("[ WIT È¨ÆäÀÌÁö ÀÓ½Ã ºñ¹Ğ¹øÈ£ ]");
-			sendMail.setText("<h3>¾È³çÇÏ¼¼¿ä. WIT ºñ¹Ğ¹øÈ£ Ã£±â ¸ŞÀÏÀÔ´Ï´Ù.</h3><br>"
-					+ "È¸¿ø´ÔÀÇ ÀÓ½Ã ºñ¹Ğ¹øÈ£´Â <b>" + key + "</b> ÀÔ´Ï´Ù.");
+			//ë©”ì¼ì „ì†¡
+			sendMail.setSubject("[ WIT í™ˆí˜ì´ì§€ ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ]");
+			sendMail.setText("<h3>ì•ˆë…•í•˜ì„¸ìš”. WIT ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ë©”ì¼ì…ë‹ˆë‹¤.</h3><br>"
+					+ "íšŒì›ë‹˜ì˜ ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ëŠ” <b>" + key + "</b> ì…ë‹ˆë‹¤.");
 			sendMail.setFrom("hyeona73@gamil.com", "[WIT]");
 			sendMail.setTo(user_email);
 			sendMail.send();
 			
-			hMap.put("key", key);	//ÀÓ½Ã ºñ¹Ğ¹øÈ£ map¿¡ ¼¼ÆÃ
-			customDAO.newPWD(hMap);	//ÀÓ½Ã ºñ¹Ğ¹øÈ£·Î DB update ÇÏ±â
+			hMap.put("key", key);	//ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ mapì— ì„¸íŒ…
+			customDAO.newPWD(hMap);	//ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ë¡œ DB update í•˜ê¸°
 			
 		}
 		
@@ -254,31 +254,31 @@ public class CustomController {
 		
 	}
 	
-	//	È¸¿øÁ¤º¸ ¼öÁ¤ Ã³¸®
+	//	íšŒì›ì •ë³´ ìˆ˜ì • ì²˜ë¦¬
 	@RequestMapping(value = "/modify_custom", method = RequestMethod.POST)
 	public String modify_custom(CustomDTO dto) throws Exception {
 		
-		//Ã¼Çü °è»ê
+		//ì²´í˜• ê³„ì‚°
 		double bmi = dto.getUser_weight() / (dto.getUser_height() * dto.getUser_height() * 0.0001);
 
-		if(bmi<18.5) {//¸¶¸§
+		if(bmi<18.5) {//ë§ˆë¦„
 			dto.setUser_form("SLIM");
-		}else if(bmi<25) {//º¸Åë
+		}else if(bmi<25) {//ë³´í†µ
 			dto.setUser_form("NORMAL");
-		}else {//ÅëÅë
+		}else {//í†µí†µ
 			dto.setUser_form("FAT");
 		}
 
-		//È®ÀÎ¿ë
-		log.debug("¾ÆÀÌµğ: " + dto.getUser_id());
-		log.debug("ºñ¹Ğ¹øÈ£: " + dto.getUser_pwd());
-		log.debug("Å°: " + dto.getUser_height());
-		log.debug("¸ö¹«°Ô: " + dto.getUser_weight());
-		log.debug("¼ºº°: " + dto.getUser_gender());
-		log.debug("ÃëÇâ: " + dto.getUser_style());
+		//í™•ì¸ìš©
+		log.debug("ì•„ì´ë””: " + dto.getUser_id());
+		log.debug("ë¹„ë°€ë²ˆí˜¸: " + dto.getUser_pwd());
+		log.debug("í‚¤: " + dto.getUser_height());
+		log.debug("ëª¸ë¬´ê²Œ: " + dto.getUser_weight());
+		log.debug("ì„±ë³„: " + dto.getUser_gender());
+		log.debug("ì·¨í–¥: " + dto.getUser_style());
 		log.debug("bmi: " + bmi);
 
-		//DB¿¡ UPDATE
+		//DBì— UPDATE
 		customDAO.modifyCustom(dto);
 		
 		return "redirect:/main/main";
@@ -286,7 +286,7 @@ public class CustomController {
 	}
 	
 	
-	//ÅÛÇÃ¸´ ¹Ì¸®º¸±â ¸ÅÇÎ***********************************************************************
+	//í…œí”Œë¦¿ ë¯¸ë¦¬ë³´ê¸° ë§¤í•‘***********************************************************************
 	
 	@RequestMapping(value = "/main", method = {RequestMethod.GET,RequestMethod.POST})
 	public String main() {		

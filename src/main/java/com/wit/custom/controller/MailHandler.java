@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Repository;
 
-public class MailHandler { // ¸ŞÀÏº¸³»±â À¯Æ¿ Å¬·¡½º
+public class MailHandler { // ë©”ì¼ë³´ë‚´ê¸° ìœ í‹¸ í´ë˜ìŠ¤
 
 	private JavaMailSender mailSender;
 	private MimeMessage message;

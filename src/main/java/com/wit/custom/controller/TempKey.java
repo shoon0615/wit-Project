@@ -2,9 +2,9 @@ package com.wit.custom.controller;
 
 import java.util.Random;
 
-public class TempKey { // ÀÓ½Ã ºñ¹Ğ¹øÈ£ »ı¼º Å¬·¡½º
+public class TempKey { // ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ ìƒì„± í´ë˜ìŠ¤
 
-	private boolean lowerCheck;	//true : ¼Ò¹®ÀÚ¸¸ , false : ´ë¼Ò¹® È¥ÇÕ
+	private boolean lowerCheck;	//true : ì†Œë¬¸ìë§Œ , false : ëŒ€ì†Œë¬¸ í˜¼í•©
 	private int size;
 
 	public String getKey(int size, boolean lowerCheck) {

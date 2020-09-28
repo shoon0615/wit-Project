@@ -2,20 +2,20 @@ package com.wit.custom.dto;
 
 public class CustomDTO {
 
-	private String user_id;	//¾ÆÀÌµğ
-	private String user_pwd;	//ºñ¹Ğ¹øÈ£
-	private String user_name;	//ÀÌ¸§
-	private String user_tel;	//ÀüÈ­¹øÈ£
-	private String user_email;	//ÀÌ¸ŞÀÏ
-	private String user_point;	//Æ÷ÀÎÆ®
-	private String user_addr1;	//ÁÖ¼Ò1
-	private String user_addr2;	//ÁÖ¼Ò2
-	private int user_height;	//Å°
-	private int user_weight;	//¸ö¹«°Ô
-	private String user_form;	//Ã¼Çü
-	private String user_style;	//¼±È£ ÃëÇâ
-	private String user_gender;	//¼ºº°
-	private String user_created;	//°¡ÀÔÀÏ
+	private String user_id;		//ì•„ì´ë””
+	private String user_pwd;	//ë¹„ë°€ë²ˆí˜¸
+	private String user_name;	//ì´ë¦„
+	private String user_tel;	//ì „í™”ë²ˆí˜¸
+	private String user_email;	//ì´ë©”ì¼
+	private String user_point;	//í¬ì¸íŠ¸
+	private String user_addr1;	//ì£¼ì†Œ1
+	private String user_addr2;	//ì£¼ì†Œ2
+	private int user_height;	//í‚¤
+	private int user_weight;	//ëª¸ë¬´ê²Œ
+	private String user_form;	//ì²´í˜•
+	private String user_style;	//ì„ í˜¸ ì·¨í–¥
+	private String user_gender;	//ì„±ë³„
+	private String user_created;	//ê°€ì…ì¼
 	
 	public String getUser_id() {
 		return user_id;
@@ -101,7 +101,5 @@ public class CustomDTO {
 	public void setUser_created(String user_created) {
 		this.user_created = user_created;
 	}
-	
-	
 	
 }

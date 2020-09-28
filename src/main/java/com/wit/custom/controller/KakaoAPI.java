@@ -18,7 +18,7 @@ import com.google.gson.JsonParser;
 @Service
 public class KakaoAPI {
 	
-	// ÀÎÁõ code·Î access_token ¹Ş¾Æ¿À±â
+	// ì¸ì¦ codeë¡œ access_token ë°›ì•„ì˜¤ê¸°
 	public String getAccessToken (String authorize_code) {
 		
         String access_Token = "";
@@ -30,11 +30,11 @@ public class KakaoAPI {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             
-            //    POST ¿äÃ»À» À§ÇØ ±âº»°ªÀÌ falseÀÎ setDoOutputÀ» true·Î
+            //    POST ìš”ì²­ì„ ìœ„í•´ ê¸°ë³¸ê°’ì´ falseì¸ setDoOutputì„ trueë¡œ
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             
-            //    POST ¿äÃ»¿¡ ÇÊ¿ä·Î ¿ä±¸ÇÏ´Â ÆÄ¶ó¹ÌÅÍ ½ºÆ®¸²À» ÅëÇØ Àü¼Û
+            //    POST ìš”ì²­ì— í•„ìš”ë¡œ ìš”êµ¬í•˜ëŠ” íŒŒë¼ë¯¸í„° ìŠ¤íŠ¸ë¦¼ì„ í†µí•´ ì „ì†¡
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
@@ -44,11 +44,11 @@ public class KakaoAPI {
             bw.write(sb.toString());
             bw.flush();
             
-            //    °á°ú ÄÚµå°¡ 200ÀÌ¶ó¸é ¼º°ø
+            //    ê²°ê³¼ ì½”ë“œê°€ 200ì´ë¼ë©´ ì„±ê³µ
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);
  
-            //    ¿äÃ»À» ÅëÇØ ¾òÀº JSONÅ¸ÀÔÀÇ Response ¸Ş¼¼Áö ÀĞ¾î¿À±â
+            //    ìš”ì²­ì„ í†µí•´ ì–»ì€ JSONíƒ€ì…ì˜ Response ë©”ì„¸ì§€ ì½ì–´ì˜¤ê¸°
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
             String result = "";
@@ -58,7 +58,7 @@ public class KakaoAPI {
             }
             System.out.println("response body : " + result);
             
-            //    Gson ¶óÀÌºê·¯¸®¿¡ Æ÷ÇÔµÈ Å¬·¡½º·Î JSONÆÄ½Ì °´Ã¼ »ı¼º
+            //    Gson ë¼ì´ë¸ŒëŸ¬ë¦¬ì— í¬í•¨ëœ í´ë˜ìŠ¤ë¡œ JSONíŒŒì‹± ê°ì²´ ìƒì„±
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
             
@@ -80,10 +80,10 @@ public class KakaoAPI {
         
     }
 	
-	// access_token À¸·Î »ç¿ëÀÚ Á¤º¸ °¡Á®¿À±â
+	// access_token ìœ¼ë¡œ ì‚¬ìš©ì ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	public HashMap<String, Object> getUserInfo (String access_Token) {
 	    
-	    //    ¿äÃ»ÇÏ´Â Å¬¶óÀÌ¾ğÆ®¸¶´Ù °¡Áø Á¤º¸°¡ ´Ù¸¦ ¼ö ÀÖ±â¿¡ HashMapÅ¸ÀÔÀ¸·Î ¼±¾ğ
+	    //    ìš”ì²­í•˜ëŠ” í´ë¼ì´ì–¸íŠ¸ë§ˆë‹¤ ê°€ì§„ ì •ë³´ê°€ ë‹¤ë¥¼ ìˆ˜ ìˆê¸°ì— HashMapíƒ€ì…ìœ¼ë¡œ ì„ ì–¸
 	    HashMap<String, Object> userInfo = new HashMap<String, Object>();
 	    String reqURL = "https://kapi.kakao.com/v2/user/me";
 	    
@@ -93,7 +93,7 @@ public class KakaoAPI {
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("POST");
 	        
-	        //    ¿äÃ»¿¡ ÇÊ¿äÇÑ Header¿¡ Æ÷ÇÔµÉ ³»¿ë
+	        //    ìš”ì²­ì— í•„ìš”í•œ Headerì— í¬í•¨ë  ë‚´ìš©
 	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 	        
 	        int responseCode = conn.getResponseCode();
@@ -129,8 +129,5 @@ public class KakaoAPI {
 	    return userInfo;
 	    
 	}
-	
-
-
 
 }

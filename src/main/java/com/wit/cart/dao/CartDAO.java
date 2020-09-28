@@ -7,17 +7,17 @@ import com.wit.cart.dto.CartDTO;
 
 public interface CartDAO {
 	
-	public List<CartDTO> selectCart(String user_id); //Ä«Æ® ¼¿·ºÆ®
-	public void updateCart(Map<String,Object> hmap); //Ä«Æ®¾÷µ¥ÀÌÆ®
-	public int selectTotalAmount(String user_id); //ÅäÅ»±İ¾×
-	public void deleteCart(Map<String,Object> hmap); //Ä«Æ®»èÁ¦
-	public List<CartDTO> selectColor(String prod_subcode); //Ä«Æ® ¿É¼Çº¯°æ ÄÃ·¯ ¼¿·ºÆ®
-	public List<CartDTO> selectSize(String prod_subcode); //Ä«Æ® ¿É¼Çº¯°æ size ¼¿·ºÆ®
-	public void updateCartOption(CartDTO dto); //Ä«Æ®¾÷µ¥ÀÌÆ®(¿É¼Çº¯°æ)
-	public void addUpdateCartOption(CartDTO dto); //add click Ä«Æ®¾÷µ¥ÀÌÆ®(¿É¼Çº¯°æ)
-	public void insertCartOption(CartDTO dto); //Ä«Æ®insert(¿É¼Çº¯°æ)
+	public List<CartDTO> selectCart(String user_id); //ì¹´íŠ¸ ì…€ë ‰íŠ¸
+	public void updateCart(Map<String,Object> hmap); //ì¹´íŠ¸ì—…ë°ì´íŠ¸
+	public int selectTotalAmount(String user_id); //í† íƒˆê¸ˆì•¡
+	public void deleteCart(Map<String,Object> hmap); //ì¹´íŠ¸ì‚­ì œ
+	public List<CartDTO> selectColor(String prod_subcode); //ì¹´íŠ¸ ì˜µì…˜ë³€ê²½ ì»¬ëŸ¬ ì…€ë ‰íŠ¸
+	public List<CartDTO> selectSize(String prod_subcode); //ì¹´íŠ¸ ì˜µì…˜ë³€ê²½ size ì…€ë ‰íŠ¸
+	public void updateCartOption(CartDTO dto); //ì¹´íŠ¸ì—…ë°ì´íŠ¸(ì˜µì…˜ë³€ê²½)
+	public void addUpdateCartOption(CartDTO dto); //add click ì¹´íŠ¸ì—…ë°ì´íŠ¸(ì˜µì…˜ë³€ê²½)
+	public void insertCartOption(CartDTO dto); //ì¹´íŠ¸insert(ì˜µì…˜ë³€ê²½)
 	public int selectChk(CartDTO dto);
 	public String selectChkProdCode(CartDTO dto);
-	public void deleteCartOption(CartDTO dto); //Ä«Æ® delete (¿É¼Çº¯°æ)
+	public void deleteCartOption(CartDTO dto); //ì¹´íŠ¸ delete (ì˜µì…˜ë³€ê²½)
 	
 }

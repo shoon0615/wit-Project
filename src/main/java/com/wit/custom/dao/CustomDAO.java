@@ -6,12 +6,12 @@ import com.wit.custom.dto.CustomDTO;
 
 public interface CustomDAO {
 	
-	public String idCheck(String id) throws Exception;	//È¸¿ø°¡ÀÔ ½Ã ¾ÆÀÌµğ Áßº¹Ã¼Å©
-	public void addCustom(CustomDTO dto) throws Exception;	//È¸¿ø°¡ÀÔ ¿Ï·á ½Ã DB insert
-	public CustomDTO loginCheck(CustomDTO dto) throws Exception;	//·Î±×ÀÎ ½Ã Á¦´ë·Î µÈ °èÁ¤ÀÎÁö È®ÀÎ
-	public String findID(Map<String, String> hMap) throws Exception;	//¾ÆÀÌµğ Ã£±â ½Ã Á¦´ë·Î µÈ °èÁ¤ÀÎÁö È®ÀÎ
-	public String findPWD(Map<String, String> hMap) throws Exception;	//ºñ¹Ğ¹øÈ£ Ã£±â ½Ã Á¦´ë·Î µÈ °èÁ¤ÀÎÁö È®ÀÎ
-	public void newPWD(Map<String, String> hMap) throws Exception;	//ÀÓ½Ã ºñ¹Ğ¹øÈ£·Î DB update
-	public void modifyCustom(CustomDTO dto) throws Exception;	//È¸¿øÁ¤º¸ ¼öÁ¤ ½Ã DB update
+	public String idCheck(String id) throws Exception;	//íšŒì›ê°€ì… ì‹œ ì•„ì´ë”” ì¤‘ë³µì²´í¬
+	public void addCustom(CustomDTO dto) throws Exception;	//íšŒì›ê°€ì… ì™„ë£Œ ì‹œ DB insert
+	public CustomDTO loginCheck(CustomDTO dto) throws Exception;	//ë¡œê·¸ì¸ ì‹œ ì œëŒ€ë¡œ ëœ ê³„ì •ì¸ì§€ í™•ì¸
+	public String findID(Map<String, String> hMap) throws Exception;	//ì•„ì´ë”” ì°¾ê¸° ì‹œ ì œëŒ€ë¡œ ëœ ê³„ì •ì¸ì§€ í™•ì¸
+	public String findPWD(Map<String, String> hMap) throws Exception;	//ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì‹œ ì œëŒ€ë¡œ ëœ ê³„ì •ì¸ì§€ í™•ì¸
+	public void newPWD(Map<String, String> hMap) throws Exception;	//ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ë¡œ DB update
+	public void modifyCustom(CustomDTO dto) throws Exception;	//íšŒì›ì •ë³´ ìˆ˜ì • ì‹œ DB update
 
 }

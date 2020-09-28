@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.wit.cart.dao.CartDAO;
 import com.wit.cart.dto.CartDTO;
 import com.wit.custom.dto.CustomDTO;
@@ -30,7 +31,7 @@ public class CartController {
 	@Autowired
 	MyUtil myUtil;
 
-	private Logger log = LoggerFactory.getLogger(ProductController.class);
+	private Logger log = LoggerFactory.getLogger(CartController.class);
 
 	@RequestMapping(value = "/shopcart", method = {RequestMethod.GET})
 	public String shopcart(HttpServletRequest req) {
@@ -38,7 +39,7 @@ public class CartController {
 		return ".tiles/cart/shop-cart";
 	}
 
-	//Ä«Æ® µ¥ÀÌÅÍ ¸®½ºÆ® »Ñ¸²
+	//ì¹´íŠ¸ ë°ì´í„° ë¦¬ìŠ¤íŠ¸ ë¿Œë¦¼
 	@RequestMapping(value = "/shopcart_ok", method = {RequestMethod.POST})
 	public String shopcart_ok(HttpServletRequest req) {
 
@@ -63,7 +64,7 @@ public class CartController {
 		return "/cart/cartDetail";
 	}
 
-	//Ä«Æ®¿¡¼­ ¼ö·® +,-Å¬¸¯½Ã ¾÷µ¥ÀÌÆ®
+	//ì¹´íŠ¸ì—ì„œ ìˆ˜ëŸ‰ +,-í´ë¦­ì‹œ ì—…ë°ì´íŠ¸
 	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
 	public @ResponseBody int updateCart(HttpServletRequest req,CartDTO dto) {
 
@@ -87,12 +88,12 @@ public class CartController {
 			
 			for(int i=0; i<lists.size(); i++) {
 				if(lists.get(i).getProd_code().equals(dto.getProd_code())) {
-					lists.get(i).setCart_qty(dto.getCart_qty()); //¼ö·® ¼¼ÆÃ
-					lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); //ÃÑ¾× ¼¼ÆÃ
+					lists.get(i).setCart_qty(dto.getCart_qty()); //ìˆ˜ëŸ‰ ì„¸íŒ…
+					lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); //ì´ì•¡ ì„¸íŒ…
 				}
 			}
 			
-			//¸®½ºÆ® ¾÷µ¥ÀÌÆ® ³¡³­ ÈÄ ÀüÃ¼ ÃÑ¾× ¼¼ÆÃ
+			//ë¦¬ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸ ëë‚œ í›„ ì „ì²´ ì´ì•¡ ì„¸íŒ…
 			for(int j=0; j<lists.size(); j++) {
 				total_amount += lists.get(j).getCart_qty() * lists.get(j).getProd_price(); 
 			}
@@ -101,39 +102,39 @@ public class CartController {
 		return total_amount;
 	}
 
-	//¿É¼Çº¯°æ¿¡¼­ changeÇÏ¸é update
+	//ì˜µì…˜ë³€ê²½ì—ì„œ changeí•˜ë©´ update
 	@RequestMapping(value = "/updateCartOption", method = RequestMethod.POST)
 	public  String updateCartOption(HttpServletRequest req,CartDTO dto) {
 		HttpSession session = req.getSession();
 		CustomDTO dtoSession = (CustomDTO)session.getAttribute("customInfo");
 		String select_prod_code = dao.selectChkProdCode(dto);
 
-		//È¸¿ø
+		//íšŒì›
 		if(dtoSession != null) {
 			dto.setUser_id(dtoSession.getUser_id());
 			int select_cart_qty = dao.selectChk(dto);
-			//³»°¡ º¯°æÇÒ prod_code°¡ ÀÌ¹Ì Àå¹Ù±¸´Ï¿¡ ÀÖ´Ù¸é
+			//ë‚´ê°€ ë³€ê²½í•  prod_codeê°€ ì´ë¯¸ ì¥ë°”êµ¬ë‹ˆì— ìˆë‹¤ë©´
 			if(select_cart_qty != -1) {	
 
-				//¶È°°Àº ¿É¼ÇÀ» ¼±ÅÃÇÏÁö ¾Ê¾Ò´Ù¸é
+				//ë˜‘ê°™ì€ ì˜µì…˜ì„ ì„ íƒí•˜ì§€ ì•Šì•˜ë‹¤ë©´
 				if(!select_prod_code.equals(dto.getProd_code())) {		
 					dto.setCart_qty(dto.getCart_qty() + select_cart_qty);
-					dao.updateCartOption(dto);	//¾÷µ¥ÀÌÆ®					
+					dao.updateCartOption(dto);	//ì—…ë°ì´íŠ¸					
 					dto.setCart_qty(select_cart_qty);
-					dao.deleteCartOption(dto); //¿ø·¡ Àå¹Ù±¸´Ï¿¡ ´ã°ÜÀÖ´ø º¯°æÇÒ prod_codeÀÇ µ¥ÀÌÅÍ »èÁ¦	
+					dao.deleteCartOption(dto); //ì›ë˜ ì¥ë°”êµ¬ë‹ˆì— ë‹´ê²¨ìˆë˜ ë³€ê²½í•  prod_codeì˜ ë°ì´í„° ì‚­ì œ	
 				}
 
 			}else {
-				//¾ø´Ù¸é
-				dao.updateCartOption(dto);	//¾÷µ¥ÀÌÆ®			
+				//ì—†ë‹¤ë©´
+				dao.updateCartOption(dto);	//ì—…ë°ì´íŠ¸			
 			}
 
-		//ºñÈ¸¿ø
+		//ë¹„íšŒì›
 		}else {
 			@SuppressWarnings("unchecked")
 			List<CartDTO> lists = (List<CartDTO>)session.getAttribute("cart_lists");
 
-			//Àå¹Ù±¸´Ï¿¡ ³»°¡ ¼±ÅÃÇÑ prod_code°¡ Á¸ÀçÇÏ´ÂÁö °ËÁõ
+			//ì¥ë°”êµ¬ë‹ˆì— ë‚´ê°€ ì„ íƒí•œ prod_codeê°€ ì¡´ì¬í•˜ëŠ”ì§€ ê²€ì¦
 			boolean chk = false;
 			for(int i =0; i<lists.size(); i++) {
 				if(select_prod_code.equals(lists.get(i).getProd_code())) {
@@ -142,24 +143,24 @@ public class CartController {
 				}
 			}
 			
-			//³» ÀÚ½ÅÀ» ¼±ÅÃÇÑ°Ô ¾Æ´Ï¶ó¸é
+			//ë‚´ ìì‹ ì„ ì„ íƒí•œê²Œ ì•„ë‹ˆë¼ë©´
 			if(!select_prod_code.equals(dto.getProd_code())) { 
 				int select_cart_qty = dto.getCart_qty(); 
-				int temp = -1; // È¤½Ã temp¿¡ index°ªÀÌ ÀúÀå¾ÈµÈ°æ¿ì ¾Æ¹«°Íµµ »èÁ¦¾ÈµÇ°ÔÇÏ·Á°í ±âº»°ªÀ¸·Î -1 ÀúÀå 
+				int temp = -1; // í˜¹ì‹œ tempì— indexê°’ì´ ì €ì¥ì•ˆëœê²½ìš° ì•„ë¬´ê²ƒë„ ì‚­ì œì•ˆë˜ê²Œí•˜ë ¤ê³  ê¸°ë³¸ê°’ìœ¼ë¡œ -1 ì €ì¥ 
 				for(int j=0; j<lists.size(); j++) { 
-					//list¿¡ÀÖ´Â j¹øÂ° ÄÚµå°¡ ³»°¡ ¿É¼Çº¯°æÇÒ prod_code¸é 
+					//listì—ìˆëŠ” jë²ˆì§¸ ì½”ë“œê°€ ë‚´ê°€ ì˜µì…˜ë³€ê²½í•  prod_codeë©´ 
 					if(lists.get(j).getProd_code().equals(select_prod_code)) {
-						lists.get(j).setCart_qty(lists.get(j).getCart_qty() + select_cart_qty); //¼ö·® ´õÇØ¼­ set
-						lists.get(j).setCart_amount(lists.get(j).getCart_qty() * dto.getProd_price()); //ÃÑ¾× set
-					//list¿¡ÀÖ´Â j¹øÂ° prod_code°¡ ³» ¿ø·¡ prod_code°í, ³»°¡ ¼±ÅÃÇÑ ¿É¼Ç(prod_code)°¡ Àå¹Ù±¸´Ï¾È¿¡ ÀÖÀ» °æ¿ì
+						lists.get(j).setCart_qty(lists.get(j).getCart_qty() + select_cart_qty); //ìˆ˜ëŸ‰ ë”í•´ì„œ set
+						lists.get(j).setCart_amount(lists.get(j).getCart_qty() * dto.getProd_price()); //ì´ì•¡ set
+					//listì—ìˆëŠ” jë²ˆì§¸ prod_codeê°€ ë‚´ ì›ë˜ prod_codeê³ , ë‚´ê°€ ì„ íƒí•œ ì˜µì…˜(prod_code)ê°€ ì¥ë°”êµ¬ë‹ˆì•ˆì— ìˆì„ ê²½ìš°
 					}else if(lists.get(j).getProd_code().equals(dto.getProd_code()) && chk ==true) { 
-						temp = j; //ÀÎµ¦½º ÀúÀå 
-					//list¿¡ÀÖ´Â j¹øÂ° prod_code°¡ ³» ¿ø·¡ prod_code°í, ³»°¡ ¼±ÅÃÇÑ ¿É¼Ç(prod_code)°¡ Àå¹Ù±¸´Ï¾È¿¡ ¾øÀ» °æ¿ì 
+						temp = j; //ì¸ë±ìŠ¤ ì €ì¥ 
+					//listì—ìˆëŠ” jë²ˆì§¸ prod_codeê°€ ë‚´ ì›ë˜ prod_codeê³ , ë‚´ê°€ ì„ íƒí•œ ì˜µì…˜(prod_code)ê°€ ì¥ë°”êµ¬ë‹ˆì•ˆì— ì—†ì„ ê²½ìš° 
 					}else if(lists.get(j).getProd_code().equals(dto.getProd_code()) && chk == false) {
-						lists.get(j).setProd_code(select_prod_code); //³» prod_code¸¦ ¼±ÅÃÇÑ ¿É¼ÇÀÇ prod_code·Î set 
+						lists.get(j).setProd_code(select_prod_code); //ë‚´ prod_codeë¥¼ ì„ íƒí•œ ì˜µì…˜ì˜ prod_codeë¡œ set 
 					} 
 				} 
-				//ÀúÀåÇÑ ÀÎµ¦½º ¹øÈ£ µ¥ÀÌÅÍ »èÁ¦
+				//ì €ì¥í•œ ì¸ë±ìŠ¤ ë²ˆí˜¸ ë°ì´í„° ì‚­ì œ
 				if(temp != -1) { 
 					lists.remove(temp); 
 				}
@@ -170,7 +171,7 @@ public class CartController {
 		return"cart/cartOptionModal";
 	}
 
-	//¿É¼Çº¯°æ¿¡¼­ Ãß°¡ÇÏ¸é insert
+	//ì˜µì…˜ë³€ê²½ì—ì„œ ì¶”ê°€í•˜ë©´ insert
 	@RequestMapping(value = "/insertCartOption", method = RequestMethod.POST)
 	public String insertCartOption(HttpServletRequest req,CartDTO dto) {
 		HttpSession session = req.getSession();
@@ -180,12 +181,12 @@ public class CartController {
 			dto.setUser_id(dtoSession.getUser_id());
 			int select_cart_qty = dao.selectChk(dto);
 
-			//³»°¡ º¯°æÇÒ prod_code°¡ ÀÌ¹Ì Àå¹Ù±¸´Ï¿¡ ÀÖ´Ù¸é
+			//ë‚´ê°€ ë³€ê²½í•  prod_codeê°€ ì´ë¯¸ ì¥ë°”êµ¬ë‹ˆì— ìˆë‹¤ë©´
 			if(select_cart_qty != -1) {
 				dto.setCart_qty(1 + select_cart_qty);
-				dao.addUpdateCartOption(dto);	//¾÷µ¥ÀÌÆ®	
+				dao.addUpdateCartOption(dto);	//ì—…ë°ì´íŠ¸	
 			}else {
-				//¾ø´Ù¸é insert
+				//ì—†ë‹¤ë©´ insert
 				dao.insertCartOption(dto);
 			}
 		}else {
@@ -194,7 +195,7 @@ public class CartController {
 			List<CartDTO> lists = (List<CartDTO>)session.getAttribute("cart_lists");
 			String select_prod_code = dao.selectChkProdCode(dto);
 
-			//Àå¹Ù±¸´Ï¿¡ ³»°¡ ¼±ÅÃÇÑ prod_code°¡ Á¸ÀçÇÏ´ÂÁö °ËÁõ
+			//ì¥ë°”êµ¬ë‹ˆì— ë‚´ê°€ ì„ íƒí•œ prod_codeê°€ ì¡´ì¬í•˜ëŠ”ì§€ ê²€ì¦
 			boolean chk = false;
 			for(int i =0; i<lists.size(); i++) {
 				if(select_prod_code.equals(lists.get(i).getProd_code())) {
@@ -202,17 +203,17 @@ public class CartController {
 					break;
 				}
 			}
-			//Àå¹Ù±¸´Ï¿¡ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é
+			//ì¥ë°”êµ¬ë‹ˆì— ë°ì´í„°ê°€ ìˆìœ¼ë©´
 			if(chk == true) {
 				for(int i=0; i<lists.size(); i++) {
 					if(lists.get(i).getProd_code().equals(select_prod_code)) {
-						lists.get(i).setCart_qty(lists.get(i).getCart_qty()+1); // ¼±ÅÃÇÑ prod_codeÀÇ ¼ö·® + 1
-						lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); // ÃÑ¾× set
+						lists.get(i).setCart_qty(lists.get(i).getCart_qty()+1); // ì„ íƒí•œ prod_codeì˜ ìˆ˜ëŸ‰ + 1
+						lists.get(i).setCart_amount(lists.get(i).getCart_qty() * dto.getProd_price()); // ì´ì•¡ set
 					}
 				}
-			//Àå¹Ù±¸´Ï¿¡ µ¥ÀÌÅÍ°¡ ¾øÀ¸¸é
+			//ì¥ë°”êµ¬ë‹ˆì— ë°ì´í„°ê°€ ì—†ìœ¼ë©´
 			}else {
-				//Ãß°¡
+				//ì¶”ê°€
 				dto.setProd_code(select_prod_code);
 				dto.setCart_qty(1);
 				dto.setProd_price(dto.getProd_price());
@@ -225,7 +226,7 @@ public class CartController {
 		return"cart/cartOptionModal";	
 	}
 
-	//Àå¹Ù±¸´Ï»èÁ¦
+	//ì¥ë°”êµ¬ë‹ˆì‚­ì œ
 	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
 	public String deleteCart(HttpServletRequest req,String prod_code) {
 
@@ -240,7 +241,7 @@ public class CartController {
 		prod_code = prod_code.substring(0, prod_code.length()-1);
 		prod_code_arr = prod_code.split(",");
 		
-		//È¸¿ø
+		//íšŒì›
 		if(dtoSession != null) {
 
 			for(int i=0; i<prod_code_arr.length; i++) {
@@ -257,13 +258,13 @@ public class CartController {
 			req.setAttribute("lists", lists);
 			req.setAttribute("total_amount", total_amount);
 
-		//ºñÈ¸¿ø
+		//ë¹„íšŒì›
 		}else {
 
 			@SuppressWarnings("unchecked")
 			List<CartDTO> lists = (List<CartDTO>)session.getAttribute("cart_lists");
 			
-			//¸®½ºÆ® µ¥ÀÌÅÍ »èÁ¦
+			//ë¦¬ìŠ¤íŠ¸ ë°ì´í„° ì‚­ì œ
 			for(int j=0; j<prod_code_arr.length; j++) { 
 				for(int i=0; i<lists.size(); i++) { 	
 					if(lists.get(i).getProd_code().equals(prod_code_arr[j])) {
@@ -271,7 +272,7 @@ public class CartController {
 					}		
 				}
 			}
-			// ¸®½ºÆ® »èÁ¦ ÈÄ »óÇ° ÀüÃ¼ ÃÑ¾× set
+			// ë¦¬ìŠ¤íŠ¸ ì‚­ì œ í›„ ìƒí’ˆ ì „ì²´ ì´ì•¡ set
 			for(int i=0; i<lists.size(); i++) {
 				total_amount += lists.get(i).getCart_qty() * lists.get(i).getProd_price();
 			}
@@ -283,7 +284,7 @@ public class CartController {
 	}
 
 
-	//Àå¹Ù±¸´Ï ¿É¼Çº¯°æ
+	//ì¥ë°”êµ¬ë‹ˆ ì˜µì…˜ë³€ê²½
 	@RequestMapping(value = "cartOptionChange", method = RequestMethod.GET)
 	public String cartOptionChange(HttpServletRequest req,CartDTO dto) {
 
