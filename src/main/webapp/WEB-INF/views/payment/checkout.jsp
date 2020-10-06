@@ -58,7 +58,7 @@
 			//$('input[name=prod_list]').val(JSON.stringify(eval('${prod_list_json }')));	// json 형식으로 변환(앞뒤 큰따옴표 제거)
 			
 			// 로그인되어있다면 '주문자 정보와 동일' 체크 설정
-			if(!'${customInfo}') {
+			if('${customInfo}') {
 				$('.checkout__form__checkbox input').prop("checked", true);
 				
 				// name 칸의 text 속성 disabled 설정
@@ -86,6 +86,13 @@
 
 			// 체크박스 '주문자 정보와 동일'을 클릭 시
 			$('.checkout__form__checkbox input').click(function(){
+
+				// 비회원은 체크하지못하도록 고정
+				if(!'${customInfo}') {
+					$('.checkout__form__checkbox input').prop("checked", false);
+					return;
+				}
+				
 				// 체크 표시 설정 시 session 정보와 동일화 시킴
 				if($(this).prop("checked")) {
 					$('input[name=user_id]').val('${customInfo.user_id}');
@@ -287,25 +294,25 @@
 		                                    <span class="checkmark"></span>
 		                                </label>
 			                        </div>
-                                    <input type="text" name="user_id" placeholder="Enter your Name">
+                                    <input type="text" name="user_id" value="${customInfo.user_id}" placeholder="Enter your Name">
                                     <span></span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="checkout__form__input">
                                     <p>Phone <span>*</span></p>
-                                    <input type="text" name="user_tel" placeholder="Enter your Phone">
+                                    <input type="text" name="user_tel" value="${customInfo.user_tel}" placeholder="Enter your Phone">
                                     <span></span>
                                 </div>
                                 <div class="checkout__form__input">
                                     <p>Email <span>*</span></p>
-                                    <input type="text" name="user_email" placeholder="Enter your Email">
+                                    <input type="text" name="user_email" value="${customInfo.user_email}" placeholder="Enter your Email">
                                     <span></span>
                                 </div>
                                 <div class="checkout__form__input">
                                     <p>Address <span>*</span></p>
-                                    <input type="text" name="delivery_addr1" placeholder="Street Address" readonly>
-                                    <input type="text" name="delivery_addr2" placeholder="Apartment. suite, unite ect ( optinal )">
+                                    <input type="text" name="delivery_addr1" value="${customInfo.user_addr1}" placeholder="Street Address" readonly>
+                                    <input type="text" name="delivery_addr2" value="${customInfo.user_addr2}" placeholder="Apartment. suite, unite ect ( optinal )">
                                     <span></span>
                                 </div>
                                 <div class="checkout__form__input">

@@ -6,6 +6,11 @@
 <script src="/wit/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
+// 비회원일시 장바구니 수량도 바로 변경되게 수정(header가 2개 생겨 제거하려했으나 안되어 임시로 class만 제거함)
+$(".header").children().remove();
+$(".header").load(location.href + " .header");
+$(".header").removeClass("header");
+
 //옵션변경을 클릭했을때
 $('.optionChange').on('click',function(){
 	hide(); //옵션창 하나만 선택되게 하기위해 우선 하이드해줌

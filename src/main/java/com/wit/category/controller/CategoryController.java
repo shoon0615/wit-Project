@@ -36,20 +36,6 @@ public class CategoryController {
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
 	public String shop(HttpServletRequest request, CategoryDTO dto) throws Exception {
-		/*
-		Map<String, Object> hMap = new HashMap<String, Object>();
-		
-		// 테스트 에러 방지로 임시 제작, 완성시 삭제
-		if(category1 == null) {
-			category1 = "";
-		}
-		if(category2 == null) {
-			category2 = "";
-		}
-		
-		hMap.put("category1", category1);
-		hMap.put("category2", category2);
-		*/
 		
 		// 테스트 에러 방지로 임시 제작, 완성시 삭제
 		if(dto.getProd_category1() == null) {

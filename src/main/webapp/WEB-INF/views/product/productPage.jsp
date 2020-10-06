@@ -37,9 +37,122 @@
 	<script type="text/javascript">
 	
 		$(function() {
+			var checked = "";
 			var checkedSubcode = '${dto.PROD_SUBCODE }';
 			var f = document.prodForm;
-			
+
+			// 컬러와 사이즈를 선택한 경우 상품 정보를 추가해주는 함수
+		    var checkedInsert = function() {
+			    // radio 및 label로 인해 디자인 초기화(radio는 설정이 안됨)
+		    	$(".color__checkbox label input").after("<style type='text/css'>"
+		    		+ ".product__details__widget ul li .color__checkbox label input:checked~:after {opacity: 0;}"
+		    		+ ".product__details__widget ul li .color__checkbox label input[id='white']:checked~:after {opacity: 0;}</style>");
+				$(".color__checkbox label input").removeAttr('checked');
+				$(".size__btn label").removeClass('active');
+
+		    	var checkedColor = $(':radio[name=color__radio]:checked').attr('id').toUpperCase();
+				var checkedSize = $(':radio[name=size__radio]:checked').attr('id').replace("-btn", " ").trim().toUpperCase();
+				
+				$.post("choiceProd.action", {PROD_SUBCODE:checkedSubcode, PROD_COLOR:checkedColor, PROD_SIZE:checkedSize}, function(data){
+
+					var proTable = $(".product__details__list table");
+					var prod_COLOR = data.prod_COLOR;
+					var prod_SIZE = data.prod_SIZE;
+					var prod_SUBCODE = data.prod_SUBCODE;
+					var prod_PRICE = data.prod_PRICE;
+
+					var prod_id = '#' + prod_COLOR + '-' + prod_SIZE;
+
+					// 상품 정보가 이미 추가돼있는 경우 기존에 더해짐
+					if($(prod_id).length != 0) {
+				    	var oldQty = $(prod_id).closest("tr").find("td.prod__qty").find('input');
+						var oldPrice = $(prod_id).closest("tr").find("td.prod__price").children("span");
+									
+						oldPrice.text(parseFloat(oldPrice.text()) + parseFloat(prod_PRICE));
+						oldQty.val(parseFloat(oldQty.val()) + 1);
+					// 상품 정보가 존재하지 않는 경우 추가됨
+				    } else {
+					    proTable.append('<tr><td class="prod__sub"><span id="' + prod_COLOR + '-' + prod_SIZE + '"> ' 
+					    	+ '<b>' + prod_SUBCODE + '</b><br/>- ' 
+					    	+ prod_COLOR + '/' + prod_SIZE + '</span></td>');
+					    proTable.find("tr:last").append('<td class="prod__qty">');	
+					    proTable.find("td:last").prepend($('<div/>', {class: 'pro-qty'}));
+					    proTable.find("div:last").append('<input type="text" value="1" disabled="disabled"/></td>');
+						proTable.find("div:last").prepend('<span class="dec qtybtn" style="padding-left: 3px;">-</span>');
+						proTable.find("div:last").append('<span class="inc qtybtn">+</span>');
+						proTable.find("tr:last").append('<td class="prod__close"><span class="icon_close"></span></td>');
+						proTable.find("tr:last").append('<td class="prod__price">￦ <span>' + prod_PRICE + '</span></td></tr>');
+					}
+					
+					// 총금액도 기존 금액에 더해짐
+					var totalAmount = $(".product__details__amount").children("span");
+					totalAmount.text(parseFloat(totalAmount.text()) + parseFloat(prod_PRICE));
+				}, "json");
+		    }
+
+		    // 컬러 리스트 또는 사이즈 리스트 클릭 시
+		    $('.color__checkbox label input, .size__btn label input').click(function(){	   
+			    // 처음 클릭 시엔 속성 값만 바뀌도록 설정 
+				if(checked == "") {
+					checked = $(this).attr("name").indexOf("color") == -1 ? "size" : "color";
+				// 클릭한 리스트의 속성과 변수에 저장한 속성이 다를 경우(다른 리스트끼리 선택한 경우)
+				} else if($(this).attr("name").indexOf(checked) == -1){
+					checkedInsert();
+					checked = "";
+		        }
+
+		        // input 대신 label로 보이게되어있어 label의 속성만 바뀜(디자인)
+				if(checked == "color") {
+		    		$(".color__checkbox label input").removeAttr('checked');
+		        	$(this).attr('checked', true);
+		        	$('.color__checkbox label style').remove();
+		        } else if(checked == "size") {
+		        	$(".size__btn label").removeClass('active');
+		        	$(this).closest("label").addClass('active');
+		        } 	    	
+			});
+
+			// 수량 변경 버튼 클릭 시(+, -)
+			$('.product__details__list').on('click', '.qtybtn', function () {
+				var oldQty = $(this).parent().find('input');										// 기존 수량								
+				//var oldAmt = $('.product__details__price').text().substring(2).replace(",", "");	// 상품 단일 금액(selector)
+				var oldAmt = '${dto.PROD_PRICE }';													// 상품 단일 금액
+				var newQty = parseFloat(oldQty.val());												// 수량 변경 저장 함수
+				var oldPrc = $(this).closest("tr").find("td.prod__price").children("span");			// 상품 수량에 따른 금액
+				var newPrc = parseFloat(oldPrc.text());												// 상품 금액 저장 함수
+				var totalAmt = $(".product__details__amount").children("span");						// 총 금액
+
+				if ($(this).hasClass('inc')) {
+					newQty = newQty + 1;
+					newPrc = newPrc + parseFloat(oldAmt);
+					totalAmt.text(parseFloat(totalAmt.text()) + parseFloat(oldAmt));
+				} else {
+					// 수량 1 미만 안되게 설정(Don't allow decrementing below zero)
+					if (parseFloat(oldQty.val()) > 1) {
+						newQty = newQty - 1;
+						newPrc = newPrc - parseFloat(oldAmt);
+						totalAmt.text(parseFloat(totalAmt.text()) - parseFloat(oldAmt));
+					} else {
+						newQty = 1;
+						newPrc = parseFloat(oldAmt);
+					}
+				}
+
+				oldQty.val(newQty);
+				oldPrc.text(newPrc);
+		    });
+
+			// 상품 정보의 닫기(x) 버튼 클릭 시
+		    $('.product__details__list').on('click', '.icon_close', function () {
+		    	var totalAmt = $(".product__details__amount").children("span");
+		    	var oldAmt = $(this).closest("tr").find("td.prod__price").children("span").text();
+
+		    	// 총금액에서 상품 수량에 따른 금액을 차감함
+		    	totalAmt.text(parseFloat(totalAmt.text()) - parseFloat(oldAmt));
+		    	$(this).closest("tr").remove();
+		    });
+
+		    // 바로 결제 버튼 클릭 시
 			$('.cart-btn').click(function(){
 				var prodStr = "";																//선택한 상품 리스트를 담아줄 문자열
 				$('.product__details__list tr').each(function(index){
@@ -53,11 +166,67 @@
 					alert("구매할 상품이 없습니다!");
 					return;
 				} else {
-					prodStr = checkedSubcode + prodStr;												// 문자열(0)에 subcode 삽입												// 문자열(0)에 subcode 삽입	
+					prodStr = checkedSubcode + prodStr;												// 문자열(0)에 subcode 삽입
 					$(f).append($('<input/>', {type: 'hidden', name: 'prodStr', value: prodStr}));	// form에 매개변수 저장 후 이동
 					f.submit();
 				}
 			});
+
+		    // 찜하기(heart) 버튼 클릭 시
+			$('.heart-btn').on('click', function () {
+				// 로그인 시에만 등록되도록 설정
+				if('${customInfo}') {
+					var url = '${pageContext.request.contextPath}/myPage/heartInsert.action';
+					var user_id = '${customInfo.user_id}';
+
+					$.post(url,{user_id:user_id,prod_subcode:checkedSubcode},function(args){
+						if(args) {
+							alert("찜 목록에 등록되었습니다!");
+						} else {
+							alert("이미 찜 목록에 존재하는 상품이 있습니다!");
+						}
+					});
+				// 비회원은 로그인 창으로 이동
+				} else {
+					window.location.href = '${pageContext.request.contextPath}/custom/login';
+				}
+		    });
+
+		    // 장바구니(cart) 버튼 클릭 시
+			$('.bag-btn').on('click', function () {		    	
+		    	var prod_info = [];
+
+		    	// 상품 정보를 [색상-사이즈-수량]의 배열로 보냄  *예시) BLACK-250-1
+		    	$(".product__details__list table").find("tr").each(function(i){
+		    		prod_info.push($(this).find("td.prod__sub").children("span").attr("id") 
+		    		+ '-' + $(this).find("div.pro-qty").children("input").val());
+		    	});
+
+		    	// 디자인으로 인한 맨 앞의 빈 tr 제거
+		    	prod_info.splice(0, 1);
+		    	
+		    	if(prod_info.length == 0) {
+		    		alert("장바구니에 담을 내역이 없습니다!");
+		    	} else {
+		    		$.post("selectBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:prod_info}, function(data){
+		    			if(data != "") {
+			    			var message = "이미 장바구니에 존재하는 상품이 있습니다.\r\n";
+							for(var i in data) {
+								message += "[" + data[i] + "]\r\n";
+							}	
+							message += "그대로 진행하시겠습니까?"
+							var ok = confirm(message);
+						}
+						
+						if(data == "" || ok == true) {
+							$.post("insertBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:prod_info}, function(data){
+								alert("장바구니에 담겼습니다!");
+								window.location.href = "/wit/cart/shopcart";
+							});
+						}
+					});
+		    	}
+		    }); 
 			
 		});	
 			
@@ -70,30 +239,6 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <ul class="offcanvas__widget">
-            <li><span class="icon_search search-switch"></span></li>
-            <li><a href="#"><span class="icon_heart_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-            <li><a href="#"><span class="icon_bag_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-        </ul>
-        <div class="offcanvas__logo">
-            <a href="./index.html"><img src="/wit/resources/img/logo.png" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
-
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -101,8 +246,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">Women's </a>
-                        <span>Essential structured blazer</span>
+                        <a href="#">Shop </a>
+                        <span>${dto.PROD_CATEGORY1 }</span>
                     </div>
                 </div>
             </div>
@@ -222,7 +367,7 @@
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" onclick="sendReview('review_created');" role="tab">Reviews ( 2 )</a>
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" onclick="sendReview('review_created');" role="tab">Reviews ( ${map.CNT } )</a>
                             </li>
                         </ul>
                         <div class="tab-content">

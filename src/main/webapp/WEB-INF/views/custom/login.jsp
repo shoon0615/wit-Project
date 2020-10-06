@@ -44,6 +44,7 @@
 
 		var id = $("#id").val();
 		var pwd = $("#pwd").val();
+		var f = document.custom_login;
 
 		$.ajax({
 			type : "post",
@@ -52,8 +53,9 @@
 			data : {user_id:id , user_pwd:pwd},
 			success : function(data){
 				if(data == "true"){//해당 id,pwd로 계정이 있으면 
-					document.custom_login.action = "<%=cp %>/main/main";	//controller에서 requesetmapping -> post로도 되어있어야 함!
-					document.custom_login.submit();
+					// f.action = "<%=cp %>/main/main";	//controller에서 requesetmapping -> post로도 되어있어야 함!
+					f.action += "?beforeUrl=" + document.referrer;
+					f.submit();
 				}else{//해당 id,pwd로 계정이 없으면
 					$("#login_result").text("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
 					$("#login_result").css('color','red');
@@ -76,6 +78,13 @@
 	function fn_click_pwd(){
 		$("#pwd").val("");
 		$("#login_result").text("");		
+	}
+
+	// Enter키 체크
+	function fn_check_enter(){
+		if(window.event.keyCode == 13) {
+			fn_check_login();
+	    }
 	}
 
 </script>
@@ -116,26 +125,26 @@
                                 </div>
                             	<div class="checkout__form__input mt20">
                                     <p>Password</p>
-                                    <input type="password" name="user_pwd" id="pwd" style="margin-bottom: 10px;" placeholder="Enter your password" onclick="fn_click_pwd()">                                    
+                                    <input type="password" name="user_pwd" id="pwd" style="margin-bottom: 10px;" placeholder="Enter your password" onclick="fn_click_pwd()" onkeyup="fn_check_enter()">                                    
                                 </div>
                                 <div class="checkout__form__input mt20">                                                                        
                                     <span id="login_result" style="font-size: 15px;"></span>                                   
                                 </div>
-                                <div class="checkout__form__checkbox mt20">
-                                	<p><label onclick="javascript:location.href='<%=cp %>/custom/find_account';" style="padding-left: 0px;color: red;text-align: right;"><i class="icofont-question-circle"></i>Forgot ID or Password ?</label></p>
+                                <div class="checkout__form__checkbox mt20" style="text-align: right;">
+                                	<p><label onclick="javascript:location.href='<%=cp %>/custom/find_account';" style="padding-left: 0px;color: red;display: inline-block;"><i class="icofont-question-circle"></i>Forgot ID or Password ?</label></p>
                                 </div>
-                                <div class="checkout__form__checkbox mt20">
-                                	<p><label onclick="javascript:location.href='<%=cp %>/custom/join';" style="padding-left: 0px;color: red;text-align: right;"><i class="icofont-question-circle"></i>Would you like to join ?</label></p>
+                                <div class="checkout__form__checkbox mt20" style="text-align: right;">
+                                	<p><label onclick="javascript:location.href='<%=cp %>/custom/join';" style="padding-left: 0px;color: red;display: inline-block;"><i class="icofont-question-circle"></i>Would you like to join ?</label></p>
                                 </div>                                                                                             
                             </div>                                                                                                        
                             <div class="mt20" style="padding-left: 33%;">
-                            	<button type="button" class="site-btn" style="font-size: 18px;" onclick="fn_check_login()">
+                            	<button type="button" class="site-btn" style="width: 226px;font-size: 18px;" onclick="fn_check_login()">
                             	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             	</button>
                             </div>
-                            <div class="mt20" style="padding-left: 31%;">
+                            <div class="mt20" style="padding-left: 33%;">
                             	<a href="https://kauth.kakao.com/oauth/authorize?client_id=46a7983f1090447e062943a08473a49f&redirect_uri=http://localhost:8081/wit/custom/kakaoLogin&response_type=code">
-                            		<img src="<%=cp %>/resources/kakao/kakao_login_btn1.png" align="middle">
+                            		<img src="<%=cp %>/resources/kakao/kakao_login_btn2.png" align="middle" style="border-radius: 50px;">
                             	</a>
                             </div>                                                 
                         </div>

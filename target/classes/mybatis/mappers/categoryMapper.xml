@@ -38,6 +38,7 @@
 	        		and p.prod_size ${sizeChk} (${size})
 					and pi.prod_price between #{minAmount} and #{maxAmount}
 	        		group by pi.prod_subcode,pi.prod_price,i.prod_img,pi.prod_count
+	        		order by pi.prod_subcode
 		 		 ) data
 		  )
  	where rnum between #{start} and #{end} 
@@ -60,7 +61,7 @@
 	               and p.prod_size ${sizeChk} (${size})
 				   and pi.prod_price between #{minAmount} and #{maxAmount}
 	               group by pi.prod_subcode,pi.prod_price,i.prod_img,pi.prod_count
-	               order by pi.prod_price ${sort}
+	               order by pi.prod_price ${sort}, pi.prod_subcode
 	    	 	 ) data
 		)
 	where rnum between #{start} and #{end} 
@@ -83,7 +84,7 @@
 	               and p.prod_size ${sizeChk} (${size})
 				   and pi.prod_price between #{minAmount} and #{maxAmount}
 	               group by pi.prod_subcode,pi.prod_price,i.prod_img,pi.prod_count
-	               order by pi.prod_count ${sort}
+	               order by pi.prod_count ${sort}, pi.prod_subcode
 	    	 	 ) data
 		)
 	where rnum between #{start} and #{end} 
@@ -106,7 +107,7 @@
 	                and b.prod_size ${sizeChk} (${size})
 					and pi.prod_price between #{minAmount} and #{maxAmount}
 					group by pi.prod_subcode,pi.prod_price,i.prod_img
-					order by rescore ${sort}
+					order by avgscore ${sort}, pi.prod_subcode
 				 ) data
 		)
 	where rnum between #{start} and #{end}
@@ -130,7 +131,7 @@
                     and b.prod_size ${sizeChk} (${size})
 					and pi.prod_price between #{minAmount} and #{maxAmount}
 					group by pi.prod_subcode,pi.prod_price,i.prod_img
-					order by recount ${sort}
+					order by recount ${sort}, pi.prod_subcode
 				 ) data
 		 )
 	where rnum between #{start} and #{end} 

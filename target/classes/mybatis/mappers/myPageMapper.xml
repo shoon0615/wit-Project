@@ -65,6 +65,14 @@
 	delete review where review_num = #{review_num}
 </delete>
 
+<!-- 선택한 찜한 상품 등록 -->
+<delete id="insertHeart" parameterType="myPageDTO">
+	insert into heart 
+	(user_id, prod_subcode)
+	values 
+	(#{user_id}, #{prod_subcode})
+</delete>
+
 <!-- 내가 찜한 상품 목록 -->
 <select id="getHeart" parameterType="String" resultType="myPageDTO">
 	select 	i.prod_img, pi.prod_subcode, pi.prod_price, nvl(round(avg(r.review_score),1),0) review_score

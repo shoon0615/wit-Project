@@ -11,8 +11,9 @@ import com.wit.product.dto.reviewDTO;
 public interface ProductDAO {
 
 	public ProductDTO selectProd(String PROD_SUBCODE);
+	public ProductDTO selectProd_test(String PROD_SUBCODE);
 	public List<String> selectProdImg(String PROD_SUBCODE);
-	public HashMap<String, Object> selectProdScore();
+	public HashMap<String, Object> selectProdScore(String PROD_SUBCODE);
 	public boolean selectProdHeart();
 	public boolean selectProdCart();
 	public List<String> selectProdChoice(String PROD_INFO, String PROD_SUBCODE);

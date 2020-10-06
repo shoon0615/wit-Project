@@ -50,7 +50,11 @@
 			url : "<%=cp%>/custom/find_id",
 			dataType : "text",
 			data : {user_name:name , user_email:email},
+			beforeSend : function(){
+				$(".loader").show();
+			},
 			success : function(data){
+				$(".loader").hide();
 				if(data == "true"){//해당 name,email로 계정이 있으면 
 					$("#id_result").text("이메일로 아이디를 전송했습니다. 입력하신 이메일을 확인해주세요.");
 					$("#id_result").css('color','green');
@@ -77,7 +81,11 @@
 			url : "<%=cp%>/custom/find_pwd",
 			dataType : "text",
 			data : {user_id:id , user_email:email},
+			beforeSend : function(){
+				$(".loader").show();
+			},
 			success : function(data){
+				$(".loader").hide();
 				if(data == "true"){//해당 id,email로 계정이 있으면 
 					$("#pwd_result").text("이메일로 임시 비밀번호를 전송했습니다. 입력하신 이메일을 확인해주세요.");
 					$("#pwd_result").css('color','green');
@@ -137,6 +145,7 @@
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
+    	<div class="loader" style="display: none;z-index: 999999;"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

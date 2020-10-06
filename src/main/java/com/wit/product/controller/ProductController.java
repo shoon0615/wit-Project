@@ -45,12 +45,12 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productDetail", method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView productDetail(String PROD_SUBCODE,String sort) {		
-
+	public ModelAndView productDetail(HttpServletRequest request, String PROD_SUBCODE) {		
+		PROD_SUBCODE = PROD_SUBCODE.toUpperCase();
 		ModelAndView mav = new ModelAndView();
 
 		ProductDTO dto = dao.selectProd(PROD_SUBCODE);
-		HashMap<String, Object> map = dao.selectProdScore();
+		HashMap<String, Object> map = dao.selectProdScore(PROD_SUBCODE);
 		List<String> PROD_IMG = dao.selectProdImg(PROD_SUBCODE);
 		List<String> PROD_COLOR = dao.selectProdChoice("C", PROD_SUBCODE);
 		List<String> PROD_SIZE = dao.selectProdChoice("S", PROD_SUBCODE);
@@ -61,7 +61,12 @@ public class ProductController {
 		mav.addObject("PROD_COLOR", PROD_COLOR);
 		mav.addObject("PROD_SIZE", PROD_SIZE);
 
-		mav.setViewName(".tiles/product/productPage");
+		// 받은 PROD_SUBCODE가 없을 경우 이전 주소로 롤백함
+		if(dto == null) {
+			mav.setViewName("redirect:" + request.getHeader("referer").substring(request.getHeader("referer").indexOf("/wit")+4).replace(".action", ""));
+		} else {
+			mav.setViewName(".tiles/product/productPage");
+		}
 
 		return mav;
 	}

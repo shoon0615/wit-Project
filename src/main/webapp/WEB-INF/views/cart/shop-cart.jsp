@@ -212,7 +212,7 @@
             
     		$.post(url,{prod_code : prod_code},function(args){	
     			$(".cartDetail").html(args);
-    		});
+    		});	    		
        
         });
      

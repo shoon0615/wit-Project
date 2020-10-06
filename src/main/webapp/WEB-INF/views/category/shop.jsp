@@ -357,12 +357,6 @@
 					$('#sizeList').html(args);
 				});
 
-				// 상품별 다른 사이즈 호출
-				url = "<%=cp%>/category/categorySize.action";
-				$.post(url,{category1 : code_form},function(args){
-					$('#sizeList').html(args);
-				});
-
 				$('#sizeList').find('input').prop("checked", false); //체크박스 초기화
 			});
 
@@ -373,7 +367,7 @@
 				var category1 = $(this).closest('.card').children('.card-heading').children().attr("id");
 				var category2 = $(this).attr("id");
 
-				// 선택한 중분류에만 색 구분 추가
+				// 선택한 중분류에만 색 구분 추가(초기화 -> 색 구분 추가)
 				$(this).closest("ul").find("a").css({"color":"", "font-weight":""});
 				$(this).css({"color":"black", "font-weight":"500"});
 
@@ -449,6 +443,27 @@
 					priceChk = 0;
 				}
 			});
+
+			// 찜하기 버튼 클릭 시
+			$('html').on('click','.heart_alt',function(){
+				// 로그인 시에만 등록되도록 설정
+				if('${customInfo}') {
+					var url = "<%=cp%>/myPage/heartInsert.action";
+					var user_id = '${customInfo.user_id}';
+					var prod_subcode = $(this).closest("ul").attr("id");
+
+					$.post(url,{user_id:user_id,prod_subcode:prod_subcode},function(args){
+						if(args) {
+							alert("찜 목록에 등록되었습니다!");
+						} else {
+							alert("이미 찜 목록에 존재하는 상품이 있습니다!");
+						}
+					});
+				// 비회원은 로그인 창으로 이동
+				} else {
+					window.location.href = "<%=cp%>/custom/login";
+				}
+			});	
 		});
 		
 		//모든 게 로드된 후

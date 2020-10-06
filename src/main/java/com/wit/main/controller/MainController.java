@@ -91,6 +91,12 @@ public class MainController {
 		req.setAttribute("reCount_lists", reCount_lists);
 		req.setAttribute("reScore_lists", reScore_lists);
 		
+		Map<String, List<CategoryDTO>> test = new HashMap<String, List<CategoryDTO>>();
+		test.put("Hot_Trend", hot_lists);
+		test.put("Many Review", reCount_lists);
+		test.put("Review Score", reScore_lists);
+		req.setAttribute("test", test);
+		
 		return ".tiles/main/index";
 
 

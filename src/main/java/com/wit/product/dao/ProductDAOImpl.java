@@ -31,6 +31,15 @@ public class ProductDAOImpl implements ProductDAO {
 		return dto;
 	}
 	
+	// 상품 정보(테스트 버전) : 전체 데이터가 한곳에 들어있음
+	@Override
+	public ProductDTO selectProd_test(String PROD_SUBCODE) {
+		
+		ProductDTO dto = sqlSession.selectOne("productMapper.selectProd_test", PROD_SUBCODE);
+		
+		return dto;
+	}
+	
 	// 상품 이미지 정보
 	@Override
 	public List<String> selectProdImg(String PROD_SUBCODE) {
@@ -42,9 +51,9 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	// 상품 별점/리뷰수
 	@Override
-	public HashMap<String, Object> selectProdScore() {
+	public HashMap<String, Object> selectProdScore(String PROD_SUBCODE) {
 		
-		HashMap<String, Object> map = sqlSession.selectOne("productMapper.selectProdScore");
+		HashMap<String, Object> map = sqlSession.selectOne("productMapper.selectProdScore", PROD_SUBCODE);
 		
 		return map;
 	}

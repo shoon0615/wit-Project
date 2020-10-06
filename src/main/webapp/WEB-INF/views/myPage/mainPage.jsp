@@ -93,6 +93,9 @@
     			getPage(i);
    			}
 
+			// 특정 페이지 요청시 해당 화면으로 셋팅
+			$(".nav-item:eq(" + ${choice } + ")").children().trigger("click");
+
 			// Review 클릭 시(리뷰 작성 창이라면 초기화)
     		$('.nav-item:eq(1)').on('click', "a", function(){
 				if(reviewWrite) {

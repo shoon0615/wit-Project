@@ -11,9 +11,11 @@
     });
 
 	// 페이지 번호 클릭 시
+	/* 
 	$('.pagination__option').on('click',function(){
       
-	});
+	}); 
+	*/
 </script>
 
 <c:forEach var="dto" items="${list}">
@@ -25,17 +27,15 @@
 				<!--<div class="label stockout stockblue">Out Of Stock</div>
                     <div class="label">Sale</div>
                 -->
-				<ul class="product__hover">
-					<li><a href="/wit/resources/img/shop/shop-1.jpg"
-						class="image-popup"><span class="arrow_expand"></span></a></li>
-					<li><a href="#"><span class="icon_heart_alt"></span></a></li>
+				<ul id="${dto.prod_subcode}" class="product__hover">
+					<!-- <li><a href="/wit/resources/img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li> -->
+					<li><a href="${pageContext.request.contextPath}/product/productDetail?PROD_SUBCODE=${dto.prod_subcode}"><span class="arrow_expand"></span></a></li>
+					<li><a class="heart_alt" style="cursor: pointer;"><span class="icon_heart_alt"></span></a></li>
 					<li><a href="#"><span class="icon_bag_alt"></span></a></li>
 				</ul>
 			</div>
 			<div class="product__item__text">
-				<h6>
-					<a href="#">${dto.prod_subcode}</a>
-				</h6>
+				<h6>${dto.prod_subcode}</h6>
 				<div class="rating">
 					<c:forEach begin="1" end="${dto.avgscore }">
                     	<i class="fa fa-star"></i>
@@ -44,7 +44,7 @@
                     	<span class="fa fa-star"></span>
                     </c:forEach>
 				</div>
-				<div class="product__price">${dto.prod_price}원</div>
+				<div class="product__price">￦ ${dto.prod_price}</div>
 			</div>
 		</div>
 	</div>

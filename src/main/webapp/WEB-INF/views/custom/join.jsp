@@ -129,13 +129,13 @@
 			//pwd2까지 확인한 후 다시 pwd1을 수정했을 경우를 고려
 			if($(this).val()==$("#pwd2").val()){
 				if($("#pwd2").val()!=""){
-					$("#pwd2_result").text('');
+					$("#pwd2").next().text('');
 					$("#pwd2").css("border-color", "green");
 					compare_pwd1 = true;
 				}
 			}else{
 				if($("#pwd2").val()!=""){
-					$("#pwd2_result").text("비밀번호가 일치하지 않습니다 !!!");
+					$("#pwd2").next().text("비밀번호가 일치하지 않습니다 !!!");
 					$("#pwd2").css("border-color", "red");
 					compare_pwd1 = false;
 				}
@@ -247,8 +247,10 @@
 						compare_addr1 = true;
 			        }
 			    }).open();
-			}
-
+			},
+			blur: function(){
+				$("#addr2").focus();
+			}		
 		});
 
 
@@ -274,10 +276,14 @@
 		$("#height").on({
 
 			blur: function(){
-				$(this).next().val($(this).val());//cm 제외한 숫자만 form으로 보낼 value로 세팅
-				if($(this).val().indexOf("cm")==-1){//cm가 없으면 cm를 붙여라 (보여주기용)
-					var height = $(this).val() + " cm";
-					$(this).val(height);
+				if($(this).val()!=""){
+					$(this).next().val($(this).val());//cm 제외한 숫자만 form으로 보낼 value로 세팅
+					if($(this).val().indexOf("cm")==-1){//cm가 없으면 cm를 붙여라 (보여주기용)
+						var height = $(this).val() + " cm";
+						$(this).val(height);
+					}
+				} else if($(this).next().val()!=""){
+					$(this).val($(this).next().val() + " cm");//눌렀다가 그냥 나갈경우 이전 value로 되돌림
 				}
 			},
 			focus: function(){
@@ -291,13 +297,17 @@
 		$("#weight").on({
 
 			blur: function(){
-				$(this).next().val($(this).val());//kg 제외한 숫자만 form으로 보낼 value로 세팅
-				if($(this).val().indexOf("kg")==-1){//kg이 없으면 kg을 붙여라 (보여주기용)
-					var weight = $(this).val() + " kg";
-					$(this).val(weight);
+				if($(this).val()!=""){
+					$(this).next().val($(this).val());//kg 제외한 숫자만 form으로 보낼 value로 세팅
+					if($(this).val().indexOf("kg")==-1){//kg이 없으면 kg을 붙여라 (보여주기용)
+						var weight = $(this).val() + " kg";
+						$(this).val(weight);
+					}
+				} else if($(this).next().val()!=""){
+					$(this).val($(this).next().val() + " kg");//눌렀다가 그냥 나갈경우 이전 value로 되돌림
 				}
 			},
-			focust: function(){
+			focus: function(){
 				$(this).val("");
 			}
 
@@ -456,14 +466,14 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="checkout__form__input mt20">
                                     <p>Height</p>
-                                    <input type="text" id="height" style="margin-bottom: 10px;" placeholder="Enter your height">
+                                    <input type="text" id="height" maxlength="3" style="margin-bottom: 10px;" placeholder="Enter your height">
                                     <input type="hidden" name="user_height" id="user_height">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="checkout__form__input mt20">
                                     <p>Weight</p>
-                                    <input type="text" id="weight" style="margin-bottom: 10px;" placeholder="Enter your weight">
+                                    <input type="text" id="weight" maxlength="3" style="margin-bottom: 10px;" placeholder="Enter your weight">
                                     <input type="hidden" name="user_weight" id="user_weight">
                                 </div>
                             </div>

@@ -431,7 +431,7 @@ ol {
 
 .header__right__auth {
 	display: inline-block;
-	margin-right: 25px;
+	margin-right: 17px;
 }
 
 .header__right__auth a {
@@ -455,6 +455,14 @@ ol {
 	top: -2px;
 	content: "/";
 	font-size: 13px;
+}
+
+.header__right__input {
+	width: 180px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 13px;
+    color: #111111;
+    font-weight: 500;
 }
 
 .header__right__widget {
@@ -1294,7 +1302,7 @@ ol {
 	padding-top: 22px;
 }
 
-.product__item__text h6 a {
+.product__item__text h6 {
 	font-size: 14px;
 	color: #111111;
 }

@@ -82,6 +82,12 @@ public class MyPageDAOImpl implements MyPageDAO {
 		sqlSession.delete("myPageMapper.deleteReview", review_num);
 	}
 	
+	// 선택한 찜한 상품 등록
+	@Override
+	public void insertHeart(MyPageDTO dto) {
+		sqlSession.insert("myPageMapper.insertHeart", dto);
+	}
+	
 	// 내가 찜한 상품 목록
 	@Override
 	public List<MyPageDTO> getHeart(String user_id) {

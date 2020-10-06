@@ -3,6 +3,7 @@ package com.wit.custom.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -45,8 +46,14 @@ public class CustomController {
 
 	//	로그인 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() throws Exception {
+	public String try_login() throws Exception {
 		return ".tiles/custom/login";
+	}
+	
+	//	로그인 이전 페이지
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(String beforeUrl) throws Exception {
+		return "redirect:" + beforeUrl.substring(beforeUrl.indexOf("/wit")+4).replace(".action", "");	
 	}
 	
 	//	아이디, 비밀번호 찾기 페이지
@@ -122,12 +129,6 @@ public class CustomController {
 		if(dtoC != null) {
 			session.setAttribute("customInfo", dtoC);	//세션에 계정정보 올리기
 			result = "true";	//Ajax 반환 data
-			//세션확인
-			CustomDTO dtoS = (CustomDTO)session.getAttribute("customInfo");			
-			log.debug("세션 name: " + dtoS.getUser_name());
-			log.debug("세션 tel: " + dtoS.getUser_tel());
-			log.debug("세션 form: " + dtoS.getUser_form());
-			log.debug("세션 style: " + dtoS.getUser_style());
 		}
 		
 		log.debug("result: " + result);
@@ -140,6 +141,7 @@ public class CustomController {
 	@RequestMapping(value = "/kakaoLogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
 
+		System.out.println("code: " + code);
 		// 인증 code로 access_token 받아오기
 		String access_Token = kakao.getAccessToken(code);
 		System.out.println("controller access_token : " + access_Token);
@@ -148,7 +150,7 @@ public class CustomController {
 		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);	   
 	    System.out.println("login Controller : " + userInfo);
 	    
-	    //	    클라이언트의 이메일이 존재할 때 세션에 해당 이메일,닉네임 토큰 등록
+	    // 	클라이언트의 이메일이 존재할 때 세션에 해당 이메일,닉네임 토큰 등록
 	    if (userInfo.get("email") != null) {
 	        session.setAttribute("email", (String)userInfo.get("email"));
 	        session.setAttribute("nickname", (String)userInfo.get("nickname"));
@@ -156,28 +158,28 @@ public class CustomController {
 	        session.setAttribute("kakao", "ok");
 	    }
 	    
-		return "redirect:/main/main";		
-		
+	    return "redirect:/main/main";
 	}
 	
 	//	로그아웃 처리
 	@RequestMapping(value = "/logout", method = {RequestMethod.GET,RequestMethod.POST})
-	public String logout(HttpSession session) throws Exception {
+	public String logout(HttpSession session, HttpServletRequest request) throws Exception {
 		
-		//일반 로그인 되있을 시 세션에서 정보 삭제하기
+		// 일반 로그인 되있을 시 세션에서 정보 삭제하기
 		session.removeAttribute("customInfo");
 		
-		//카카오 계정으로 로그인 되어 있으면
+		// 카카오 계정으로 로그인 되어 있으면
 		if(session.getAttribute("access_Token") != null) {
+			// kakao.kakaoLogout((String)session.getAttribute("access_Token"));
 		    session.removeAttribute("access_Token");
 		    session.removeAttribute("nickname");
 		    session.removeAttribute("email");
 		    session.removeAttribute("kakao");
-		    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=46a7983f1090447e062943a08473a49f&logout_redirect_uri=http://localhost:8081/wit/custom/main";
+		    return "redirect:https://kauth.kakao.com/oauth/logout?client_id=46a7983f1090447e062943a08473a49f&logout_redirect_uri=http://localhost:8081/wit/main/main";
 		}
 
-		return "redirect:/main/main";
-		
+		// 로그인 이전 페이지로 돌아가기
+		return "redirect:" + request.getHeader("referer").substring(request.getHeader("referer").indexOf("/wit")+4).replace(".action", "");
 	}
 	
 	//	아이디 찾기 처리
@@ -201,7 +203,7 @@ public class CustomController {
 			sendMail.setSubject("[ WIT 홈페이지 아이디 확인 ]");
 			sendMail.setText("<h3>안녕하세요. WIT 아이디 찾기 메일입니다.</h3><br>"
 					+ "회원님의 아이디는 <b>" + result + "</b> 입니다.");
-			sendMail.setFrom("hyeona73@gamil.com", "[WIT]");
+			sendMail.setFrom("hyeona73@gmail.com", "[WIT]");
 			sendMail.setTo(user_email);
 			sendMail.send();
 			
@@ -241,7 +243,7 @@ public class CustomController {
 			sendMail.setSubject("[ WIT 홈페이지 임시 비밀번호 ]");
 			sendMail.setText("<h3>안녕하세요. WIT 비밀번호 찾기 메일입니다.</h3><br>"
 					+ "회원님의 임시 비밀번호는 <b>" + key + "</b> 입니다.");
-			sendMail.setFrom("hyeona73@gamil.com", "[WIT]");
+			sendMail.setFrom("hyeona73@gmail.com", "[WIT]");
 			sendMail.setTo(user_email);
 			sendMail.send();
 			

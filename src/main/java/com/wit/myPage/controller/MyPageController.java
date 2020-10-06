@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.wit.custom.dto.CustomDTO;
 import com.wit.myPage.dao.MyPageDAO;
 import com.wit.myPage.dto.MyPageDTO;
 
@@ -32,9 +34,18 @@ private Logger log = LoggerFactory.getLogger(MyPageController.class);
 	
 	// 메인 페이지
 	@RequestMapping(value = "/mainPage", method = {RequestMethod.GET, RequestMethod.POST})
-	public String mainPage(HttpServletRequest request) {
+	public String mainPage(HttpServletRequest request, HttpSession session) {
 		
-		return ".tiles/myPage/mainPage";
+		CustomDTO dtoSession = (CustomDTO)session.getAttribute("customInfo");
+		
+		if(dtoSession == null) {
+			return "redirect:/custom/login";
+		} else {
+			if(request.getParameter("choice") != null) {
+				request.setAttribute("choice", request.getParameter("choice"));
+			}
+			return ".tiles/myPage/mainPage";
+		}
 	}
 	
 	// 1: 내가 주문한 내역 페이지
@@ -82,6 +93,17 @@ private Logger log = LoggerFactory.getLogger(MyPageController.class);
 	public @ResponseBody String reviewDelete(String review_num) {	
 		dao.deleteReview(review_num);
 		return "";
+	}
+	
+	// 3: 찜한 상품 등록 기능
+	@RequestMapping(value = "/heartInsert", method = RequestMethod.POST)
+	public @ResponseBody boolean heartInsert(MyPageDTO dto) {	
+		try {
+			dao.insertHeart(dto);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}		
 	}
 	
 	// 3: 내가 찜한 상품 목록 페이지
