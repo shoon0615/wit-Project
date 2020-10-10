@@ -990,6 +990,10 @@ ol {
 	margin-bottom: 5px;
 }
 
+.footer__social .fa {
+    line-height: 2.5;
+}
+
 .footer__social a:last-child {
 	margin-right: 0;
 }
@@ -1284,6 +1288,7 @@ ol {
 	-webkit-transition: all, 0.5s;
 	-o-transition: all, 0.5s;
 	transition: all, 0.5s;
+	border: 1px solid #D2D2D2;
 }
 
 .product__hover li a span {
@@ -1302,7 +1307,7 @@ ol {
 	padding-top: 22px;
 }
 
-.product__item__text h6 {
+.product__item__text h6 a {
 	font-size: 14px;
 	color: #111111;
 }

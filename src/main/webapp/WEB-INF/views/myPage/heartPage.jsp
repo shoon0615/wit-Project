@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -14,7 +15,7 @@
 		<div class="myPage__heart__item">
 			<label></label>
 			<input type="checkbox"/>
-			<img src="/wit/resources/img/shop-cart/cp-1.jpg" alt="">
+			<img src="<spring:url value='/product/${dto.prod_img }'/>" alt=""/>
 			<a href="${pageContext.request.contextPath}/product/productDetail?PROD_SUBCODE=${dto.prod_subcode}"><h6>${dto.prod_subcode }</h6></a>
 			<div class="rating">
 				<c:forEach begin="1" end="${dto.review_score }">

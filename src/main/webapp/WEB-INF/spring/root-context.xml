@@ -7,7 +7,11 @@
 	
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
       <property name="locations">
-         <value>/WEB-INF/config/jdbc/jdbc.properties</value>
+      	 <list>
+         	<value>/WEB-INF/config/jdbc/jdbc.properties</value>
+         	<value>/WEB-INF/config/mail/mail.properties</value>
+         	<value>/WEB-INF/config/file/file.properties</value>
+         </list>
       </property>
    </bean>
 
@@ -48,10 +52,10 @@
 
    <!-- 메일 보내기 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	   	<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="shoon0615@gmail.com" />
-		<property name="password" value="s1632000" />
+	   	<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -7,7 +8,7 @@
 
 <c:forEach var="dto" items="${lists }">
 	<div class="myPage__review__text">
-		<img src="/wit/resources/img/shop-cart/cp-1.jpg" alt=""/>
+		<img src="<spring:url value='/product/${dto.prod_img }'/>" alt=""/>
 		<div class="myPage__review__item">
 			<span>${dto.review_created }</span>
 	        <h3>${dto.prod_subcode } <span>[ ${dto.prod_color }/${dto.prod_size } ]</span></h3>

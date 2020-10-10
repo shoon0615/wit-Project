@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -22,7 +23,7 @@
 	<div class="col-lg-4 col-md-6">
 		<div class="product__item">
 			<div class="product__item__pic set-bg"
-				data-setbg="/wit/resources/img/shop/shop-1.jpg">
+				data-setbg="<spring:url value='/product/${dto.prod_img }'/>">
 				<div class="label new">New</div>
 				<!--<div class="label stockout stockblue">Out Of Stock</div>
                     <div class="label">Sale</div>
