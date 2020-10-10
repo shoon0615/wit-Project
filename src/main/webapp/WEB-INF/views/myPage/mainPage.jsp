@@ -58,8 +58,10 @@
 		    width: 430px;
 		}
 		.shop__cart__table tbody tr .cart__product__item img {
-		    width: 90px;
-		    height: 90px;
+		    margin-bottom: -20px;
+		}
+		.shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
+			padding-bottom: 21px;
 		}
     
     </style>
