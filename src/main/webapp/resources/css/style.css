@@ -2311,6 +2311,9 @@ ol {
 
 .shop__cart__table tbody tr .cart__product__item img {
 	margin-right: 25px;
+	width: 90px;
+    height: 90px;
+    margin-bottom: -70px;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
@@ -3177,6 +3180,8 @@ ol {
 
 .blog__comment__item__pic img {
 	border-radius: 50%;
+	width: 90px;
+    height: 90px;
 }
 
 .blog__comment__item__text {
@@ -3203,6 +3208,11 @@ ol {
 .blog__comment__item__text .rating span {
 	font-size: 10px;
 	color: #666666;
+}
+
+.blog__comment__item__text img {
+	width: 90px;
+	height: 90px;
 }
 
 .blog__comment__item__text ul li {
@@ -3589,6 +3599,8 @@ ol {
 
 .myPage__heart__item img {
     margin-right: 32px;
+    width: 90px;
+    height: 90px;
 }
 
 .myPage__heart__item h6 {

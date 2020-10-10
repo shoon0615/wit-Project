@@ -73,7 +73,7 @@ function hide() {
                                         <div class="pro-qty">
                                         	<input class="dec qtybtn" type="button" value="-">
                                             <input class="cartQtyValue" disabled="disabled" type="text" value="${dto.cart_qty }">
-                                            <input class="inc qtybtn" type="button" value="+">            
+                                            <input class="inc qtybtn" type="button" value="+" style="width: 15px;">            
                                         </div>
                                     </td>
                                     <td class="cart__total">${dto.cart_amount}</td>
@@ -114,7 +114,7 @@ function hide() {
                         <ul>
                             <li>Total <span class="total_amount">${total_amount }</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <a href="${pageContext.request.contextPath}/payment/checkout.action" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>

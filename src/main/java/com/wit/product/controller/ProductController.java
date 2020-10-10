@@ -178,8 +178,10 @@ public class ProductController {
 
 		//�����̹���
 		for(int i=0; i<review_lists.size(); i++) { 
+			System.out.println(review_lists.get(i).getReview_num());
 			review_lists.get(i).setReview_img(dao.selectReviewImg(review_lists.get(i).getReview_num()));
 		}
+
 		req.setAttribute("review_lists", review_lists);
 		req.setAttribute("reviewCnt", reviewCnt);
 		req.setAttribute("pageNum", currentPage);
@@ -191,14 +193,16 @@ public class ProductController {
 	//�Ű�
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public String report(HttpServletRequest req) {
+		
+		HttpSession session = req.getSession();
+		CustomDTO dtoSession = (CustomDTO)session.getAttribute("customInfo");
 
-		String user_id = "user";
 		int review_num = Integer.parseInt(req.getParameter("review_num"));
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
 		//�Ű� insert
 		hMap.put("review_num", review_num);
-		hMap.put("user_id", user_id);
+		hMap.put("user_id", dtoSession.getUser_id());
 		dao.insertReport(hMap);
 
 		dao.deleteReview(); //�Ű� 3�������� �������

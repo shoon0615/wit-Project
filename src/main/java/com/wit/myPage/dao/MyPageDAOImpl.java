@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.wit.myPage.dto.MyPageDTO;
@@ -19,6 +20,10 @@ public class MyPageDAOImpl implements MyPageDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	// 리뷰 이미지 파일 경로
+	@Value("${file.reviewUrl}") 
+	private String reviewUrl;
 	
 	// 내가 주문한 내역
 	@Override
@@ -57,7 +62,7 @@ public class MyPageDAOImpl implements MyPageDAO {
 				String fileName = toDate + "_" + dto.getUpload_img().get(i).getOriginalFilename();
 
 				try {
-					File file = new File("C:/work/img/" + fileName);
+					File file = new File(reviewUrl + fileName);
 					dto.getUpload_img().get(i).transferTo(file);
 				} catch (Exception e) {
 					System.out.println(e.toString());

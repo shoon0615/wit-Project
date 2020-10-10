@@ -43,9 +43,9 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
 			sendReview(sortChk, pageNum); //성공했을시 정렬과 체크박스 페이지넘 유지를 위해 sendReview 함수를 탐	
 		},		
 		error:function(e){
-			if(${!empty sessionScope.customInfo.id }){
+			if(${!empty sessionScope.customInfo.user_id }){
 				alert("이미 신고하셨습니다!");
-			}else{
+			} else{
 				alert("로그인 후 이용해주세요!");
 			}
 		}	
@@ -59,7 +59,7 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
    	 <c:if test="${status.index%2 == 0 }">
         <div class="blog__comment__item">
            <div class="blog__comment__item__pic">
-           <c:forEach var="dto2" items="${dto1.review_img }" begin="1" end="1">
+           <c:forEach var="dto2" items="${dto1.review_img }" begin="0" end="0">
            		<img src="<spring:url value='/review/${dto2 }'/>" alt="">
            </c:forEach>
               </div>
@@ -94,7 +94,7 @@ $('.blog__comment__item__text').on('click','.fa-remove',function(){
       <c:if test="${status.index%2 != 0 }">
         		<div class="blog__comment__item blog__comment__item--reply">
               <div class="blog__comment__item__pic">
-                  <c:forEach var="dto2" items="${dto1.review_img }" begin="1" end="1">
+                  <c:forEach var="dto2" items="${dto1.review_img }" begin="0" end="0">
                  		<img src="<spring:url value='/review/${dto2 }'/>" alt="">		                                    		
 					</c:forEach>			            
               </div>            

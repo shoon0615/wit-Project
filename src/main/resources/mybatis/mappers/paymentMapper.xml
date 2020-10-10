@@ -23,6 +23,7 @@
 	ON 		(A.PROD_CODE = B.PROD_CODE)
 	INNER JOIN PRODUCT_INFO C
 	ON 		(B.PROD_SUBCODE = C.PROD_SUBCODE)
+	WHERE	A.USER_ID = #{USER_ID}
 </select>
 
 <!-- 주문테이블 인서트  -->

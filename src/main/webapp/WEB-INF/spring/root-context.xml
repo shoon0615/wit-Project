@@ -4,16 +4,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
       <property name="locations">
       	 <list>
          	<value>/WEB-INF/config/jdbc/jdbc.properties</value>
          	<value>/WEB-INF/config/mail/mail.properties</value>
-         	<value>/WEB-INF/config/file/file.properties</value>
          </list>
       </property>
-   </bean>
+      <property name="fileEncoding" value="UTF-8"/>
+   	</bean>
 
    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
       <constructor-arg ref="sqlSessionFactory"></constructor-arg>
