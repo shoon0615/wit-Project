@@ -103,24 +103,24 @@
 
 		        // input 대신 label로 보이게되어있어 label의 속성만 바뀜(디자인)
 				if(checked == "color") {
-		    		$(".color__checkbox label input").removeAttr('checked');
+		    		$('.color__checkbox label input').removeAttr("checked");
 		        	$(this).attr('checked', true);
 		        	$('.color__checkbox label style').remove();
 		        } else if(checked == "size") {
-		        	$(".size__btn label").removeClass('active');
-		        	$(this).closest("label").addClass('active');
+		        	$('.size__btn label').removeClass("active");
+		        	$(this).closest("label").addClass("active");
 		        } 	    	
 			});
 
 			// 수량 변경 버튼 클릭 시(+, -)
-			$('.product__details__list').on('click', '.qtybtn', function () {
+			$('.product__details__list').on("click", '.qtybtn', function () {
 				var oldQty = $(this).parent().find('input');										// 기존 수량								
 				//var oldAmt = $('.product__details__price').text().substring(2).replace(",", "");	// 상품 단일 금액(selector)
 				var oldAmt = '${dto.PROD_PRICE }';													// 상품 단일 금액
 				var newQty = parseFloat(oldQty.val());												// 수량 변경 저장 함수
-				var oldPrc = $(this).closest("tr").find("td.prod__price").children("span");			// 상품 수량에 따른 금액
+				var oldPrc = $(this).closest("tr").find('td.prod__price').children("span");			// 상품 수량에 따른 금액
 				var newPrc = parseFloat(oldPrc.text());												// 상품 금액 저장 함수
-				var totalAmt = $(".product__details__amount").children("span");						// 총 금액
+				var totalAmt = $('.product__details__amount').children("span");						// 총 금액
 
 				if ($(this).hasClass('inc')) {
 					newQty = newQty + 1;
@@ -143,9 +143,9 @@
 		    });
 
 			// 상품 정보의 닫기(x) 버튼 클릭 시
-		    $('.product__details__list').on('click', '.icon_close', function () {
-		    	var totalAmt = $(".product__details__amount").children("span");
-		    	var oldAmt = $(this).closest("tr").find("td.prod__price").children("span").text();
+		    $('.product__details__list').on("click", '.icon_close', function () {
+		    	var totalAmt = $('.product__details__amount').children("span");
+		    	var oldAmt = $(this).closest("tr").find('td.prod__price').children("span").text();
 
 		    	// 총금액에서 상품 수량에 따른 금액을 차감함
 		    	totalAmt.text(parseFloat(totalAmt.text()) - parseFloat(oldAmt));
@@ -173,18 +173,23 @@
 			});
 
 		    // 찜하기(heart) 버튼 클릭 시
-			$('.heart-btn').on('click', function () {
+			$('.heart-btn').on("click", function () {
 				// 로그인 시에만 등록되도록 설정
 				if('${customInfo}') {
 					var url = '${pageContext.request.contextPath}/myPage/heartInsert.action';
-					var user_id = '${customInfo.user_id}';
 
-					$.post(url,{user_id:user_id,prod_subcode:checkedSubcode},function(args){
-						if(args) {
+					$.post(url,{prod_subcode:checkedSubcode},function(args){
+						if(args == "true") {				// boolean으로 받을시 args만 써도되나 over의 경우로 인해 String으로 받음
 							alert("찜 목록에 등록되었습니다!");
+						} else if(args == "over") {
+							alert("찜 목록은 30개까지만 가능합니다!");
 						} else {
 							alert("이미 찜 목록에 존재하는 상품이 있습니다!");
 						}
+
+						// header의 찜 목록 수량도 바로 변경되게 수정(header가 2개 생겨 제거하려했으나 안되어 임시로 class만 제거함)
+						$(".header").load(location.href + " .header");
+						$(".header").removeClass("header");
 					});
 				// 비회원은 로그인 창으로 이동
 				} else {
@@ -197,9 +202,9 @@
 		    	var prod_info = [];
 
 		    	// 상품 정보를 [색상-사이즈-수량]의 배열로 보냄  *예시) BLACK-250-1
-		    	$(".product__details__list table").find("tr").each(function(i){
-		    		prod_info.push($(this).find("td.prod__sub").children("span").attr("id") 
-		    		+ '-' + $(this).find("div.pro-qty").children("input").val());
+		    	$('.product__details__list tr').each(function(i){
+		    		prod_info.push($(this).find('td.prod__sub').children("span").attr("id") 
+		    		+ '-' + $(this).find('div.pro-qty').children("input").val());
 		    	});
 
 		    	// 디자인으로 인한 맨 앞의 빈 tr 제거
@@ -221,6 +226,9 @@
 						if(data == "" || ok == true) {
 							$.post("insertBag.action", {PROD_SUBCODE:checkedSubcode, PROD_INFO:prod_info}, function(data){
 								alert("장바구니에 담겼습니다!");
+								// header의 장바구니 수량도 바로 변경되게 수정(header가 2개 생겨 제거하려했으나 안되어 임시로 class만 제거함)
+								//$(".header").load(location.href + " .header");
+								//$(".header").removeClass("header");
 								window.location.href = "/wit/cart/shopcart";
 							});
 						}

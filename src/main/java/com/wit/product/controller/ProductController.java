@@ -95,7 +95,7 @@ public class ProductController {
 		List<String> lists = new ArrayList<String>();
 		
 		if(cdto != null) {
-			lists = dao.selectBag("users", PROD_SUBCODE, PROD_INFO);
+			lists = dao.selectBag(cdto.getUser_id(), PROD_SUBCODE, PROD_INFO);
 		} else if(lcdto != null) {
 			lists = dao.selectBag(PROD_SUBCODE, PROD_INFO, lcdto);
 		}

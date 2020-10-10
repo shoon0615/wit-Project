@@ -15,7 +15,7 @@
 			<label></label>
 			<input type="checkbox"/>
 			<img src="/wit/resources/img/shop-cart/cp-1.jpg" alt="">
-			<h6>${dto.prod_subcode }</h6>
+			<a href="${pageContext.request.contextPath}/product/productDetail?PROD_SUBCODE=${dto.prod_subcode}"><h6>${dto.prod_subcode }</h6></a>
 			<div class="rating">
 				<c:forEach begin="1" end="${dto.review_score }">
                    	<i class="fa fa-star"></i>

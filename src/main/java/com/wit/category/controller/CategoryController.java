@@ -36,10 +36,11 @@ public class CategoryController {
 
 	@RequestMapping(value = "/shop", method = RequestMethod.GET)
 	public String shop(HttpServletRequest request, CategoryDTO dto) throws Exception {
-		
 		// 테스트 에러 방지로 임시 제작, 완성시 삭제
 		if(dto.getProd_category1() == null) {
-			dto.setProd_category1("");
+			dto.setProd_category1("");		
+			dto.setProd_category2("");
+		} else if(dto.getProd_category2() == null) {	
 			dto.setProd_category2("");
 		}
 		

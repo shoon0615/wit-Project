@@ -63,21 +63,6 @@
                             </div>
                             <div class="categories__accordion">
                                 <div class="accordion" id="accordionExample">
-                                
-                                	<div class="card">
-                                        <div class="card-heading">
-                                            <a style="cursor:pointer" onclick="productList('all','1','BOTTOM','');" data-toggle="collapse" data-target="#collapseTwo">하의</a>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <ul>
-                                                    <c:forEach var="list" items="${category1_list }">
-                                                    	<li><a style="cursor:pointer" onclick="productList('all','1','BOTTOM','SHORT')">${list.CODE_NAME }</a></li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
 	      							<c:forEach var="list" items="${category1_list }" varStatus="status">
 	                                    <div class="card">
 	                                        <div class="card-heading">
@@ -225,8 +210,8 @@
     <script type="text/javascript">
     	var sizeArr = new Array();	//선택한 사이즈를 담아줄 배열
     	var priceChk = 0;			//금액스크롤바 마우스 이벤트
-		
-		//정렬 버튼 초기화 함수
+
+    	//정렬 버튼 초기화 함수
 		function searchTypeReset() {
 			$('.sortNav input').each(function(i){
 	    		$(this).val($(this).val().replace("↓", "").replace("↑", ""));
@@ -239,12 +224,6 @@
 			var param = "prod_category1=" + cate1;
 			param += "&prod_category2=" + cate2;
 
-			/*
-			$.post(url,{category1 : cate1, category2 : cate2},function(args){
-				$('#minamount').val('￦ ' + args.MIN);
-				$('#maxamount').val('￦ ' + args.MAX);
-			});
-			*/
 			$.ajax({
 				type: 'POST',
 	        	url: "<%=cp%>/category/categoryPrice.action",
@@ -329,12 +308,11 @@
 	
 		//DOM 트리를 생성한 후
 		$(document).ready(function () {
-			productList('1','${category1}','${category2}');
 
 			//카테고리 항목 클릭 시 정렬 설정 초기화 및 카테고리 리스트 호출
 			$('.card-heading').click(function(){
 				searchTypeReset();    
-		
+
 				var url = "<%=cp%>/category/category2.action";
 				var id = $(this).children().attr("id");   
 				var card = $(this).parent();
@@ -346,9 +324,15 @@
 				// 해당 카테고리 상품 리스트 호출
 				productList('1',id,'');	
 
-				// 중분류 리스트 호출
-				$.post(url,{code_form : code_form},function(args){
-					card.find('.card-body').html(args);
+				// 중분류 리스트 호출(첫 페이지 category2 클릭이 리스트 생성전에 진행되어 동기식 진행)
+				$.ajax({
+					type: 'POST',
+		        	url: url,
+		       		data: {code_form : code_form},
+		        	async: false,
+		        	success: function(args) {
+		        		card.find('.card-body').html(args);
+		            }
 				});
 
 				// 상품별 다른 사이즈 호출
@@ -410,11 +394,7 @@
 				var category1 = $('#sizeList').attr("data-cate1");
 				var category2 = $('#sizeList').attr("data-cate2");
 				var pageNum = $('#pageNum').val(); 		//페이지 넘버
-				/* 히든 처리돼있음
-				var pageNum = $("#pageNum").val(); 		//페이지 넘버
-				var category1 = $("#category1").val(); 	//카테고리1
-				var category2 = $("#category2").val(); 	//카테고리2
-				*/
+
 				productList('1',category1,category2,$(this));        
 			});
 
@@ -422,17 +402,6 @@
 			$('.price-range span').mousedown(function(){
 				priceChk = 1;
 			});
-
-			/*
-			$('.price-range span').mousedown(function(args){
-				priceChk = 1;
-
-				// 마우스를 뗐을 때 범위를 벗어나면
-				if($('.price-range span').has(args.target).length == 0) {
-					priceChk = 0;
-				}
-			});
-			*/
 
 			// 금액 스크롤바 마우스 클릭 끝났을 시
 			$('html').mouseup(function(){
@@ -449,15 +418,19 @@
 				// 로그인 시에만 등록되도록 설정
 				if('${customInfo}') {
 					var url = "<%=cp%>/myPage/heartInsert.action";
-					var user_id = '${customInfo.user_id}';
 					var prod_subcode = $(this).closest("ul").attr("id");
 
-					$.post(url,{user_id:user_id,prod_subcode:prod_subcode},function(args){
-						if(args) {
+					$.post(url,{prod_subcode:prod_subcode},function(args){
+						if(args == "true") {				// boolean으로 받을시 args만 써도되나 over의 경우로 인해 String으로 받음
 							alert("찜 목록에 등록되었습니다!");
+						} else if(args == "over") {
+							alert("찜 목록은 30개까지만 가능합니다!");
 						} else {
 							alert("이미 찜 목록에 존재하는 상품이 있습니다!");
 						}
+
+						$(".header").load(location.href + " .header");
+						$(".header").removeClass("header");
 					});
 				// 비회원은 로그인 창으로 이동
 				} else {
@@ -468,7 +441,8 @@
 		
 		//모든 게 로드된 후
 		$(window).on('load',function(){
-			
+			$('#${category1}').trigger("click");
+			$('#${category2}').trigger("click");
 		});
 		
 	</script>

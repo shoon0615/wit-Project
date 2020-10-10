@@ -68,17 +68,14 @@
 
 			// Total 금액칸이 로드될 시
 			$('.checkout__order__total').show(function(){
-				var totalAmount = 0;
 				var totalQty = 0;
-				$('.checkout__order__product li').each(function(i){
-					// 첫번째는 명칭이라 제외
-					if(i!=0) {
-						var orderInfo = $(this).contents();
-						
-						totalQty += Number(orderInfo.eq(0).text().charAt(orderInfo.eq(0).text().indexOf("×")+2)); // ×를 통해 qty 자리값을 불러옴
-						totalAmount += Number(orderInfo.eq(1).text().replace(/[^0-9]/g,''));	// 두번째 <span>값만 숫자로 불러옴
-					}
-				});
+				var totalAmount = 0;
+
+				for(var i in ${prod_list_json }) {
+					totalQty += Number(${prod_list_json }[i]["CART_QTY"]);
+					totalAmount += ${prod_list_json }[i]["CART_QTY"] * ${prod_list_json }[i]["PROD_PRICE"];
+				}
+
 				$('.checkout__order__total li').children("span").text("￦ " + totalAmount);
 				$(this).append($('<input/>', {type: 'hidden', name: 'order_qty', value: totalQty}));		// form에서 받기위해 append 처리
 				$(this).append($('<input/>', {type: 'hidden', name: 'order_amount', value: totalAmount}));
@@ -158,7 +155,7 @@
 				$('.checkout__form__input').children("input").each(function(i){
 					if(!$(this).val()) {		
 						// <p>태그 안의 맨 앞 텍스트만 가져오게 설정	
-						$(this).next().text("Enter your " + $(this).parent().children().first().contents().first().text());
+						$(this).next().text("Enter your " + $(this).parent().children().first().contents().first().text() + "!");
 					} 
 
 					// 경고메세지가 하나라도 있다면
@@ -169,7 +166,7 @@
 
 				// 동의 칸에 동의하지 않았다면
 				if(!$('#o-acc').prop("checked")) {
-					alert("Please agree to the checkbox");
+					alert("Please agree to the checkbox!");
 					result = false;
 				}
 
@@ -211,9 +208,7 @@
 					        alert(rsp.error_msg);
 						}
 					});
-				} else {
-					alert("Fail");
-				}
+				} 
 			});
 			
 		});

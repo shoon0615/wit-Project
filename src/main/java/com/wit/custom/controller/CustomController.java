@@ -53,7 +53,12 @@ public class CustomController {
 	//	로그인 이전 페이지
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(String beforeUrl) throws Exception {
-		return "redirect:" + beforeUrl.substring(beforeUrl.indexOf("/wit")+4).replace(".action", "");	
+		// redirect:/custom/login의 경우 referer를 찾을수없어 메인으로 롤백(예시: myPage) - if대신 try?
+		if(beforeUrl == null || beforeUrl.equals("")) {
+			return "redirect:/main/main";
+		} else {
+			return "redirect:" + beforeUrl.substring(beforeUrl.indexOf("/wit")+4).replace(".action", "");	
+		}	
 	}
 	
 	//	아이디, 비밀번호 찾기 페이지

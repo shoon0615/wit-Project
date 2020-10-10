@@ -95,24 +95,7 @@
 
 			// 특정 페이지 요청시 해당 화면으로 셋팅
 			$(".nav-item:eq(" + ${choice } + ")").children().trigger("click");
-
-			// Review 클릭 시(리뷰 작성 창이라면 초기화)
-    		$('.nav-item:eq(1)').on('click', "a", function(){
-				if(reviewWrite) {
-					getPage(2);	
-					reviewWrite = false;
-				}
-        	});
     		
-        	// heart의 체크박스 라벨 클릭 시
-			$('.tab-pane').on('click', '.myPage__heart__item', function(){
-				var children = $(this).children().first();
-				children.toggleClass("active");
-				children.next().prop("checked", function(index, prop){
-				    return prop == true ? false : true;
-				});
-			});
-
         	// Order의 Write Review 클릭 시
 			$('#tabs-1').on('click', "a", function(){
 				var order_code = $(this).closest("tr").attr("id");
@@ -120,7 +103,6 @@
 				var url = "reviewWritePage.action";
 
 				$.post(url, {order_code:order_code, prod_code:prod_code}, function(args){
-					reviewWrite = false;
 					$(window).scrollTop(200);
 	   				$('#tabs-2').html(args);
 	   				$(".nav-item:eq(1)").children().trigger("click");
@@ -155,6 +137,14 @@
 				fileArr = new Array();
 			});
 
+			// Review 클릭 시(리뷰 작성 창이라면 초기화)
+    		$('.nav-item:eq(1)').on('click', "a", function(){
+				if(reviewWrite) {
+					getPage(2);	
+					reviewWrite = false;
+				}
+        	});
+
 			// Review의 Show Detail 클릭 시
 			$('#tabs-2').on('click', "a:first-child", function(){
 				alert($(this).parent().attr("id"));
@@ -172,6 +162,15 @@
 						getPage(2);
 		   			});
 				}
+			});
+
+    		// heart의 체크박스 라벨 클릭 시
+			$('.tab-pane').on('click', '.myPage__heart__item', function(){
+				var children = $(this).children().first();
+				children.toggleClass("active");
+				children.next().prop("checked", function(index, prop){
+				    return prop == true ? false : true;
+				});
 			});
 
     		// Heart의 Select All 클릭 시

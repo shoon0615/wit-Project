@@ -63,82 +63,82 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="main.action" style="font: bold; color: black;"><!-- <img src="/wit/resources/img/logo.png" alt=""> -->
+                        <a href="${pageContext.request.contextPath}/main/main.action" style="font: bold; color: black;"><!-- <img src="/wit/resources/img/logo.png" alt=""> -->
                         What Should I wear Today?</a>
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP">TOP</a>
+                            <li class="active"><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP">TOP</a>
                             	<ul class="dropdown">
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=SLV">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=SLV">
 											SLEEVELESS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=MTM">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=MTM">
                                     		MTM</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=BLS">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=BLS">
                                     		BLOUSE</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=SHT">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=SHT">
                                     		SHIRTS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=TRN">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=TRN">
                                     		TRAINING</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=TOP&category2=OUTER">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=TOP&prod_category2=OUTER">
                                     		OUTER</a></li>
                                 </ul>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM">BOTTOM</a>
+                            <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM">BOTTOM</a>
                             	<ul class="dropdown">
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=SHORT">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=SHORT">
 											SHORTS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=SLX">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=SLX">
                                     		SLAX</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=DNM">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=DNM">
                                     		DENIM</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=CTN">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=CTN">
                                     		COTTON</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=SKT">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=SKT">
                                     		SKIRT</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=BOTTOM&category2=TRN">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=BOTTOM&prod_category2=TRN">
                                     		TRAINING</a></li>
                                 </ul>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES">SHOES</a>
+                            <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES">SHOES</a>
                             	<ul class="dropdown">
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=RUN">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=RUN">
 											RUNNING</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=SDL">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=SDL">
                                     		SANDALS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=SLP">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=SLP">
                                     		SLIPPER</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=SNK">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=SNK">
                                     		SNEAKERS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=HYL">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=HYL">
                                     		HILL</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=SHOES&category2=RW">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=SHOES&prod_category2=RW">
                                     		LOAFERS&<BR/>WALKER</a></li>
                                 </ul>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=OPS">OPS</a>
+                            <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=OPS">OPS</a>
                             	<ul class="dropdown">
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=OPS&category2=OPS_JS">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=OPS&prod_category2=OPS_JS">
 											OPS&<BR/>
 											JUMPSUIT</a></li>
                                 </ul>
                             </li>
  
-                            <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC">ACC</a>
+                            <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC">ACC</a>
                                <ul class="dropdown">
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=WAT">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=WAT">
 											WATCH</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=CAP">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=CAP">
                                     		CAP</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=EAR">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=EAR">
                                     		EARING</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=RING">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=RING">
                                     		RING</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=NCL">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=NCL">
                                     		NECKLESS</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?category1=ACC&category2=BAG">
+                                    <li><a href="${pageContext.request.contextPath}/category/shop.action?prod_category1=ACC&prod_category2=BAG">
                                     		BAG</a></li>
                                 </ul>
                             </li>

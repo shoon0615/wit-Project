@@ -217,6 +217,7 @@ public class ProductDAOImpl implements ProductDAO {
 			cdto.setCart_qty(Integer.parseInt(info[2]));
 			cdto.setCart_amount(cdto.getCart_qty() * cdto.getProd_price());
 
+			// List<CartDTO> 내에 해당 상품 코드가 존재한다면 update
 			for(int i=0;i<lcdto.size();i++) {
 				if(lcdto.get(i).getProd_code().equals(cdto.getProd_code())) {
 					lcdto.get(i).setCart_qty(lcdto.get(i).getCart_qty() + cdto.getCart_qty());
@@ -225,6 +226,7 @@ public class ProductDAOImpl implements ProductDAO {
 				} 
 			}
 
+			// List<CartDTO> 내에 해당 상품 코드가 존재하지않는다면 insert
 			if(prod_check == false) {
 				lcdto.add(cdto);
 			}

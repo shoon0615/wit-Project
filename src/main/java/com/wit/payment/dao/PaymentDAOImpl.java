@@ -46,6 +46,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 				hMap.put("CART_QTY", prodStrArr[i+2]);							// prodStrArr[3] : 수량
 				lists.add(hMap);
 			}	
+			// prodStr = String.join("-", prodStrArr);							// split의 반대(배열을 String으로)
 		}
 		
 		return lists;
@@ -61,11 +62,10 @@ public class PaymentDAOImpl implements PaymentDAO {
 	@Override
 	public void insertOrderDetail(String prod_list, String order_code) {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> hMap = new HashMap<String, Object>();
 		
 		try {
-			list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});	
+			List<Map<String, Object>> list = mapper.readValue(prod_list, new TypeReference<ArrayList<HashMap<String, Object>>>() {});	
 			hMap.put("order_code", order_code);
 			
 			for(int i=0;i<list.size();i++) {
