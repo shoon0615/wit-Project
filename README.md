@@ -28,6 +28,10 @@ DTO(정보)는 해당 구조의 테이블 컬럼 정보
 **View**   
 tiles를 이용한 header, content(구조), footer로 구성   
 
+서버는 버추얼 박스를 통해 운영되며, 서버 및 Git 정보는 localhost로 기본값 설정
+이미지/파일/데이터 올릴시에 서버 측으로 올라감
+구조는 기본 7개 주제로 구성[cart, category, custom, main, myPage, payment, product(review)]
+
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows10   
 **DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g   
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5   
