@@ -3,7 +3,13 @@
 
 - [기본 구조](#기본-구조)
 - 디테일 구조
-- [전체 플로우](#전체-플로우)
+  - [cart](#cart)
+  - [category](#category)
+  - [custom](#custom)
+  - [main](#main)
+  - [myPage](#mypage)
+  - [payment](#payment)
+  - [product](#product)
 
 * 리스트 1
 * 리스트 2
