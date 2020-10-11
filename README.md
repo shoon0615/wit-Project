@@ -13,18 +13,28 @@
   - [payment](#payment)
   - [product](#product)
 
+
+## 기본 구조
+MVC
+
 ## cart
 cart
+
 ## category
 category
+
 ## custom
 custom
+
 ## main
 main
+
 ## mypage
 mypage
+
 ## payment
 payment
+
 ## product
 product
 
