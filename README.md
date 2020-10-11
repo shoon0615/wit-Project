@@ -144,12 +144,13 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 바로 결제는 페이지 이동으로 인해 상품 정보 리스트를 form에 String 형식으로 파싱하여 이동,   
 장바구니는 ajax가 가능하여 배열로 파싱하여 이동   
 장바구니는 회원/비회원의 경우로 나뉘는데 회원은 cart 테이블, 비회원은 session - List<CartDTO>에 저장   
-**Weakness**   
+**Weakness**     
+－ 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌리나 메세지를 띄우지않음(getHeader - referer)      
 － 처음 페이지 접속 시 일일히 List를 뿌리는 점이 비효율적으로 생각되기에   
  &nbsp; &nbsp; mapper에서 리스트 내역을 listAgg를 이용해 해당 컬럼마다 전체로 저장하여 가져온뒤 
  1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅해와서 DTO의 List 부분을 뿌림   
- 2. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 해당 부분들을 split을 통해 배열 상태로 뿌림
-－ 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌리나 메세지를 띄우지않음(getHeader - referer)        
+ 2. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 해당 부분들을 split을 통해 배열 상태로 뿌림   
+     
 ## Tip
    
     
