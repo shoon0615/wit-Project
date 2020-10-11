@@ -146,8 +146,8 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 － 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌아가나 메세지를 띄우지않음(getHeader - referer)      
 － 처음 페이지 접속 시 일일히 List를 뿌리는 점이 비효율적으로 생각되기에   
  &nbsp; &nbsp; mapper에서 리스트 내역을 listAgg를 이용해 해당 컬럼마다 전체로 저장하여 가져온뒤 
- 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어놓고 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅해와서 DTO의 List 부분을 뿌림   
- 2. DTO에 String으로 받아놨다가 split을 통해 <u>배열 상태</u>로 뿌림   
+ 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어놓고 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅하여 __DTO__를 뿌림   
+ 2. DTO에 String으로 받아놨다가 split을 통해 __배열 상태__로 뿌림   
      
 ## Tip
    
