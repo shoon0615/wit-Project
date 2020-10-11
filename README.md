@@ -96,7 +96,7 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
    
 - **Weakness**   
 － if()를 통해 compare 변수를 false로 바꾸는것 대신 경고메세지.text만 바꾸고   
- &nbsp; &nbsp;&nbsp; if(!compare)로 체크하여 color를 red 바꾸는 방식으로 변경   
+ &nbsp; &nbsp;&nbsp; 마지막에 if(!compare)로 체크하여 color를 red 바꾸는 방식으로 변경   
 － 특정 양식이 잘못됨을 알려주는게 아니라면 compare 변수를 하나만 사용   
 － ajax 이용시 매개변수를 직접 부여하지않고 form.serialize() 이용   
 － 체크박스 hidden에 값을 부여하는 함수를 for문 대신 $.each(input:checked) 사용   
@@ -111,13 +111,18 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
    
 
 - **Controller**      
-   
+로그인 시 고객 취향 추천, 비회원 시 판매순으로 상품 리스트 조회   
+그 외 공통으로 조회순, 리뷰순, 별점순으로 상품 리스트 조회(category mapper)   
 
 - **View**   
    
    
 - **Weakness**   
-   
+－ 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)      
+－ 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)  
+－ 공통으로 조회되는 상품 리스트는 jsp - foreach 부분의 내용이 모두 같은데
+ &nbsp; &nbsp; /1. List<List<CategoryDTO>> 및 title[] 배열을 보낸뒤 foreach(varStatus) 이용    
+ &nbsp; &nbsp; /2. List<List<CategoryDTO>> 및 title[] 배열을 보낸뒤 foreach(varStatus) 이용    
    
 ## mypage
 - **Model**   
