@@ -139,17 +139,15 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 
 **View**   
 컬러/사이즈 리스트를 각각 한번씩 클릭할 경우 상품 정보가 생성(전역변수와 $(this) 비교)       
-상품 정보는 [정보/수량/닫기/금액] 형식으로 생성(selector와 append 구현)   
-수량 변경은 1 단위로만 진행되게 하여 단일 금액으로 변동 진행    
-바로 결제는 페이지 이동으로 인해 상품 정보 리스트를 form에 String 형식으로 파싱하여 이동,   
-장바구니는 ajax가 가능하여 배열로 파싱하여 이동   
-장바구니는 회원/비회원의 경우로 나뉘는데 회원은 cart 테이블, 비회원은 session - List<CartDTO>에 저장   
+상품 정보는 [정보/수량/닫기/금액] 형식으로 생성(selector와 append 구현)      
+바로 결제는 페이지 이동으로 인해 상품 정보 리스트를 form에 String 형식으로 파싱,   
+장바구니는 ajax가 가능하여 배열로 파싱(회원은 cart 테이블, 비회원은 session - List<CartDTO>)  
 **Weakness**     
-－ 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌리나 메세지를 띄우지않음(getHeader - referer)      
+－ 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌아가나 메세지를 띄우지않음(getHeader - referer)      
 － 처음 페이지 접속 시 일일히 List를 뿌리는 점이 비효율적으로 생각되기에   
  &nbsp; &nbsp; mapper에서 리스트 내역을 listAgg를 이용해 해당 컬럼마다 전체로 저장하여 가져온뒤 
- 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅해와서 DTO의 List 부분을 뿌림   
- 2. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 해당 부분들을 split을 통해 배열 상태로 뿌림   
+ 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어놓고 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅해와서 DTO의 List 부분을 뿌림   
+ 2. DTO에 String으로 받아놨다가 split을 통해 <u>배열 상태</u>로 뿌림   
      
 ## Tip
    
