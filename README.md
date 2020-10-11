@@ -74,7 +74,7 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 － hashMap 대신에 DTO로 이용   
 － category1,2 값이 보관된 hidden 불필요   
 － 이전, 다음 버튼 미구현   
-－ mapper 내용이 order by만 다르기에 mapper는 ${sort} 하나로 구현하고<br>
+－ mapper 내용이 order by만 다르기에 mapper는 ${sort} 하나로 구현하고   
  1. 각 DAO에 각 sort 값을 설정   
  2. 하나의 DAO에 매개변수를 통한 sort 값을 설정   
  
@@ -135,14 +135,20 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
    
 
 **Controller**      
-   
+처음 페이지 접속 시 DTO(정보), 별점/이미지/컬러/사이즈 리스트를 가지고 이동
 
 **View**   
-    
-   
+컬러/사이즈 리스트를 각각 한번씩 클릭할 경우 상품 정보가 생성(전역변수와 $(this) 비교)       
+상품 정보는 [정보/수량/닫기/금액] 형식으로 생성(selector와 append 구현)   
+수량 변경은 1 단위로만 진행되게 하여 단일 금액으로 변동 진행    
+바로 결제는 페이지 이동으로 인해 상품 정보 리스트를 form에 String 형식으로 파싱하여 이동,   
+장바구니는 ajax가 가능하여 배열로 파싱하여 이동   
+
 **Weakness**   
-    
-    
+－ 처음 페이지 접속 시 일일히 List를 뿌리는 점이 비효율적으로 생각되어   
+ mapper에서 리스트 내역을 listAgg를 이용해 해당 컬럼마다 전체로 저장하여 가져온뒤 
+ 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅해와서 DTO의 List 부분을 뿌림   
+ 2. DTO에 각 리스트 내역을 따로 List 형식으로 만들어둔뒤 해당 부분들을 split을 통해 배열 상태로 뿌림
 ## Tip
    
     
