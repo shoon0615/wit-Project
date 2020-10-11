@@ -149,7 +149,7 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
  1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어놓고 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅하여 DTO를 뿌림   
  2. DTO에 String으로 받아놨다가 split을 통해 배열로 뿌림   
 	
-=> mapper에 listAgg를 이용한 리스트 내역 test로 만들어둠
+ > mapper에 listAgg를 이용한 리스트 내역 test로 만들어둠
      
 ## Tip
    
