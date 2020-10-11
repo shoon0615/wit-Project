@@ -35,6 +35,7 @@ tiles를 이용한 header, content(구조), footer로 구성
 구조는 기본 7개 주제로 구성[cart, category, custom, main, myPage, payment, product(review)]   
 디자인은 부트스트랩을 이용   
    
+```
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows 10   
 **DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g   
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5   
@@ -42,8 +43,8 @@ tiles를 이용한 header, content(구조), footer로 구성
 **CONTROL** &nbsp; : &nbsp; Java   
 **VIEW** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Jsp(Jstl, J-Query), Css   
 **VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git   
-   
-    
+```      
+       
 ## cart
 - **Model**   
    
