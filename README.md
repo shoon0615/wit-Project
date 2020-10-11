@@ -77,49 +77,49 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
  2. 하나의 DAO에 매개변수를 통한 sort 값을 설정   
  
 ## custom
-**Model**   
+- **Model**   
    
 
-**Controller**      
+- **Controller**      
    
 
-**View**   
+- **View**   
    
    
-**Weakness**   
+- **Weakness**   
    
    
 ## main
-**Model**   
+- **Model**   
    
 
-**Controller**      
+- **Controller**      
    
 
-**View**   
+- **View**   
    
    
-**Weakness**   
+- **Weakness**   
    
    
 ## mypage
-**Model**   
+- **Model**   
    
 
-**Controller**      
+- **Controller**      
    
 
-**View**     
+- **View**     
    
    
-**Weakness**   
+- **Weakness**   
    
    
 ## payment
-**Model**   
+- **Model**   
    
 
-**Controller**      
+- **Controller**      
 cart에서 회원으로 결제한 경우, cart 테이블의 정보 추출
 cart에서 비회원으로 결제한 경우, session - List<CartDTO>의 정보 추출   
 상품 페이지에서 바로 결제한 경우, String으로 파싱해 받았기에 split을 통해 List에 셋팅하여 정보 추출   
@@ -129,30 +129,30 @@ cart에서 비회원으로 결제한 경우, session - List<CartDTO>의 정보 �
    
 결제가 성공하면 Order_Main(기본 정보), Order_Detail(json으로 받은 List 파싱), Payment(IMP 결제 데이터) 테이블에 데이터 생성   
    
-**View**   
+- **View**   
 추출받은 결제 상품 리스트와 사용자 정보가 기본 페이지 셋팅(로그인의 경우, session정보로 자동 셋팅)   
 결제 진행 클릭 시 전체 정보의 빈 칸 및 경고 메세지를 each로 확인하며 통과했을 경우, IMP API를 통해 구매 화면으로 이동   
 구매 화면에서 정상 결제에 성공하면 form의 데이터와 IMP의 결제 데이터를 가지고 컨트롤러로 이동   
    
-**Weakness**   
+- **Weakness**   
 － Order_Main 테이블에 user_name 컬럼이 없고 user_id 컬럼으로 진행되기에    
  &nbsp; &nbsp; 로그인했는데 이름을 바꾼 경우 또는 비회원이 존재하는 user_id를 사용한 경우, 문제가 발생   
  &nbsp; &nbsp; (user_name 컬럼을 추가, 비회원은 user_id에 빈값 처리 요망)
    
 ## product
-**Model**   
+- **Model**   
    
 
-**Controller**      
+- **Controller**      
 처음 페이지 접속 시 DTO(정보), 별점/이미지/컬러/사이즈 리스트를 가지고 이동
 
-**View**   
+- **View**   
 컬러/사이즈 리스트를 각각 한번씩 클릭할 경우 상품 정보가 생성(전역변수와 $(this) 비교)       
 상품 정보는 [정보/수량/닫기/금액] 형식으로 생성(selector와 append 구현)      
 바로 결제는 페이지 이동으로 인해 상품 정보 리스트를 form에 String 형식으로 파싱,   
 장바구니는 ajax가 가능하여 배열로 파싱(회원은 cart 테이블, 비회원은 session - List<CartDTO>)   
 	
-**Weakness**     
+- **Weakness**     
 － 상품 검색으로 받아온 prod_subcode가 잘못된 코드일 경우 이전 페이지로 되돌아가나 메세지를 띄우지않음(getHeader - referer)      
 － 처음 페이지 접속 시 일일히 List를 뿌리는 점이 비효율적으로 생각되기에   
  &nbsp; &nbsp; mapper에서 리스트 내역을 listAgg를 이용해 해당 컬럼마다 전체로 저장하여 가져온뒤 
