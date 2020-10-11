@@ -114,9 +114,10 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
 - **Controller**      
 로그인 시 고객 취향 추천, 비회원 시 판매순으로 상품 리스트 조회   
 그 외 공통으로 조회순, 리뷰순, 별점순으로 상품 리스트 조회(category mapper)   
+header에서 필요한 DB 정보는 tiles - preparer를 통해 가져옴   
 
 - **View**   
-   
+weather API를 통해 ajax로 날씨 정보를 받아 그 중 필요한 정보만 추출      
    
 - **Weakness**   
 － 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)      
