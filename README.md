@@ -15,13 +15,13 @@
 
 
 ## 기본 구조
-**OS**      : Windows10
-**DBMS**    : Oracle 11g
-**SERVER**  : Tomcat 8.5
-**IDE**     : Spring 4
-**CONTROL** : Java
-**VIEW**    : Jsp(Jstl, J-Query), Css
-**VCS**     :Git
+**OS**      : Windows10<br>
+**DBMS**    : Oracle 11g<br>
+**SERVER**  : Tomcat 8.5<br>
+**IDE**     : Spring 4<br>
+**CONTROL** : Java<br>
+**VIEW**    : Jsp(Jstl, J-Query), Css<br>
+**VCS**     : Git<br>
 
 ## cart
 cart
