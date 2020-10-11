@@ -1,4 +1,4 @@
-## 제목
+## Wit Project
 여기는 본문,
 Markdown 문법 사용법 예시입니다.
 
