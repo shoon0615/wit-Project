@@ -59,7 +59,8 @@ tiles를 이용한 header, content(구조), footer로 구성
    
 ## category
 - **Model**   
-
+DTO 대신 hashMap 이용   
+   
 - **Controller**      
 처음 페이지 접속 시 DTO를 통해 category1,2 값을 가지고 이동(대분류 리스트 및 금액바도 셋팅)      
 
@@ -117,7 +118,7 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
    
 ## payment
 - **Model**   
-   
+prod_option 컬럼 생성 및 hashMap 이용   
 
 - **Controller**      
 cart에서 회원으로 결제한 경우, cart 테이블의 정보 추출
@@ -139,7 +140,7 @@ cart에서 비회원으로 결제한 경우, session - List<CartDTO>의 정보 �
    
 ## product
 - **Model**   
-   
+test에 listAgg 이용   
 
 - **Controller**      
 처음 페이지 접속 시 DTO(정보), 별점/이미지/컬러/사이즈 리스트를 가지고 이동
