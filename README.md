@@ -15,8 +15,7 @@
 
 
 ## 기본 구조
-### OS
-Windows10
+### OS #### Windows10
 ### DBMS
 Oracle 11g
 ### SERVER
