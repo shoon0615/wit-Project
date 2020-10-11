@@ -15,7 +15,7 @@
 
 
 ## 기본 구조
-**OS**      : Windows10<br>
+**OS** &nbsp;&nbsp;&nbsp;&nbsp;: Windows10<br>
 **DBMS**    : Oracle 11g<br>
 **SERVER**  : Tomcat 8.5<br>
 **IDE**     : Spring 4<br>
