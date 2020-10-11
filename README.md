@@ -12,6 +12,7 @@
   - [myPage](#mypage)
   - [payment](#payment)
   - [product](#product)
+- Tip(#Tip)
 
 
 ## 기본 구조
@@ -114,6 +115,7 @@ Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master
 
 **View**   
    
+## Tip
 
 > 여기는 인용문입니다.
 ```
