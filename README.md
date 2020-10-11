@@ -15,13 +15,13 @@
 
 
 ## 기본 구조
-**OS** &nbsp; &nbsp; &nbsp;&nbsp; : Windows10<br>
-**DBMS**    : Oracle 11g<br>
-**SERVER**  : Tomcat 8.5<br>
-**IDE**     : Spring 4<br>
+**OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Windows10<br>
+**DBMS** &nbsp; &nbsp; &nbsp; : Oracle 11g<br>
+**SERVER** &nbsp; &nbsp; : Tomcat 8.5<br>
+**IDE** &nbsp; &nbsp; &nbsp; : Spring 4<br>
 **CONTROL** : Java<br>
-**VIEW**    : Jsp(Jstl, J-Query), Css<br>
-**VCS**     : Git<br>
+**VIEW** &nbsp; &nbsp; &nbsp; : Jsp(Jstl, J-Query), Css<br>
+**VCS** &nbsp; &nbsp; &nbsp; : Git<br>
 
 ## cart
 cart
