@@ -35,15 +35,13 @@ tiles를 이용한 header, content(구조), footer로 구성
 구조는 기본 7개 주제로 구성[cart, category, custom, main, myPage, payment, product(review)]   
 디자인은 부트스트랩을 이용   
    
-```
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows 10   
 **DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g   
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5   
 **IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Spring 4   
 **CONTROL** &nbsp; : &nbsp; Java   
 **VIEW** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Jsp(Jstl, J-Query), Css   
-**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git   
-```      
+**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git      
        
 ## cart
 - **Model**   
@@ -136,7 +134,9 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
 		<a category1=${대분류.code}, category2=${중분류.code}> ${중분류.code_name} </a>
 	</c:forEach>
 </c:forEach>
-```     
+```    
+－ footer에 하단 상품 및 instagram 추가   
+   
 ## mypage
 - **Model**   
    
