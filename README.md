@@ -35,6 +35,7 @@ tiles를 이용한 header, content(구조), footer로 구성
 Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master에서 Merge)   
 단, 보안 문제상 파일 경로, DB 정보, 메일 정보는 Ignore로 숨김 후 서버에서 따로 보관 처리
 
+
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows10   
 **DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g   
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5   
@@ -43,26 +44,76 @@ Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master
 **VIEW** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Jsp(Jstl, J-Query), Css   
 **VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git   
 
+
 ## cart
-cart
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## category
-category
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## custom
-custom
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## main
-main
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## mypage
-mypage
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## payment
-payment
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 ## product
-product
+**Model**   
+   
+
+**Controller**      
+   
+
+**View**   
+   
 
 > 여기는 인용문입니다.
 ```
