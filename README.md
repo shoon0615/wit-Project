@@ -61,18 +61,23 @@ Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master
    
 ## category
 **Model**   
-   
 
 **Controller**      
 처음 페이지 접속 시 DTO를 통해 category1,2 값을 가지고 이동(대분류 리스트 및 금액바도 셋팅)      
 
 **View**   
 productList 함수를 통해 상품 리스트를 ajax로 가져오는 운영 방식   
-적용될수 있는 변수로는 총 6가지로 대분류, 중분류, 사이즈, 금액바, 정렬 방식, 페이지 번호   
+적용될수 있는 변수로는 총 6가지로 대분류, 중분류, 사이즈, 금액바, 정렬 방식, 페이지 번호     
+category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 
 **Weakness**   
-   
-
+- hashMap 대신에 DTO로 이용   
+- category1,2 값이 보관된 hidden 불필요   
+- 이전, 다음 버튼 미구현   
+- mapper 내용이 order by만 다르기에 mapper는 ${sort} 하나로 구현하고   
+ 1. 각 DAO에 각 sort 값을 설정   
+ 2. 하나의 DAO에 매개변수를 통한 sort 값을 설정   
+ 
 ## custom
 **Model**   
    
