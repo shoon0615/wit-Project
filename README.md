@@ -1,7 +1,7 @@
 # Wit Project
 해외 디자인을 참고해 심플한 형태로 구현한 쇼핑몰 사이트
-
-
+   
+    
 ## 목차
 - [기본 구조](#기본-구조)
 - 디테일 구조
@@ -13,8 +13,8 @@
   - [payment](#payment)
   - [product](#product)
 - [Tip](#Tip)
-
-
+   
+    
 ## 기본 구조
 Spring 프레임워크로 구현되어 해당 구조인 MVC 형태로 구성      
 
@@ -44,8 +44,8 @@ Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master
 **CONTROL** &nbsp; : &nbsp; Java   
 **VIEW** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Jsp(Jstl, J-Query), Css   
 **VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git   
-
-
+   
+    
 ## cart
 **Model**   
    
@@ -115,8 +115,10 @@ Git을 통해 공유 및 프로젝트 작업 진행(각 브랜치 Push -> master
 
 **View**   
    
+    
 ## Tip
-
+   
+    
 > 여기는 인용문입니다.
 ```
 public class helloWorld {
