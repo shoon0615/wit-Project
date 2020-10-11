@@ -15,7 +15,13 @@
 
 
 ## 기본 구조
-MVC
+OS 	: Windows10
+DBMS	: Oracle 11g
+SERVER	: Tomcat 8.5
+IDE	: Spring 4
+CONTROL	: Java
+VIEW	: Jsp(Jstl, J-Query), Css
+VCS	: Git
 
 ## cart
 cart
