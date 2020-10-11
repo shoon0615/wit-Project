@@ -18,10 +18,10 @@
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Windows10<br>
 **DBMS** &nbsp; &nbsp; &nbsp;&nbsp; : Oracle 11g<br>
 **SERVER** &nbsp; &nbsp; : Tomcat 8.5<br>
-**IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Spring 4<br>
+**IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : Spring 4<br>
 **CONTROL** : Java<br>
-**VIEW** &nbsp; &nbsp; &nbsp;&nbsp; : Jsp(Jstl, J-Query), Css<br>
-**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Git<br>
+**VIEW** &nbsp; &nbsp; &nbsp; &nbsp; : Jsp(Jstl, J-Query), Css<br>
+**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : Git<br>
 
 ## cart
 cart
