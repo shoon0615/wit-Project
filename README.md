@@ -136,7 +136,8 @@ cart에서 비회원으로 결제한 경우, session - List<CartDTO>의 정보 �
    
 **Weakness**   
 － Order_Main 테이블에 user_name 컬럼이 없고 user_id 컬럼으로 진행되기에    
- &nbsp; &nbsp; 로그인했는데 이름을 바꾼 경우 또는 비회원이 존재하는 user_id를 사용한 경우, 문제가 발생(user_name 컬럼을 추가, 비회원은 user_id에 빈값 처리 요망)
+ &nbsp; &nbsp; 로그인했는데 이름을 바꾼 경우 또는 비회원이 존재하는 user_id를 사용한 경우, 문제가 발생   
+ &nbsp; &nbsp; (user_name 컬럼을 추가, 비회원은 user_id에 빈값 처리 요망)
    
 ## product
 **Model**   
