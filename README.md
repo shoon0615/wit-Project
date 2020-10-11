@@ -23,9 +23,9 @@ custom
 main
 ### mypage
 mypage
-> ### payment
+### payment
 payment
-> ### product
+### product
 product
 
 > 여기는 인용문입니다.
