@@ -119,12 +119,24 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
    
 - **Weakness**   
 － 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)      
-－ 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)  
 － 공통으로 조회되는 상품 리스트는 jsp - foreach 부분의 내용이 모두 같은데      
  &nbsp; &nbsp; 1. List<List<CategoryDTO>> 및 title[] 배열을 보낸뒤 foreach(varStatus) 이용       
  &nbsp; &nbsp; 2. Map<String, List<CategoryDTO>> 으로 key에는 title을 넣어 보낸뒤       
- &nbsp; &nbsp; foreach(var=map)으로 사용해 title은 ${map.key}, 내용은 foreach(var=${map.value}) 로 이용         
-   
+ &nbsp; &nbsp; &nbsp; foreach(var=map)으로 사용해 title은 ${map.key}, 내용은 foreach(var=${map.value}) 로 이용   
+－ header의 search 기능 간소화가 Main에만 적용됨(다른 jsp의 search-model 삭제)      
+－ header의 카테고리가 하드코딩으로 뿌려지는데 Controller에서   
+ &nbsp; &nbsp; 대분류 : List<Map<String, Object>> = getCategory()   
+ &nbsp; &nbsp; 중분류 : Map<int, List<Map<String, Object>>> 선언한뒤 for(int i=1;i<대분류.size();i++) { Map.put(i, getCategory(i)) }   
+ &nbsp; &nbsp; 이후 View에서   
+```
+<c:forEach "대분류" varStatus>
+	<a category1=${대분류.code}> ${대분류.code_name} </a>
+	<c:forEach "중분류.status+1">
+		<a category1=${대분류.code}, category2=${중분류.code}> ${중분류.code_name} </a>
+	</c:forEach>
+</c:forEach>
+}
+```  
 ## mypage
 - **Model**   
    
