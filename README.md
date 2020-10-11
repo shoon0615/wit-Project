@@ -128,14 +128,13 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
  &nbsp; &nbsp; 대분류 : List<Map<String, Object>> = getCategory()   
  &nbsp; &nbsp; 중분류 : Map<int, List<Map<String, Object>>> 선언한뒤 for(int i=1;i<대분류.size();i++) { Map.put(i, getCategory(i)) }   
  &nbsp; &nbsp; 이후 View에서   
-```
+ &nbsp; &nbsp; ```
 <c:forEach "대분류" varStatus>
 	<a category1=${대분류.code}> ${대분류.code_name} </a>
 	<c:forEach "중분류.status+1">
 		<a category1=${대분류.code}, category2=${중분류.code}> ${중분류.code_name} </a>
 	</c:forEach>
 </c:forEach>
-}
 ```  
 ## mypage
 - **Model**   
