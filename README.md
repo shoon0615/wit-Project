@@ -16,11 +16,11 @@
 
 ## 기본 구조
 **OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows10<br>
-**DBMS** &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Oracle 11g<br>
+**DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g<br>
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5<br>
 **IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Spring 4<br>
 **CONTROL** &nbsp; : &nbsp; Java<br>
-**VIEW** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Jsp(Jstl, J-Query), Css<br>
+**VIEW** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Jsp(Jstl, J-Query), Css<br>
 **VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Git<br>
 
 ## cart
