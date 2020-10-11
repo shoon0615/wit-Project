@@ -79,17 +79,33 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
  
 ## custom
 - **Model**   
-   
+decode(case when과 유사) 이용      
 
 - **Controller**      
+로그인 시 jsp에서 이전 주소를 변수로 보내며 시도하고, 성공하면 session에 로그인 정보 추가 및 이전 주소로 롤백(referrer)   
+로그아웃 시 session을 remove 실행(카카오는 redirect:logout)   
+회원정보가 입력되면 체형은 자동으로 공식에 맞춰 진행   
+비밀번호 찾기 시 임시 비밀번호로 변경되며 MailHandler를 통해 메일로 전송   
    
-
 - **View**   
-   
+input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현      
+로그인은 카카오 API(REST 방식) 로그인 기능 추가   
+회원가입은 J-Query 방식(next 빈도 높음) 및 ajax 다중 이벤트 구현   
+정보찾기는 mail API를 통한 정보 수신 기능 추가   
+정보수정은 컨트롤러의 GET, POST 방식을 이용한 재확인   
    
 - **Weakness**   
-   
-   
+－ if()를 통해 compare 변수를 false로 바꾸는것 대신 경고메세지.text만 바꾸고   
+ &nbsp; &nbsp; if(!compare)로 체크하여 color를 red 바꾸는 방식으로 변경   
+－ 특정 양식이 잘못됨을 알려주는게 아니라면 compare 변수를 하나만 사용   
+－ ajax 이용시 매개변수를 직접 부여하지않고 form.serialize() 이용   
+－ 체크박스 hidden에 값을 부여하는 함수를 for문 대신 $.each(input:checked) 사용   
+－ 회원가입 시 전체값을 일일히 받았으나 $.each로 input을 확인(+값이 없을 경우 경고메세지도 추가)   
+－ 로그인 시 click 함수 대신 J-Query를 통한 click 함수 통일($(this) 이용)   
+－ check_login 시 String result 없이 직접 선언 또는 boolean으로 return      
+－ 정보찾기 시 매개변수에 hashMap 대신 DTO 이용   
+－ TempKey 클래스 전역변수 대신 생성자/메소드(매개변수) 구조로 변경   
+      
 ## main
 - **Model**   
    
