@@ -15,18 +15,19 @@
 
 
 ## 기본 구조
-### OS #### Windows10
-### DBMS
+#### OS
+Windows10
+#### DBMS
 Oracle 11g
-### SERVER
+#### SERVER
 Tomcat 8.5
-### IDE
+#### IDE
 Spring 4
-### CONTROL
+#### CONTROL
 Java
-### VIEW
+#### VIEW
 Jsp(Jstl, J-Query), Css
-### VCS
+#### VCS
 Git
 
 ## cart
