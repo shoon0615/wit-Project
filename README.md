@@ -21,7 +21,7 @@
 **IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : Spring 4<br>
 **CONTROL** : Java<br>
 **VIEW** &nbsp; &nbsp; &nbsp; &nbsp; : Jsp(Jstl, J-Query), Css<br>
-**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : Git<br>
+**VCS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : Git<br>
 
 ## cart
 cart
