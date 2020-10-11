@@ -142,16 +142,22 @@ weather API를 통해 ajax로 날씨 정보를 받아 그 중 필요한 정보�
    
 ## mypage
 - **Model**   
-   
+row_number() 및 self-join 이용   
+heart에 insert_before trigger 이용(개수 30개 제한)      
 
 - **Controller**      
-   
+session이 존재할 경우에만 페이지 이동      
 
 - **View**     
-   
+tabs에 각 페이지가 저장돼있으며 myPage를 특정 페이지로 불러올경우 choice 변수 필요   
+Order는 cart의 디자인을 카피해왔으며 style은 맨 처음 head를 통해 수정   
+
    
 - **Weakness**   
-   
+－ Order에 주문 총액, 상세 정보(+결제 정보) 등의 디테일한 정보 부족   
+－ Order에 기간 및 상품 검색 기능(+금액) 부족   
+－ Review에 Show Detail(...more, 이미지) 기능 미구현   
+－ 모든 페이지에 더 보기(무한스크롤) 기능 미구현   
    
 ## payment
 - **Model**   
