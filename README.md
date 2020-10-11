@@ -35,7 +35,7 @@ tiles를 이용한 header, content(구조), footer로 구성
 구조는 기본 7개 주제로 구성[cart, category, custom, main, myPage, payment, product(review)]   
 디자인은 부트스트랩을 이용   
    
-**OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows10   
+**OS** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp; Windows 10   
 **DBMS** &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Oracle 11g   
 **SERVER** &nbsp; &nbsp; &nbsp; : &nbsp; Tomcat 8.5   
 **IDE** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; : &nbsp; Spring 4   
@@ -120,7 +120,12 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
    
 
 **Controller**      
+cart에서 회원으로 결제한 경우, cart 테이블의 정보 추출
+cart에서 비회원으로 결제한 경우, session - List<CartDTO>의 정보 추출   
+상품 페이지에서 바로 결제한 경우, String으로 파싱해 받았기에 split을 통해 List에 셋팅하여 정보 추출   
    
+추출한 List를 직접 View에 뿌림
+추가로 Total 처리 및 String 파싱 대신 배열 파싱을 위해 추출한 List를 json으로 파싱하여 뿌림   
 
 **View**   
    
