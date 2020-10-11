@@ -120,9 +120,9 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
 - **Weakness**   
 － 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)      
 － 뿌려준 상품 리스트에 대한 기능만 동작하고, 나머지 부분이 모두 미구현(배너가 3개라 체형 조회하는등..)  
-－ 공통으로 조회되는 상품 리스트는 jsp - foreach 부분의 내용이 모두 같은데
+－ 공통으로 조회되는 상품 리스트는 jsp - foreach 부분의 내용이 모두 같은데   
  &nbsp; &nbsp; /1. List<List<CategoryDTO>> 및 title[] 배열을 보낸뒤 foreach(varStatus) 이용    
- &nbsp; &nbsp; /2. List<List<CategoryDTO>> 및 title[] 배열을 보낸뒤 foreach(varStatus) 이용    
+ &nbsp; &nbsp; /2. Map<String, List<CategoryDTO>> 으로 key에는 title을 넣어 보낸뒤 foreach(var=map)으로 사용해 title은 ${map.key}, 내용은 foreach(var=${map.value}) 로 이용      
    
 ## mypage
 - **Model**   
