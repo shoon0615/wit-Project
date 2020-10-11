@@ -96,7 +96,7 @@ input 태그와 keyup 등을 이용한 DOM 방식 페이지 구현
    
 - **Weakness**   
 － if()를 통해 compare 변수를 false로 바꾸는것 대신 경고메세지.text만 바꾸고   
- &nbsp; &nbsp; if(!compare)로 체크하여 color를 red 바꾸는 방식으로 변경   
+ &nbsp; &nbsp;&nbsp; if(!compare)로 체크하여 color를 red 바꾸는 방식으로 변경   
 － 특정 양식이 잘못됨을 알려주는게 아니라면 compare 변수를 하나만 사용   
 － ajax 이용시 매개변수를 직접 부여하지않고 form.serialize() 이용   
 － 체크박스 hidden에 값을 부여하는 함수를 for문 대신 $.each(input:checked) 사용   
