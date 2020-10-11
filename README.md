@@ -12,7 +12,7 @@
   - [myPage](#mypage)
   - [payment](#payment)
   - [product](#product)
-- Tip(#Tip)
+- [Tip](#Tip)
 
 
 ## 기본 구조
