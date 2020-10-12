@@ -80,7 +80,7 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
  
 ## custom
 - **Model**   
-decode(case when과 유사) 이용2      
+decode(case when과 유사) 이용      
 
 - **Controller**      
 로그인 시 jsp에서 이전 주소를 변수로 보내며 시도하고, 성공하면 session에 로그인 정보 추가 및 이전 주소로 롤백(referrer)   
@@ -147,17 +147,24 @@ heart에 insert_before trigger 이용(개수 30개 제한)
 
 - **Controller**      
 session이 존재할 경우에만 페이지 이동      
+Heart에 찜 등록 시 true(성공), over(trigger 에러), fail(같은 상품 외 기타) 중 return   
 
 - **View**     
-tabs에 각 페이지가 저장돼있으며 myPage를 특정 페이지로 불러올경우 choice 변수 필요   
+tabs에 각 페이지가 저장돼있으며 myPage를 특정 페이지로 불러올경우 choice 변수 필요<br>      
 Order는 cart의 디자인을 카피해왔으며 style은 맨 처음 head를 통해 수정   
-
+ OrderCode로 통합하여 조회(첫번째 상품만 rowspan 적용)   
+ReviewWrite는 name이 같은 경우 List에 추가가 되는 것을 이용해 List<File>로 데이터를 받아오도록 적용   
+ type=file은 초기화 외 직접 변경이 불가하여 hidden으로 file을 append하고, 파일 개수는 배열로 판단   
+ 페이지가 새로 여는것이 아닌 Review 페이지에 ajax로 호출(Review 클릭시 기존 페이지로 초기화)   
+Heart는 체크박스 대신 label을 통한 디자인   
    
 - **Weakness**   
 － Order에 주문 총액, 상세 정보(+결제 정보) 등의 디테일한 정보 부족   
 － Order에 기간 및 상품 검색 기능(+금액) 부족   
 － Review에 Show Detail(...more, 이미지) 기능 미구현   
+－ Heart에 찜 등록되며 head 초기화 시 깜빡이는 현상(header 추가로 인해 발생)      
 － 모든 페이지에 더 보기(무한스크롤) 기능 미구현   
+
    
 ## payment
 - **Model**   
