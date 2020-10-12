@@ -12,6 +12,7 @@
   - [myPage](#mypage)
   - [payment](#payment)
   - [product](#product)
+  - [review](#review)
 - [Tip](#Tip)
    
     
@@ -208,7 +209,25 @@ test에 listAgg 이용
  &nbsp; &nbsp; 1. DTO에 각 리스트 내역을 따로 List 형식으로 만들어놓고 mapper에서 가져왔을때 Arrays와 split을 통해 셋팅하여 DTO를 뿌림   
  &nbsp; &nbsp; 2. DTO에 String으로 받아놨다가 split을 통해 배열로 뿌림   
 	
- => mapper에 listAgg를 이용한 리스트 내역 test로 만들어둠
+ => mapper에 listAgg를 이용한 리스트 내역 test로 만들어둠   
+ 
+## review
+- **Model**   
+delete를 report - count로 체크하여 삭제
+
+- **Controller**      
+product의 부분적 기능 중 하나라 product 컨트롤러에 포함   
+
+- **View**   
+onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리스트를 ajax로 가져오는 방식   
+..more 클릭 시 review의 이미지 활성화   
+신고 시 PK로 인해 발생하는 ajax - error로 확인하는 방식   
+
+- **Weakness**     
+－ hashMap 대신에 DTO로 이용   
+－ 비회원 체형별 정렬 조회 미구현   
+－ 신고 옆 화살표 아이콘 기능 미구현   
+
      
 ## Tip
    
