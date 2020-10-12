@@ -152,10 +152,10 @@ Heart에 찜 등록 시 true(성공), over(trigger 에러), fail(같은 상품 �
 - **View**     
 tabs에 각 페이지가 저장돼있으며 myPage를 특정 페이지로 불러올경우 choice 변수 필요<br>      
 Order는 cart의 디자인을 카피해왔으며 style은 맨 처음 head를 통해 수정   
- OrderCode로 통합하여 조회(첫번째 상품만 rowspan 적용)   
+ &nbsp; OrderCode로 통합하여 조회(첫번째 상품만 rowspan 적용)   
 ReviewWrite는 name이 같은 경우 List에 추가가 되는 것을 이용해 List<File>로 데이터를 받아오도록 적용   
- type=file은 초기화 외 직접 변경이 불가하여 hidden으로 file을 append하고, 파일 개수는 배열로 판단   
- 페이지가 새로 여는것이 아닌 Review 페이지에 ajax로 호출(Review 클릭시 기존 페이지로 초기화)   
+ &nbsp; type=file은 초기화 외 직접 변경이 불가하여 hidden으로 file을 append하고, 파일 개수는 배열로 판단   
+ &nbsp; 페이지가 새로 여는것이 아닌 Review 페이지에 ajax로 호출(Review 클릭시 기존 페이지로 초기화)   
 Heart는 체크박스 대신 label을 통한 디자인   
    
 - **Weakness**   
