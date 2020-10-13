@@ -361,17 +361,28 @@ java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), tru
 - **방식(기준: KAKAO)**   
 공식 홈페이지에서 모두 안내(매개변수 정보도 포함)      
 송신 : 홈페이지의 [Request]를 참조해 https://Host/GET 을 통해 작업 진행   
-수신 : 홈페이지의 [Response]를 참조해 Location의 데이터 수신   
+수신 : 홈페이지의 [Response]를 참조해 데이터 수신   
+  - **java**   
+  Request 주소를 가상의 url로 보내고, Response 받아온 값을 처리하는 방식(페이지로 처리하는 것이 node.js와 유사)      
 
 - **로그인(기준: KAKAO)**   
-https://Host/GET 주소대로   
+![](https://github.com/shoon0615/wit-Project/src/main/webapp/resources/kakao/kakao_login_btn.png)      
+jsp에서 https://Host/GET 주소대로   
 https://kauth.kakao.com/oauth/authorize?client_id="app_key"&redirect_uri="/wit/custom/kakaoLogin"&response_type=code   
+주소로 작업을 진행하여 reponse로 code(=authorize_code)를 받아옴   
+  - **java**   
+  기능들의 사용을 위해 access_token값이 필요해 가이드대로 역시 https://Host/POST   
+  가상의 url(new URL)에 필요한 request에 적힌 변수들을 매개변수로 보내고 getInputStream을 통해 response를 받아옴   
+  받아온 값이 json으로 되어있어 파싱한뒤 access_token 값만 return 받음<br>      
+  로그인 정보 역시 가상의 url에 요청대로 매개변수를 key : Authorization, value : access_token로 보낸뒤   
+  받아온 response에서 필요한 정보만 추출해옴   
+  이후 다시 token 받지않기 위해 session에 token과 받아온 정보들로 데이터 생성   
+  
+- **로그아웃(기준: KAKAO)**   
+가상의 url에 매개변수를 보내어 로그아웃 처리   
+다만 카카오 계정과 함께 로그아웃 기능을 위해 java가 아닌 url 처리   
 
-> 여기는 인용문입니다.
-```
-public class helloWorld {
-	public static void main(String[] args) {
-		System.out.println("Hello World!");
-	} 
-}
-```
+- **참고**   
+출처 : https://antdev.tistory.com/36   
+참조 : https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api   
+
