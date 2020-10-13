@@ -241,7 +241,7 @@ onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리�
      
 ## Tip   
 - **Spring**   
-   
+ - Ioc  
     
 > 여기는 인용문입니다.
 ```
