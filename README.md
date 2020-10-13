@@ -94,7 +94,7 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
  
 ## custom
 - **Model**   
-decode(case when과 유사) 이용      
+decode(case when과 유사) 이용   
 
 - **Controller**      
 로그인 시 jsp에서 이전 주소를 변수로 보내며 시도하고, 성공하면 session에 로그인 정보 추가 및 이전 주소로 롤백(referrer)   
