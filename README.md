@@ -288,10 +288,45 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   - **클라이언트**   
   github.com 페이지에서 자신의 Branch로 설정 및 Code 복사한뒤   
   프레임워크 우클릭 - import - Git - Projects from Git - Clone URI       
-  /- github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
+  - github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
   이후 작업한 내용이 생길때마다 Git Staging 에서 ++버튼 클릭 후 Commit and Push   
 - **Git 기능**   
-  - 
+  - **Commit**   
+  local의 git 저장소에 업로드(.git)   
+  - **Stashes**   
+  책갈피 설정   
+  - **Push to origin**   
+  전체 Branch를 Push(commit이 돼있어야함)   
+  - **Fetch from origin**   
+  github에서 아직 받지않은 업데이트 내역 확인   
+  - **Pull**   
+  현재 또는 선택한 Branch에 github로부터 데이터를 불러와 덮어씌움   
+  master는 Switch To를 통해 Branch 변경 후 Pull 받으면 local의 Branch도 github와 똑같이 업데이트   
+  클라이언트는 Fetch from - Next - master - Add Spec - Finish 이후   
+  - Pull... - Reference - 스페이스바 - master - Finish 하면 master 데이터를 그대로 덮어씀   
+  - **Remote(Fetch from)**   
+  다른 Branch로 정보 설정(1회성)   
+  - **Switch To**   
+  현재 Branch를 다른 Branch로 변경(Branch=사용자로 봐도 무방)      
+  - **Merge**   
+  다른 Branch의 데이터와 현재 Branch의 데이터를 통합(보통은 master에서 진행)   
+  단, non-fast-forward 발생한 경우는 변경된 데이터 내역이 있어 발생   
+  reset을 통해 현재 버전으로 재실행 또는 commit으로 변경 내역을 지워주면 해결   
+  추가/변동/생성된 파일들을 자동으로 적용하여 통합   
+  같은 라인에 수정된 내용 있을 시 충돌 발생하며, Merge tool 또는 직접 수정 후 ctrl+s(저장)으로 해결   
+  한 번 Merge된 이후 변동이 없다면 계속 Merge에 포함되지않기때문에 주의 요망   
+  예시) A=1, B=2 에서 B=3 을 통합 시 B=2로 Merge하면 이후 해당 Branch의 B=3인 경우는 체크하지않음   
+  - **Merge Tool**   
+  Merge 통합 시에 
+  - **Rebase**   
+  history 라인을 하나로 재배치   
+  - **Reset**   
+  선택한 Commit 시점으로 롤백   
+  - **Add to Index   
+  - **Ignore**   
+  설정한 파일/폴더는 Push 해도 github로 전송되지않음(대체적으로 보안 관련)   
+  - **Show in History**   
+  Git에서 작업한 commit 시점 및 메세지 확인   
 
 > 여기는 인용문입니다.
 ```
