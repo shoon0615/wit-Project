@@ -275,6 +275,10 @@ Controller : 웹/DB연결(Java)
 View &nbsp; &nbsp; &nbsp; &nbsp; : 웹 페이지(html, css, js, jsp)   
 
 ### Git
+- **구조**   
+프로젝트 - Commit - local의 .git 저장소에 업로드 - Push - github로 데이터 업로드   
+Team - Pull or Merge를 통해 github로부터 데이터 수신   
+
 - **프로젝트 생성**   
 github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정 후 Create)   
 현재 진행하는 프로젝트 우클릭 - Team - Share Project - Create Repository(체크박스 체크) - Finish   
@@ -290,6 +294,7 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   프레임워크 우클릭 - import - Git - Projects from Git - Clone URI       
   - github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
   이후 작업한 내용이 생길때마다 Git Staging에서 ++버튼 클릭 후 Commit and Push   
+  
 - **Git 기능**   
   - **Commit**   
   local의 git 저장소에 업로드(.git)   
@@ -331,6 +336,9 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   설정한 파일/폴더는 Push 해도 github로 전송되지않음(대체적으로 보안 관련)   
   - **Show in History**   
   Git에서 작업한 commit 시점 및 메세지 확인   
+  - **Git staging**   
+  프로젝트에서 변경이 일어나 git과 달라진 변경 내역 확인(하나라도 존재 시 Pull or Merge 불가)   
+  Windows - Show View - Git에 존재   
 
 > 여기는 인용문입니다.
 ```
