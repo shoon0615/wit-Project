@@ -14,7 +14,7 @@
   - [product](#product)
   - [review](#review)
 - [Tip](#Tip)
-  - [Spring](#spring)
+  - [Spring](#**Spring**)
    
     
 ## 기본 구조
@@ -241,7 +241,7 @@ onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리�
 
      
 ## Tip   
-- **spring**
+- **Spring**
   - 컨테이너 방식(bean 객체)
   web.xml의 DispatcherServlet을 통한 root, servlet-context.xml 사용 설정   
   mapping - url 경로를 참조하며, @RequestMapping을 통해 자동 인식       
