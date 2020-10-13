@@ -371,14 +371,20 @@ jsp에서 https://Host/GET 주소대로
 https://kauth.kakao.com/oauth/authorize?client_id="app_key"&redirect_uri="/wit/custom/kakaoLogin"&response_type=code   
 주소로 작업을 진행하여 reponse로 code(=authorize_code)를 받아옴   
   - **java**   
+  ![kakao_token](https://user-images.githubusercontent.com/67447628/95860868-9e307580-0d9b-11eb-99db-2745cbbe90a7.PNG)   
+  ![kakao_token2](https://user-images.githubusercontent.com/67447628/95860876-a092cf80-0d9b-11eb-83d8-d3e475ed7003.PNG)   
   기능들의 사용을 위해 access_token값이 필요해 가이드대로 역시 https://Host/POST   
   가상의 url(new URL)에 필요한 request에 적힌 변수들을 매개변수로 보내고 getInputStream을 통해 response를 받아옴   
-  받아온 값이 json으로 되어있어 파싱한뒤 access_token 값만 return 받음<br>      
+  받아온 값이 json으로 되어있어 파싱한뒤 access_token 값만 return 받음<br>   
+  ![kakao_login](https://user-images.githubusercontent.com/67447628/95861228-1d25ae00-0d9c-11eb-91c2-228c7eebfb26.PNG)   
+  ![kakao_login2](https://user-images.githubusercontent.com/67447628/95861232-1eef7180-0d9c-11eb-9e3c-10502bfa2211.PNG)   
+  ![kakao_login3](https://user-images.githubusercontent.com/67447628/95861236-20b93500-0d9c-11eb-9fcc-b6b4ea3da461.PNG)   
   로그인 정보 역시 가상의 url에 요청대로 매개변수를 key : Authorization, value : access_token로 보낸뒤   
   받아온 response에서 필요한 정보만 추출해옴   
   이후 다시 token 받지않기 위해 session에 token과 받아온 정보들로 데이터 생성   
   
 - **로그아웃(기준: KAKAO)**   
+![kakao_logout](https://user-images.githubusercontent.com/67447628/95861245-2282f880-0d9c-11eb-9685-7387fb3cbee0.png)   
 가상의 url에 매개변수를 보내어 로그아웃 처리   
 다만 카카오 계정과 함께 로그아웃 기능을 위해 java가 아닌 url 처리   
 
