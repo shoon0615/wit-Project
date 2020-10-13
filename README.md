@@ -354,7 +354,7 @@ context.xml에 preparerFactoryClass 추가 후 tiles.xml에도 preparer 추가
 이후 preparer 넘겨줄 java를 Util에 생성(ViewPreparer로 인터페이스 받고 execute 오버라이딩 고정)   
 @어노테이션("명칭")으로 되어있어야 preparer에서 java 호출이 가능   
 java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), true) 작업을 통해 데이터 뿌려줌   
-필요한 jsp에서 <tiles:importAttribute> 선언 후 호출 가능   
+필요한 jsp에서 /<tiles:importAttribute> 선언 후 호출 가능   
 
 > 여기는 인용문입니다.
 ```
