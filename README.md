@@ -291,8 +291,7 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   master는 클라이언트가 작업 올린 경우 Merge 작업을 통해 프로젝트 통합   
   - **클라이언트**   
   github.com 페이지에서 자신의 Branch로 설정 및 Code 복사한뒤   
-  프레임워크 우클릭 - import - Git - Projects from Git - Clone URI       
-  - github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
+  import - Git - Projects from Git - Clone URI - github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
   이후 작업한 내용이 생길때마다 Git Staging에서 ++버튼 클릭 후 Commit and Push   
   
 - **Git 기능**   
@@ -330,6 +329,9 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   history 라인을 하나로 재배치   
   - **Reset**   
   선택한 Commit 시점으로 롤백   
+  일반적으로 hard 선택으로 돌아가며 해당 시점으로 프로젝트를 모두 되돌리나, 돌아간 시점 이후의 시점 및 데이터 모두 삭제   
+  - **Revert**   
+  현재 시점을 백업해두고 해당 시점으로 프로젝트를 모두 되돌리나, 충돌 부분이 있을 경우 실패함    
   - **Add to Index**   
   Commit 이전 준비 설정(스프링 4 버전 이상에는 필요없음)   
   - **Ignore**   
