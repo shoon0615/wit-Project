@@ -249,8 +249,8 @@ onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리�
   기본적으로 Bean을 미리 xml에 선언 후 사용 가능하나 @어노테이션을 통해 객체에서 Bean을 생성   
   @Controller : 웹 요청 class에 사용   
   @Repository : DAO 등의 DB 컨트롤러 관련 class에 사용   
-  @Service &nbsp;&nbsp; : 비즈니스 로직에 사용   
-  @Component &nbsp; : 그 외 기본적인 등록등에 사용(ex: util)   
+  @Service &nbsp; &nbsp; &nbsp; : 비즈니스 로직에 사용   
+  @Component : 그 외 기본적인 등록등에 사용(ex: util)   
     
 > 여기는 인용문입니다.
 ```
