@@ -358,7 +358,14 @@ java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), tru
 필요한 jsp에서 tiles:importAttribute 선언 후 호출 가능   
 
 ### Rest
-- **설정**   
+- **방식(기준: KAKAO)**   
+공식 홈페이지에서 모두 안내(매개변수 정보도 포함)      
+송신 : 홈페이지의 [Request]를 참조해 https://Host/GET 을 통해 작업 진행   
+수신 : 홈페이지의 [Response]를 참조해 Location의 데이터 수신   
+
+- **로그인(기준: KAKAO)**   
+https://Host/GET 주소대로   
+https://kauth.kakao.com/oauth/authorize?client_id="app_key"&redirect_uri="/wit/custom/kakaoLogin"&response_type=code   
 
 > 여기는 인용문입니다.
 ```
