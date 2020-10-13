@@ -279,10 +279,17 @@ View &nbsp; &nbsp; &nbsp; &nbsp; : 웹 페이지(html, css, js, jsp)
 github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정 후 Create)   
 현재 진행하는 프로젝트 우클릭 - Team - Share Project - Create Repository(체크박스 체크) - Finish   
 작업 진행시 숨김 폴더로 .git 폴더가 자동으로 생성되며 git의 관리하에 들어감(=git init)   
-이하 모든 작업은 우클릭 - Team에서 진행   
+이하 모든 작업은 우클릭 - Team에서 진행<br>      
   - **master**   
   commit 작업 후 Git Staging에서 확인되면 Push 진행
   이후 Switch To - New Branch를 통해 클라이언트 브랜치 생성 - Commit and Push(모두 마쳐야 브랜치 생성)   
+  github.com 페이지에서 Code 복사한뒤 Settings - Manage access - invite a collabolator를 통해 클라이언트 초대<br>   
+  master는 클라이언트가 작업 올린 경우 Merge 작업을 통해 프로젝트 통합   
+  - **클라이언트**   
+  github.com 페이지에서 자신의 Branch로 설정 및 Code 복사한뒤   
+  프레임워크 우클릭 - import - Git - Projects from Git - Clone URI       
+  /- github ID,PW 입력 - 자신의 Branch만 체크 - 모두 Next - Finish<br>   
+  이후 작업한 내용이 생길때마다 Git Staging 에서 ++버튼 클릭 후 Commit and Push   
 - **Git 기능**   
   - 
 
