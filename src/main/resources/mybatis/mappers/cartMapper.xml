@@ -107,4 +107,15 @@
 	and cart_qty = #{cart_qty}
 	and user_id = #{user_id}
 </delete>
+
+<!-- 옵션변경에서 add 클릭시 insert(test)  -->
+<insert id="insertCartOption_test" parameterType="cartDTO">
+	insert into cart
+	select 	#{user_id} user_id, prod_code, #{cart_qty} cart_qty, sysdate
+	from	product
+	where	prod_size = #{prod_size} 
+	and 	prod_color = #{prod_color} 
+	and 	prod_subcode = #{prod_subcode}
+</insert>
+
 </mapper>
