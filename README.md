@@ -241,7 +241,16 @@ onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리�
      
 ## Tip   
 - **Spring**
- - Ioc  
+  - 컨테이너 방식(bean 객체)
+  web.xml의 DispatcherServlet을 통한 root, servlet-context.xml 사용 설정(mapping - url 경로 참조)   
+  servlet-context.xml는 Controller, View 관련 설정 및 일반적인 기능   
+  root-context.xml는 Model 관련 설정   
+  - Ioc(제어 역행)
+  기본적으로 Bean을 미리 xml에 선언 후 사용 가능하나 @어노테이션을 통해 객체에서 Bean을 생성   
+  @Controller : 웹 요청 class에 사용   
+  @Repository : DAO 등의 DB 컨트롤러 관련 class에 사용   
+  @Service &nbsp;&nbsp; : 비즈니스 로직에 사용   
+  @Component &nbsp; : 그 외 기본적인 등록등에 사용(ex: util)   
     
 > 여기는 인용문입니다.
 ```
