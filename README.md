@@ -15,7 +15,7 @@
   - [review](#review)
 - [Tip](#Tip)
   - [Spring](#Spring)
-   
+  - [Git](#Git)
     
 ## 기본 구조
 Spring 프레임워크로 구현되어 해당 구조인 MVC 형태로 구성   
@@ -254,8 +254,9 @@ root-context.xml는 Model 관련 설정
 @Controller : 웹 요청 class에 사용   
 @Repository : DAO 등의 DB 컨트롤러 관련 class에 사용   
 @Service &nbsp; &nbsp; &nbsp; : 비즈니스 로직에 사용   
-@Component : 그 외 기본적인 등록등에 사용(ex: util)   
-
+@Component : 그 외 기본적인 등록등에 사용(ex: util)<br>      
+@AutoWired를 제외한 나머지는 모두 Bean 등록 기능으로 동일하나 가독성 및 향후 변화로 인해 구분하는 것을 권장   
+   
 - DI(의존성 주입)   
 자신이 아닌 외부의 객체로부터 데이터를 받아와 주입하는 방식   
 Servlet 방식 및 어노테이션, 선언된 데이터를 받아오는 경우가 이에 해당   
@@ -266,15 +267,25 @@ POJO 방식으로 단일 책임 원칙을 유지(하나의 객체에선 하나�
 
 - 트랜잭션   
 DB의 상태가 변화되는 여러 작업   
-트랜잭션 처리가 안돼있다면 제한되며, 하나라도 실패할 경우 모두 롤백(commit, rollback)<br>   
-@AutoWired를 제외한 나머지는 모두 Bean 등록 기능으로 동일하나 가독성 및 향후 변화로 인해 구분하는 것을 권장   
+트랜잭션 처리가 안돼있다면 제한되며, 하나라도 실패할 경우 모두 롤백(commit, rollback) 
 
 - MVC 구조   
 Model &nbsp; &nbsp; &nbsp; : DB(Oracle, SQL)      
 Controller : 웹/DB연결(Java)   
 View &nbsp; &nbsp; &nbsp; &nbsp; : 웹 페이지(html, css, js, jsp)   
 
-  
+### Git
+- 프로젝트 생성
+github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정 후 Create)   
+현재 진행하는 프로젝트 우클릭 - Team - Share Project - Create Repository(체크박스 체크) - Finish   
+작업 진행시 숨김 폴더로 .git 폴더가 자동으로 생성되며 git의 관리하에 들어감(=git init)   
+이하 모든 작업은 우클릭 - Team에서 진행   
+  - master
+  commit 작업 후 Git Staging에서 확인되면 Push 진행
+  이후 Switch To - New Branch를 통해 클라이언트 브랜치 생성 - Commit and Push(모두 마쳐야 브랜치 생성)   
+- Git 기능
+  - 
+
 > 여기는 인용문입니다.
 ```
 public class helloWorld {
