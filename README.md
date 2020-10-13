@@ -242,13 +242,13 @@ onclick을 통해 불러오는 sendReview 함수의 매개변수로 리뷰 리�
      
 ## Tip   
 ### Spring
-- 컨테이너 방식(bean 객체)
+- **컨테이너 방식(bean 객체)**   
 web.xml의 DispatcherServlet을 통한 root, servlet-context.xml 사용 설정   
 mapping - url 경로를 참조하며, @RequestMapping을 통해 자동 인식       
 servlet-context.xml는 Controller, View 관련 설정 및 일반적인 기능   
 root-context.xml는 Model 관련 설정   
 
-- Ioc(제어 역행)
+- **Ioc(제어 역행)**   
 기본적으로 Bean을 미리 xml에 선언 후 사용 가능하나 @어노테이션을 통해 객체에서 Bean을 생성   
 @AutoWired : 자동으로 class와 일치하는 컨테이너의 bean 객체를 주입   
 @Controller : 웹 요청 class에 사용   
@@ -257,33 +257,33 @@ root-context.xml는 Model 관련 설정
 @Component : 그 외 기본적인 등록등에 사용(ex: util)<br>      
 @AutoWired를 제외한 나머지는 모두 Bean 등록 기능으로 동일하나 가독성 및 향후 변화로 인해 구분하는 것을 권장   
    
-- DI(의존성 주입)   
+- **DI(의존성 주입)**   
 자신이 아닌 외부의 객체로부터 데이터를 받아와 주입하는 방식   
 Servlet 방식 및 어노테이션, 선언된 데이터를 받아오는 경우가 이에 해당   
 
-- AOP(관점지향)
+- **AOP(관점지향)**   
 가독성 및 공통적 업무 처리를 위해 분리하여 별도 관리(인터페이스, DAO ...)   
 POJO 방식으로 단일 책임 원칙을 유지(하나의 객체에선 하나의 기능만을 수행)   
 
-- 트랜잭션   
+- **트랜잭션**      
 DB의 상태가 변화되는 여러 작업   
 트랜잭션 처리가 안돼있다면 제한되며, 하나라도 실패할 경우 모두 롤백(commit, rollback) 
 
-- MVC 구조   
+- **MVC 구조**   
 Model &nbsp; &nbsp; &nbsp; : DB(Oracle, SQL)      
 Controller : 웹/DB연결(Java)   
 View &nbsp; &nbsp; &nbsp; &nbsp; : 웹 페이지(html, css, js, jsp)   
 
 ### Git
-- 프로젝트 생성
+- **프로젝트 생성**   
 github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정 후 Create)   
 현재 진행하는 프로젝트 우클릭 - Team - Share Project - Create Repository(체크박스 체크) - Finish   
 작업 진행시 숨김 폴더로 .git 폴더가 자동으로 생성되며 git의 관리하에 들어감(=git init)   
 이하 모든 작업은 우클릭 - Team에서 진행   
-  - master
+  - **master**   
   commit 작업 후 Git Staging에서 확인되면 Push 진행
   이후 Switch To - New Branch를 통해 클라이언트 브랜치 생성 - Commit and Push(모두 마쳐야 브랜치 생성)   
-- Git 기능
+- **Git 기능**   
   - 
 
 > 여기는 인용문입니다.
