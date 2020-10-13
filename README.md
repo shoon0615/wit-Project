@@ -357,7 +357,7 @@ context.xml에 preparerFactoryClass 추가 후 tiles.xml에도 preparer 추가(u
 java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), true) 작업을 통해 데이터 뿌려줌   
 필요한 jsp에서 tiles:importAttribute 선언 후 호출 가능   
 
-### Rest(KAKAO)
+### Rest
 - **설정**   
 
 > 여기는 인용문입니다.
