@@ -51,13 +51,18 @@ ___
    
 
 - **Controller**      
-   
+로그인 시 cart 테이블, 비회원 시 session - List<CartDTO>의 정보 추출   
+total_amount는 컨트롤러에서 계산 후 뿌려줌   
+
 
 - **View**   
-   
-   
+전체적인 부분을 cartDetail에 저장 및 호출하는 방식(startCart 함수 이용)   
+iframe - src를 통해 Option 변경 가능하며, 이후 창은 hide 함수를 통해 숨김 처리   
+수량 및 Option 변경 시 데이터에 직접적으로 변동을 주고 ajax를 통해 화면을 다시 호출(iframe - top)      
+
 - **Weakness**   
-   
+－ updateCart에서 hashMap 대신에 DTO로 이용, user_id는 View에서 seesionScope.user_id로 DTO에 전송   
+－ updateCart에 cartPriceValue 대신 cartAmountValue 전송(qty*price -> price 가능)   
    
 ## category
 - **Model**   
