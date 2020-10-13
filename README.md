@@ -53,7 +53,8 @@ ___
 - **Controller**      
 로그인 시 cart 테이블, 비회원 시 session - List<CartDTO>의 정보 추출   
 total_amount는 컨트롤러에서 계산 후 뿌려줌   
-
+Option 변경 역시 로그인 시 cart 테이블, 비회원 시 session - List<CartDTO> 직접 수정   
+기존 코드의 옵션 변경 이후 기존 코드를 삭제하는 방식   
 
 - **View**   
 전체적인 부분을 cartDetail에 저장 및 호출하는 방식(startCart 함수 이용)   
@@ -62,8 +63,10 @@ iframe - src를 통해 Option 변경 가능하며, 이후 창은 hide 함수를 
 
 - **Weakness**   
 － updateCart에서 hashMap 대신에 DTO로 이용, user_id는 View에서 seesionScope.user_id로 DTO에 전송   
-－ updateCart에 cartPriceValue 대신 cartAmountValue 전송(qty*price -> price 가능)   
-   
+－ updateCart에 cartPriceValue 대신 cartAmountValue 전송(qtyprice -> price 가능)   
+－ 컨트롤러에서 select_prod_code 선언받아놓은뒤 mapper에선 모두 하위쿼리로 다시 받아옴      
+－ Continue Shopping 버튼(referer) 및 Discount Code 받는 등의 기능 미구현   
+ 
 ## category
 - **Model**   
 DTO 대신 hashMap 이용   
@@ -79,6 +82,8 @@ category1,2 값을 받았을때 trigger("click") 방식으로 페이지 로딩
 - **Weakness**   
 － hashMap 대신에 DTO로 이용   
 － category1,2 값이 보관된 hidden 불필요   
+－ 상품 상태 라벨 미구현(New, Out Of Stock, Sale, Best)   
+－ 장바구니 버튼 미구현   
 － 이전, 다음 버튼 미구현   
 － mapper 내용이 order by만 다르기에 mapper는 ${sort} 하나로 구현하고   
  &nbsp; &nbsp; 1. 각 DAO에 각 sort 값을 설정   
