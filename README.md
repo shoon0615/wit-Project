@@ -17,7 +17,7 @@
   - [Spring](#Spring)
   - [Git](#Git)
   - [Tiles](#Tiles)
-  - [Rest(KAKAO)](#Rest(KAKAO))
+  - [Rest](#Rest)
     
 ## 기본 구조
 Spring 프레임워크로 구현되어 해당 구조인 MVC 형태로 구성   
