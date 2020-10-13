@@ -323,7 +323,7 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   - **Merge Tool**   
   Merge 통합 시 충돌된 작업에 대해 편의성을 가진 도구   
   Git Staging에서 문제발생한 파일 더블 클릭 시 자동 실행   
-  Two-Way Compare - Copy All Non-Conflicting 진행 시 Merge로 전달받은 내용으로 모두 덮어써짐
+  Two-Way Compare - Copy All Non-Conflicting 진행 시 Merge로 전달받은 내용으로 모두 덮어써짐   
   그 외 충돌된 부분 확인이나 Drag&Drop 등 가독성에서도 편의성을 제공   
   - **Rebase**   
   history 라인을 하나로 재배치   
