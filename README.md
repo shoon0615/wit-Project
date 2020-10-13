@@ -366,7 +366,7 @@ java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), tru
   Request 주소를 가상의 url로 보내고, Response 받아온 값을 처리하는 방식(페이지로 처리하는 것이 node.js와 유사)      
 
 - **로그인(기준: KAKAO)**   
-![](https://github.com/shoon0615/wit-Project/src/main/webapp/resources/kakao/git/kakao_access.png)      
+![kakao_access](https://user-images.githubusercontent.com/67447628/95860694-5f022480-0d9b-11eb-924a-b2e5cde9436f.png)      
 jsp에서 https://Host/GET 주소대로   
 https://kauth.kakao.com/oauth/authorize?client_id="app_key"&redirect_uri="/wit/custom/kakaoLogin"&response_type=code   
 주소로 작업을 진행하여 reponse로 code(=authorize_code)를 받아옴   
