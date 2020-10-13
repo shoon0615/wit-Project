@@ -16,6 +16,7 @@
 - [Tip](#Tip)
   - [Spring](#Spring)
   - [Git](#Git)
+  - [Tiles](#Tiles)
     
 ## 기본 구조
 Spring 프레임워크로 구현되어 해당 구조인 MVC 형태로 구성   
@@ -341,6 +342,19 @@ github.com 페이지에서 New 를 통해 새 Repository 생성(이름만 설정
   - **Git staging**   
   프로젝트에서 변경이 일어나 git과 달라진 변경 내역 확인(하나라도 존재 시 Pull or Merge 불가)   
   Windows - Show View - Git에 존재   
+  
+### Tiles
+- **설정**   
+pom.xml에 tiles 관련 라이브러리 추가 후 root or servlet-context.xml에 tiles.xml 경로 및 우선순위 설정   
+tiles.xml에 경로 definition 설정 / 기준 layout.jsp 설정 / header, body, footer 등 파트 분배   
+body의 경로는 동적으로 설정(/{1}/{2}.jsp)   
+기준 layout.jsp에선 <tiles:insertAttribute>를 통해 각 파트의 내용을 전달<br>      
+header, footer 등의 body 외 파트에서 attribute가 필요한 경우 preparer 설정   
+context.xml에 preparerFactoryClass 추가 후 tiles.xml에도 preparer 추가   
+이후 preparer 넘겨줄 java를 Util에 생성(ViewPreparer로 인터페이스 받고 execute 오버라이딩 고정)   
+@어노테이션("명칭")으로 되어있어야 preparer에서 java 호출이 가능   
+java에서 attributeContext.putAttribute("명칭", new Attribute(보낼값), true) 작업을 통해 데이터 뿌려줌   
+필요한 jsp에서 <tiles:importAttribute> 선언 후 호출 가능   
 
 > 여기는 인용문입니다.
 ```
