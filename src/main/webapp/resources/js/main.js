@@ -102,7 +102,7 @@ Created: Colorib
         items: 1,
         dots: false,
         nav: true,
-        navText: ["<i class='arrow_carrot-left'></i>","<i class='arrow_carrot-right'></i>"],
+        navText: ["<i class='arrow_carrot-left' style='line-height: 1;'></i>","<i class='arrow_carrot-right' style='line-height: 1;'></i>"],
         smartSpeed: 1200,
         autoHeight: false,
         autoplay: false,

@@ -58,8 +58,10 @@
 		    width: 430px;
 		}
 		.shop__cart__table tbody tr .cart__product__item img {
-		    width: 90px;
-		    height: 90px;
+		    margin-bottom: -20px;
+		}
+		.shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
+			padding-bottom: 21px;
 		}
     
     </style>
@@ -94,7 +96,9 @@
    			}
 
 			// 특정 페이지 요청시 해당 화면으로 셋팅
-			$(".nav-item:eq(" + ${choice } + ")").children().trigger("click");
+			if('${choice }') {
+				$(".nav-item:eq(" + ${choice } + ")").children().trigger("click");
+			}
     		
         	// Order의 Write Review 클릭 시
 			$('#tabs-1').on('click', "a", function(){
@@ -105,7 +109,7 @@
 				$.post(url, {order_code:order_code, prod_code:prod_code}, function(args){
 					$(window).scrollTop(200);
 	   				$('#tabs-2').html(args);
-	   				$(".nav-item:eq(1)").children().trigger("click");
+	   				$('.nav-item:eq(1)').children().trigger("click");
 					reviewWrite = true;
 	   			});
 			});

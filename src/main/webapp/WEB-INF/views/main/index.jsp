@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%	request.setCharacterEncoding("UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <% request.setCharacterEncoding("UTF-8");
@@ -117,17 +116,17 @@
      	<c:forEach var="dto" items="${lists}">
             <div class="col-lg-3 col-md-4 col-sm-6 mix women">
                 <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/wit/resources/img/product/${dto.prod_img }">
+                    <div class="product__item__pic set-bg" data-setbg="<spring:url value='/product/${dto.prod_img }'/>">
                         <div class="label new">New</div>
                         <ul class="product__hover">
-                            <li><a href="/wit/resources/img/product/${dto.prod_img }" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }"><span class="arrow_expand"></span></a></li>
                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                             <li><a href="#"><span class="icon_bag_alt"></span></a></li>
                         </ul>
                     </div>
                     
                     <div class="product__item__text">
-                        <h6><a href="#">${dto.prod_subcode }</a></h6>
+                        <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
                          <div class="rating">
                                   <c:if test="${dto.avgscore  > 0 }">
                            	   <c:forEach begin="1" end="${dto.avgscore  }">
@@ -143,7 +142,7 @@
                                </c:forEach>
                             </c:if>
                             </div>
-                        <div class="product__price">${dto.prod_price }</div>
+                        <div class="product__price">￦ ${dto.prod_price }</div>
                     </div>
                     
                 </div>
@@ -199,8 +198,8 @@
                     </div>
                     <c:forEach var="dto" items="${hot_lists }">
                     <div class="trend__item">
-                        <div class="trend__item__pic">
-                            <img src="/wit/resources/img/product/${dto.prod_img }" alt="">
+                        <div class="trend__item__pic">	
+                            <img src="<spring:url value='/product/${dto.prod_img }'/>" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
@@ -219,7 +218,7 @@
                                </c:forEach>
                             </c:if>
                             </div>
-                            <div class="product__price">${dto.prod_price }won</div>
+                            <div class="product__price">￦ ${dto.prod_price }</div>
                         </div>
                     </div>
                    </c:forEach>
@@ -234,7 +233,7 @@
                     <c:forEach var="dto" items="${reCount_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/${dto.prod_img }" alt="">
+                            <img src="<spring:url value='/product/${dto.prod_img }'/>" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
@@ -253,7 +252,7 @@
                                </c:forEach>
                             </c:if>
                         </div>
-                            <div class="product__price">${dto.prod_price }won</div>
+                            <div class="product__price">￦ ${dto.prod_price }</div>
                         </div>
                     </div>
                     </c:forEach>
@@ -267,7 +266,7 @@
                     <c:forEach var="dto" items="${reScore_lists }">
                     <div class="trend__item">
                         <div class="trend__item__pic">
-                            <img src="/wit/resources/img/trend/${dto.prod_img }" alt="">
+                            <img src="<spring:url value='/product/${dto.prod_img }'/>" alt="">
                         </div>
                         <div class="trend__item__text">
                             <h6><a href="<%=cp%>/product/productDetail.action?PROD_SUBCODE=${dto.prod_subcode }" style="color: black;">${dto.prod_subcode }</a></h6>
@@ -286,7 +285,7 @@
                                </c:forEach>
                             </c:if>
                         </div>
-                            <div class="product__price">${dto.prod_price }won</div>
+                            <div class="product__price">￦ ${dto.prod_price }</div>
                         </div>
                     </div>
                     </c:forEach>

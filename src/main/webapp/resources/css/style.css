@@ -990,6 +990,10 @@ ol {
 	margin-bottom: 5px;
 }
 
+.footer__social .fa {
+    line-height: 2.5;
+}
+
 .footer__social a:last-child {
 	margin-right: 0;
 }
@@ -1284,6 +1288,7 @@ ol {
 	-webkit-transition: all, 0.5s;
 	-o-transition: all, 0.5s;
 	transition: all, 0.5s;
+	border: 1px solid #D2D2D2;
 }
 
 .product__hover li a span {
@@ -1302,7 +1307,7 @@ ol {
 	padding-top: 22px;
 }
 
-.product__item__text h6 {
+.product__item__text h6 a {
 	font-size: 14px;
 	color: #111111;
 }
@@ -2306,6 +2311,9 @@ ol {
 
 .shop__cart__table tbody tr .cart__product__item img {
 	margin-right: 25px;
+	width: 90px;
+    height: 90px;
+    margin-bottom: -70px;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
@@ -3172,6 +3180,8 @@ ol {
 
 .blog__comment__item__pic img {
 	border-radius: 50%;
+	width: 90px;
+    height: 90px;
 }
 
 .blog__comment__item__text {
@@ -3198,6 +3208,11 @@ ol {
 .blog__comment__item__text .rating span {
 	font-size: 10px;
 	color: #666666;
+}
+
+.blog__comment__item__text img {
+	width: 90px;
+	height: 90px;
 }
 
 .blog__comment__item__text ul li {
@@ -3584,6 +3599,8 @@ ol {
 
 .myPage__heart__item img {
     margin-right: 32px;
+    width: 90px;
+    height: 90px;
 }
 
 .myPage__heart__item h6 {

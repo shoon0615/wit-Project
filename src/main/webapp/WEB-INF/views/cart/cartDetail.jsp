@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
@@ -50,7 +51,7 @@ function hide() {
                                 <tr>
                                     <td class="cart__product__item">
                                      <input type="checkbox" class="cart_check">
-                                        <img src="/wit/resources/img/shop-cart/cp-1.jpg" alt="">
+                                       	<img src="<spring:url value='/product/${dto.prod_img }'/>" alt="">
                                         <div class="cart__product__item__title">
                                             <h6>${dto.prod_subcode }</h6>
                                              <input type="text" class="cart_prod_code" value="${dto.prod_code }" style="font: -webkit-small-control; color: #cccccc; border: 0;">
@@ -72,7 +73,7 @@ function hide() {
                                         <div class="pro-qty">
                                         	<input class="dec qtybtn" type="button" value="-">
                                             <input class="cartQtyValue" disabled="disabled" type="text" value="${dto.cart_qty }">
-                                            <input class="inc qtybtn" type="button" value="+">            
+                                            <input class="inc qtybtn" type="button" value="+" style="width: 15px;">            
                                         </div>
                                     </td>
                                     <td class="cart__total">${dto.cart_amount}</td>
@@ -113,7 +114,7 @@ function hide() {
                         <ul>
                             <li>Total <span class="total_amount">${total_amount }</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <a href="${pageContext.request.contextPath}/payment/checkout.action" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>

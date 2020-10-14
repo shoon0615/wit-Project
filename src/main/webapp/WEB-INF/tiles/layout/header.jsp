@@ -153,11 +153,13 @@
                         <div class="header__right__auth">
                         	<c:if test="${sessionScope.customInfo.user_id == null}">
                             	<a href="<%=cp%>/custom/login">Login</a>
+                            	<a href="<%=cp%>/custom/join">Register</a>
                             </c:if>  
                             <c:if test="${sessionScope.customInfo.user_id != null}">
                             	<a href="<%=cp%>/custom/logout">Logout</a>
+                            	<a href="<%=cp%>/custom/modify">Modify</a>
                             </c:if> 
-                            <a href="#">Register</a>
+                            
                         </div>
                         
                         <ul class="header__right__widget">

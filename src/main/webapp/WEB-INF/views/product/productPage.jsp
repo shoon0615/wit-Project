@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%	request.setCharacterEncoding("UTF-8"); %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -89,6 +89,13 @@
 					totalAmount.text(parseFloat(totalAmount.text()) + parseFloat(prod_PRICE));
 				}, "json");
 		    }
+
+		 	// 컬러 리스트 하나일 경우 디자인에 문제있어 처리
+		    $('.color__checkbox').show(function(){	   
+		    	if('${PROD_COLOR.size() }' == 1) {
+					$(this).css("display", "initial");
+			    }
+			});
 
 		    // 컬러 리스트 또는 사이즈 리스트 클릭 시
 		    $('.color__checkbox label input, .size__btn label input').click(function(){	   
@@ -272,7 +279,7 @@
                         <div class="product__details__pic__left product__thumb nice-scroll">
                         	<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
                             	<a class="pt" href="#product-${status.index+1 }">
-                               		<img src="/wit/resources/img/product/details/${img }" alt="" style="height: 122px;">
+                               		<img src="<spring:url value='/product/${img }'/>" alt="" style="height: 122px;">
                             	</a>
                             </c:forEach>
                         </div>
@@ -280,7 +287,7 @@
                             <div class="product__details__pic__slider owl-carousel">
                             	<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
                                 	<img data-hash="product-${status.index+1 }" class="product__big__img" 
-                                		src="/wit/resources/img/product/details/${img }" alt="" style="height: 549px;">
+                                		src="<spring:url value='/product/${img }'/>" alt="" style="height: 549px;">
                                 </c:forEach>
                             </div>
                         </div>
@@ -290,15 +297,13 @@
                     <div class="product__details__text">
                         <h3>${dto.PROD_SUBCODE }</h3>
                         <div class="rating">
-                        	<c:if test="${map.CNT > 0 }">
-                        		<c:forEach begin="1" end="${map.AVG }">
-	                            	<i class="fa fa-star"></i>
-	                            </c:forEach>
-	                            <c:forEach begin="1" end="${5 - map.AVG }">
-	                            	<span class="fa fa-star"></span>
-	                            </c:forEach>
-	                            <span>( ${map.CNT } reviews )</span>
-                            </c:if>
+                       		<c:forEach begin="1" end="${map.AVG }">
+                            	<i class="fa fa-star"></i>
+                            </c:forEach>
+                            <c:forEach begin="1" end="${5 - map.AVG }">
+                            	<span class="fa fa-star"></span>
+                            </c:forEach>
+                            <span>( ${map.CNT } reviews )</span>
                         </div>
                         <!-- <div class="product__details__price">$ 75.0 <span>$ 83.0</span></div> -->
                         <div class="product__details__price">￦ <fmt:formatNumber value="${dto.PROD_PRICE }" type="number"/></div>
@@ -382,7 +387,7 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             	<div class="tab-img" style="text-align: -webkit-center;">
                             		<c:forEach items="${PROD_IMG }" var="img">
-                            			<img src="/wit/resources/img/product/details/${img }" alt="" 
+                            			<img src="<spring:url value='/product/${img }'/>" alt="" 
                             				style="display: block;width: 580px;height: 549px;margin-bottom: 30px;"/>
                             				
                             		</c:forEach>
@@ -392,7 +397,7 @@
                             			<tr>
 		                            		<c:forEach items="${PROD_IMG }" var="img" varStatus="status">
 		                            			<c:if test="${status.index%2 == 0 }"></tr><tr></c:if>
-		                            			<td><img src="/wit/resources/img/product/details/${img }" alt=""
+		                            			<td><img src="<spring:url value='/product/${img }'/>" alt=""
 		                            				style="width: 520px;height: 549px;margin: 10px 15px 30px 15px;"/></td>
 		                            		</c:forEach>
 	                            		</tr>

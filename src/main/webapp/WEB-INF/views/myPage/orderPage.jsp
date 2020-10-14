@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -24,7 +25,7 @@
 	            		<td class="cart__ordercode" rowspan="${dto.order_code_cnt }" style="padding-left: 26px;">${dto.order_code }</td>
 	            	</c:if>
 	                <td class="cart__product__item"> 	
-	                    <img src="/wit/resources/img/shop-cart/cp-1.jpg" alt="">
+	                    <img src="<spring:url value='/product/${dto.prod_img }'/>" alt=""/>
 	                    <div class="cart__product__item__title">
 	                       	<h6>${dto.prod_subcode } × ${dto.prod_qty }</h6>
 	                       	<span>[ ${dto.prod_color }/${dto.prod_size } ]</span>

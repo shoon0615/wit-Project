@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%	request.setCharacterEncoding("UTF-8"); %>
 
-<form method="post" action="${pageContext.request.contextPath}/myPage/reviewInsert.action" class="checkout__form" name="reviewForm" enctype="multipart/form-data">	
+<form method="post" action="reviewInsert.action" class="checkout__form" name="reviewForm" enctype="multipart/form-data">	
 	<div class="subject">
 	   	<h5 style="padding-top: 3px;padding-left: 26px;">Write Review</h5>
 	</div>

@@ -12,7 +12,7 @@
 
 </head> 
 <body> 
-footer start
+
 <!-- Footer Section Begin -->
 <footer class="footer">
     <div class="container">

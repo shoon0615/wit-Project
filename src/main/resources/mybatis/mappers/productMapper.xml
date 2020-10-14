@@ -99,12 +99,14 @@
 
 <!-- 옵션 선택시 생성되는 상품 코드 정보(비회원) -->
 <select id="choiceProdCart" parameterType="productDTO" resultType="cartDTO">
-	SELECT	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE	
-	FROM	PRODUCT A, PRODUCT_INFO B
+	SELECT	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE, C.PROD_IMG	
+	FROM	PRODUCT A, PRODUCT_INFO B, PRODUCT_IMG C
 	WHERE	A.PROD_SUBCODE = B.PROD_SUBCODE
+	AND 	B.PROD_SUBCODE = C.PROD_SUBCODE(+)
 	AND 	A.PROD_SUBCODE = #{PROD_SUBCODE}
 	AND 	A.PROD_COLOR = #{PROD_COLOR}
 	AND 	A.PROD_SIZE = #{PROD_SIZE}
+	AND 	NVL(C.PROD_MAINIMG, '1') != '0'
 </select>
 
 <!-- 옵션 선택시 생성되는 상품 코드(insert용) -->
@@ -114,20 +116,6 @@
 	WHERE 	PROD_SUBCODE = #{PROD_SUBCODE}
 	AND 	PROD_COLOR = #{PROD_COLOR}
 	AND 	PROD_SIZE = #{PROD_SIZE}
-</select>
-
-<!-- 옵션 선택시 생성되는 상품 코드의 정보 -->
-<!-- productDTO에 CART_QTY 컬럼 생성해야함 -->
-<select id="cartProd" parameterType="String" resultType="productDTO">
-	SELECT 	B.PROD_SUBCODE, B.PROD_COLOR, B.PROD_SIZE, A.CART_QTY, B.PROD_PRICE
-	FROM 	CART A, 
-			(
-				SELECT	A.PROD_CODE, A.PROD_SUBCODE, A.PROD_COLOR, A.PROD_SIZE, B.PROD_PRICE	
-				FROM	PRODUCT A, PRODUCT_INFO B
-				WHERE	A.PROD_SUBCODE = B.PROD_SUBCODE
-				AND 	A.PROD_CODE = #{PROD_CODE}
-			) B
-	WHERE 	A.PROD_CODE = B.PROD_CODE
 </select>
 
 <select id="selectBag" parameterType="hashMap" resultType="String">
@@ -282,9 +270,9 @@
 
 <!-- 신고,리뷰 테이블 딜리트(신고 3번이상이면 게시물 자동삭제)  -->
 <delete id="deleteReview">
-	delete review where review_num = (select review_num from report group by review_num having count(*)>=2)
+	delete review where review_num = (select review_num from report group by review_num having count(*)>=3)
 </delete>
 <delete id="deleteReport">
-	delete report where review_num = (select review_num from report group by review_num having count(*)>=2)
+	delete report where review_num = (select review_num from report group by review_num having count(*)>=3)
 </delete>
 </mapper>

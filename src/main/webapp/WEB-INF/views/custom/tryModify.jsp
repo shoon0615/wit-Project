@@ -78,6 +78,13 @@
 		$("#login_result").text("");		
 	}
 
+	// Enter키 체크
+	function fn_check_enter(){
+		if(window.event.keyCode == 13) {
+			fn_check_login();
+	    }
+	}
+
 </script>
 
 <body>
@@ -116,7 +123,7 @@
                                 </div>
                             	<div class="checkout__form__input mt20">
                                     <p>Password</p>
-                                    <input type="password" name="user_pwd" id="pwd" style="margin-bottom: 10px;" placeholder="Enter your password" onclick="fn_click_pwd()">                                    
+                                    <input type="password" name="user_pwd" id="pwd" style="margin-bottom: 10px;" placeholder="Enter your password" onclick="fn_click_pwd()" onkeyup="fn_check_enter()">                                    
                                 </div>
                                 <div class="checkout__form__input mt20">                                                                        
                                     <span id="login_result" style="font-size: 15px;"></span>                                   
