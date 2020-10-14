@@ -186,7 +186,8 @@
 					}, function(rsp) {
 						if (rsp.success) {
 					    	var f = document.payForm;
-					    	var url = "insertOrder.action";
+					    	var url = "insertOrder.action";	   
+					    	$('input[name=user_id]').attr("disabled", false);					// 이름 데이터 수신 설정 	
 					    	var param = $(f).serialize();
 							param += "&payment_type=" + rsp.pay_method.toUpperCase();			// 결제 방법
 							param += "&payment_account=" + rsp.card_number;						// 계좌,카드번호

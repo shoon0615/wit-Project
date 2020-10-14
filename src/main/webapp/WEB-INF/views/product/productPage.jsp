@@ -90,6 +90,13 @@
 				}, "json");
 		    }
 
+		 	// 컬러 리스트 하나일 경우 디자인에 문제있어 처리
+		    $('.color__checkbox').show(function(){	   
+		    	if('${PROD_COLOR.size() }' == 1) {
+					$(this).css("display", "initial");
+			    }
+			});
+
 		    // 컬러 리스트 또는 사이즈 리스트 클릭 시
 		    $('.color__checkbox label input, .size__btn label input').click(function(){	   
 			    // 처음 클릭 시엔 속성 값만 바뀌도록 설정 
